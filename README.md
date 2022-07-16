@@ -1,2 +1,2 @@
 # lordicon
-Use Lordicon icons in HTML and PDF documents.
+Use Lordicon icons in HTML documents.
