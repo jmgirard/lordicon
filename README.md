@@ -1,6 +1,6 @@
 # Lordicon Extension for Quarto
 
-This extension provides support including free icons provided by Lordicon. Icons can be used in HTML and Revealjs formats.
+This extension provides support including free icons provided by Lordicon. Icons can be used in HTML and Revealjs formats. Icon customization and loading icons (including premium icons) from JSON files is coming soon...
 
 ## Installing
 
