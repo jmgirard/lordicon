@@ -2,7 +2,7 @@ function ensureHtmlDeps()
   quarto.doc.addHtmlDependency({
     name = 'lord-icon-element',
     version = '3.4.0',
-    scripts = {'assets/js/xdjxvujz.js'}
+    scripts = {'https://cdn.lordicon.com/xdjxvujz.js'}
   })
 end
 
