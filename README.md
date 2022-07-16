@@ -1,10 +1,3 @@
-<style>
-#screenshot {
-  border: 1px solid black;
-  border-radius: 5px;
-}
-</style>
-
 # Lordicon Extension for Quarto
 
 This extension provides support including free icons provided by Lordicon. Icons can be used in HTML and Revealjs formats.
@@ -29,7 +22,7 @@ To embed an icon, use the `{{< li code >}}` shortcode. For example:
 
 Look up the `code` for an icon by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the HTML button. The `code` is displayed at the bottom left of the modal and can be copied to the clipboard using the COPY HTML CODE button (see screenshot of the modal below).
 
-<img src="docs/screenshot.png" id="screenshot" />
+<img src="docs/screenshot.png" />
 
 ## Example
 
