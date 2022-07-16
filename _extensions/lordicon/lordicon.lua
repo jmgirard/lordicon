@@ -1,6 +1,6 @@
 function ensureHtmlDeps()
   quarto.doc.addHtmlDependency({
-    name = 'lord-icon-element',
+    name = 'lord-icon-bundle',
     version = '3.4.0',
     scripts = {'assets/js/bundle.js'},
     stylesheets = {'assets/css/styles.css'}
@@ -14,7 +14,7 @@ return {
     -- detect html
     if quarto.doc.isFormat("html:js") then
       ensureHtmlDeps()
-      return pandoc.RawInline('html', '<lord-icon src="https://cdn.lordicon.com/' .. code .. '.json" trigger="loop" style="width:250px;height:250px;"></lord-icon>')
+      return pandoc.RawInline('html', '<lord-icon src="https://cdn.lordicon.com/' .. code .. '.json" trigger="loop"></lord-icon>')
     else
       return pandoc.Null()
     end
