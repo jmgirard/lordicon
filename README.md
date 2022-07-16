@@ -12,7 +12,7 @@ This will install the extension under the `_extensions` subdirectory. If you're 
 
 ## Using
 
-To embed an icon, use the `{{< li >}}` shortcode. For example:
+To embed an icon, use the `{{< li code >}}` shortcode. For example:
 
 ```
 {{< li wxnxiano >}}
@@ -20,13 +20,9 @@ To embed an icon, use the `{{< li >}}` shortcode. For example:
 {{< li jluicbpf >}}
 ```
 
-[Free Wired Outline Icons](https://lordicon.com/icons/wired/outline?group=free)
+Look up the `code` for an icon by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the HTML button. The `code` is displayed at the bottom left of the modal and can be copied to the clipboard using the COPY HTML CODE button (see screenshot of the modal below).
 
-[Free Wired Flat Icons](https://lordicon.com/icons/wired/flat?group=free)
-
-[Free Wired Lineal Icons](https://lordicon.com/icons/wired/lineal?group=free)
-
-[Free System Outline Icons](https://lordicon.com/icons/system/outline?group=free)
+<img src="docs/screenshot.png" style="border:1px solid black;border-radius:5px;"/>
 
 ## Example
 
