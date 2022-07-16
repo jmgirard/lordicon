@@ -4,5 +4,4 @@
 /json/
 *.Rproj
 *_files/
-*.html
 .Rhistory
