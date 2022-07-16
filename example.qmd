@@ -14,4 +14,4 @@ For example:
 
 | Shortcode               | Icon                  |
 |-------------------------|-----------------------|
-| `{{{< fa lupuorrc >}}}` | {{{< fa lupuorrc >}}} |
+| `{{{< li lupuorrc >}}}` | {{< li lupuorrc >}}   |

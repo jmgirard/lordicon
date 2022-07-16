@@ -1,6 +1,7 @@
-*.Rproj
-/.Rproj.user
+/.Rproj.user/
 /.quarto/
-*.html
-*.pdf
+/node_modules/
+/json/
+*.Rproj
 *_files/
+.Rhistory
