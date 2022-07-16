@@ -1,6 +1,6 @@
 module.exports = {
 	entry: './_extensions/lordicon/assets/js/main.js',
-	mode: 'development',
+	mode: 'production',
 	output: {
 		path: `${__dirname}/_extensions/lordicon/assets/js/`,
 		filename: 'bundle.js',

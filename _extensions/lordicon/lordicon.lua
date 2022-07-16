@@ -1,7 +1,7 @@
 function ensureHtmlDeps()
   quarto.doc.addHtmlDependency({
     name = 'lord-icon-bundle',
-    version = '3.4.0',
+    version = '3.4.2',
     scripts = {'assets/js/bundle.js'},
     stylesheets = {'assets/css/styles.css'}
   })

@@ -1,7 +1,6 @@
 ---
 title: Lordicon Quarto Extension
-format:
-  html: default
+format: html
 ---
 
 This extension allows you to use lordicon icons in your Quarto HTML documents. It provides an `{{{< li >}}}` shortcode:
