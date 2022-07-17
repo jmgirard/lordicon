@@ -1,4 +1,4 @@
-require('../css/styles.css');
+require('./styles.css');
 
 import lottie from 'lottie-web';
 import { defineLordIconElement } from 'lord-icon-element';
