@@ -24,12 +24,23 @@ Look up the `code` for an icon by browsing [lordicon.com](https://lordicon.com/i
 
 <img src="docs/screenshot.png" />
 
-You can also customize various aspects of the icon's appearance, such as their animation trigger, delay, speed, colors, stroke, scale, and position (see the [HTML example](https://jmgirard.github.io/lordicon/example.html) to see these options in action). Icon sizing and background color are controlled by setting CSS for `lord-icon` HTML elements:
+You can also customize various aspects of the icon's appearance, such as their animation trigger, delay, speed, colors, stroke, scale, and position (see the [HTML example](https://jmgirard.github.io/lordicon/example.html) to see these options in action). 
+
+Icons sizes are controlled by setting CSS for `lord-icon` HTML elements:
 
 ```
 lord-icon {
   width: 128px;
   height: 128px;
+}
+```
+
+To style groups of icons, you can pass each icon a CSS class via the shortcode's `class` argument (e.g., `{{< li lupuorrc class=small >}}`).
+
+```
+lord-icon.small {
+  width: 48px;
+  height: 48px;
 }
 ```
 

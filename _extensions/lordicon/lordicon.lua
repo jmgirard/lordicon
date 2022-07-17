@@ -19,6 +19,7 @@ return {
     local scale = pandoc.utils.stringify(kwargs['scale'])
     local x = pandoc.utils.stringify(kwargs['x'])
     local y = pandoc.utils.stringify(kwargs['y'])
+    local class = pandoc.utils.stringify(kwargs['class'])
     
     local src = 'src="https://cdn.lordicon.com/' .. code .. '.json" '
     
@@ -54,10 +55,14 @@ return {
       y = 'axis-y="' .. y .. '" '
     end
     
+    if class ~= '' then
+      class = 'class="' .. class .. '" '
+    end
+    
     -- detect html
     if quarto.doc.isFormat("html:js") then
       ensureHtmlDeps()
-      return pandoc.RawInline('html', '<lord-icon ' .. speed .. delay .. colors .. stroke .. scale .. x .. y .. src .. trigger .. '></lord-icon>')
+      return pandoc.RawInline('html', '<lord-icon ' .. speed .. delay .. colors .. stroke .. scale .. x .. y .. class .. src .. trigger .. '></lord-icon>')
     else
       return pandoc.Null()
     end
