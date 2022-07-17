@@ -24,6 +24,15 @@ Look up the `code` for an icon by browsing [lordicon.com](https://lordicon.com/i
 
 <img src="docs/screenshot.png" />
 
+You can also customize various aspects of the icon's appearance, such as their animation trigger, delay, speed, colors, stroke, scale, and position (see the [HTML example](https://jmgirard.github.io/lordicon/example.html) to see these options in action). Icon sizing and background color are controlled by setting CSS for `lord-icon` HTML elements:
+
+```
+lord-icon {
+  width: 128px;
+  height: 128px;
+}
+```
+
 ## Example
 
 Here is the source code for a minimal example: [example.qmd](https://github.com/jmgirard/lordicon/blob/main/example.qmd)
