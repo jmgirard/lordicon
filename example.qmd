@@ -6,11 +6,82 @@ format: html
 This extension allows you to use lordicon icons in your Quarto HTML documents. It provides an `{{{< li >}}}` shortcode:
 
 ``` markdown
-{{{< li src >}}}
+{{{< li code >}}}
 ```
 
-For example:
+### Triggers
 
-| Shortcode               | Icon                  |
-|-------------------------|-----------------------|
-| `{{{< li lupuorrc >}}}` | {{< li lupuorrc >}}   |
+`trigger` controls the icon's animation type. When using the `loop` or `loop-on-hover` triggers, you can also set an optional `delay` (in ms) between loops.
+
+| Shortcode                            | Icon                             |
+|--------------------------------------|----------------------------------|
+| `{{{< li wxnxiano >}}}`              | {{< li wxnxiano >}}              |
+| `{{{< li wxnxiano trigger=click >}}}` | {{< li wxnxiano trigger=click >}} |
+| `{{{< li wxnxiano trigger=hover >}}}` | {{< li wxnxiano trigger=hover >}} |
+| `{{{< li wxnxiano trigger=loop >}}}` | {{< li wxnxiano trigger=loop >}} |
+| `{{{< li wxnxiano trigger=loop delay=1000 >}}}` | {{< li wxnxiano trigger=loop delay=1000 >}} |
+| `{{{< li wxnxiano trigger=loop-on-hover >}}}` | {{< li wxnxiano trigger=loop-on-hover >}} |
+| `{{{< li wxnxiano trigger=loop-on-hover delay=1000 >}}}` | {{< li wxnxiano trigger=loop-on-hover delay=1000 >}} |
+| `{{{< li wxnxiano trigger=morph >}}}` | {{< li wxnxiano trigger=morph >}} |
+| `{{{< li wxnxiano trigger=boomerang >}}}` | {{< li wxnxiano trigger=boomerang >}} |
+
+### Speed
+
+`speed` controls how quickly the icon's animation plays.
+
+| Shortcode                            | Icon                             |
+|--------------------------------------|----------------------------------|
+| `{{{< li lupuorrc trigger=loop speed=0.5 >}}}`   | {{< li lupuorrc trigger=loop speed=0.5 >}}   |
+| `{{{< li lupuorrc trigger=loop speed=1.0 >}}}`   | {{< li lupuorrc trigger=loop speed=1.0 >}}   |
+| `{{{< li lupuorrc trigger=loop speed=2.0 >}}}`   | {{< li lupuorrc trigger=loop speed=2.0 >}}   |
+
+### Colors
+
+`colors` controls the icon's coloring. Outline icons typically have just a primary and secondary color, but flat and lineal icons can have many more. Each color should be given in `rank:color` format (where ranks are primary, secondary, tertiary, etc.) and multiple colors should be separated by commas. Colors can be given in HTML color names or hexcodes.
+
+| Shortcode                            | Icon                             |
+|--------------------------------------|----------------------------------|
+| `{{{< li lupuorrc >}}}`              | {{< li lupuorrc >}}              |
+| `{{{< li lupuorrc colors=primary:gold >}}}`   | {{< li lupuorrc colors=primary:gold >}}   |
+| `{{{< li lupuorrc colors=primary:gray,secondary:orange >}}}`   | {{< li lupuorrc colors=primary:gray,secondary:orange >}}   |
+| `{{{< li lupuorrc colors=primary:#4030e8,secondary:#ee66aa >}}}`   | {{< li lupuorrc colors=primary:#4030e8,secondary:#ee66aa >}}   |
+
+### Stroke
+
+`stroke` controls how thick the lines in an icon are.
+
+| Shortcode                            | Icon                             |
+|--------------------------------------|----------------------------------|
+| `{{{< li lupuorrc stroke=50 >}}}`    | {{< li lupuorrc stroke=50 >}}    |
+| `{{{< li lupuorrc stroke=100 >}}}`   | {{< li lupuorrc stroke=100 >}}   |
+| `{{{< li lupuorrc stroke=150 >}}}`   | {{< li lupuorrc stroke=150 >}}   |
+
+### Scale
+
+`scale` controls how large or zoomed in the icon is.
+
+| Shortcode                            | Icon                             |
+|--------------------------------------|----------------------------------|
+| `{{{< li lupuorrc scale=25 >}}}`     | {{< li lupuorrc scale=25 >}}     |
+| `{{{< li lupuorrc scale=50 >}}}`     | {{< li lupuorrc scale=50 >}}     |
+| `{{{< li lupuorrc scale=100 >}}}`    | {{< li lupuorrc scale=100 >}}    |
+
+### Axis X
+
+`x` controls the horizontal position of the center of the icon.
+
+| Shortcode                        | Icon                       |
+|----------------------------------|----------------------------|
+| `{{{< li lupuorrc x=25 >}}}`     | {{< li lupuorrc x=25 >}}   |
+| `{{{< li lupuorrc x=50 >}}}`     | {{< li lupuorrc x=50 >}}   |
+| `{{{< li lupuorrc x=100 >}}}`    | {{< li lupuorrc x=100 >}}  |
+
+### Axis Y
+
+`y` controls the vertical position of the center of the icon.
+
+| Shortcode                        | Icon                       |
+|----------------------------------|----------------------------|
+| `{{{< li lupuorrc y=25 >}}}`     | {{< li lupuorrc y=25 >}}   |
+| `{{{< li lupuorrc y=50 >}}}`     | {{< li lupuorrc y=50 >}}   |
+| `{{{< li lupuorrc y=100 >}}}`    | {{< li lupuorrc y=100 >}}  |

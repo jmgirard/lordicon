@@ -120,9 +120,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p>This extension allows you to use lordicon icons in your Quarto HTML documents. It provides an <code>{{&lt; li &gt;}}</code> shortcode:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>{{&lt; li src &gt;}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>{{&lt; li code &gt;}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="triggers" class="level3">
+<h3 class="anchored" data-anchor-id="triggers">Triggers</h3>
+<p><code>trigger</code> controls the icon’s animation type. When using the <code>loop</code> or <code>loop-on-hover</code> triggers, you can also set an optional <code>delay</code> (in ms) between loops.</p>
 <table class="table">
+<colgroup>
+<col style="width: 52%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Shortcode</th>
+<th>Icon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{{&lt; li wxnxiano &gt;}}</code></td>
+<td><p><lord-icon src="https://cdn.lordicon.com/wxnxiano.json"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li wxnxiano trigger=click &gt;}}</code></td>
+<td><p><lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="click"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li wxnxiano trigger=hover &gt;}}</code></td>
+<td><p><lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="hover"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li wxnxiano trigger=loop &gt;}}</code></td>
+<td><p><lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li wxnxiano trigger=loop delay=1000 &gt;}}</code></td>
+<td><p><lord-icon delay="1000" src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li wxnxiano trigger=loop-on-hover &gt;}}</code></td>
+<td><p><lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop-on-hover"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li wxnxiano trigger=loop-on-hover delay=1000 &gt;}}</code></td>
+<td><p><lord-icon delay="1000" src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop-on-hover"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li wxnxiano trigger=morph &gt;}}</code></td>
+<td><p><lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="morph"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li wxnxiano trigger=boomerang &gt;}}</code></td>
+<td><p><lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="boomerang"></lord-icon></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="speed" class="level3">
+<h3 class="anchored" data-anchor-id="speed">Speed</h3>
+<p><code>speed</code> controls how quickly the icon’s animation plays.</p>
+<table class="table">
+<colgroup>
+<col style="width: 52%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Shortcode</th>
+<th>Icon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc trigger=loop speed=0.5 &gt;}}</code></td>
+<td><p><lord-icon speed="0.5" src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li lupuorrc trigger=loop speed=1.0 &gt;}}</code></td>
+<td><p><lord-icon speed="1.0" src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc trigger=loop speed=2.0 &gt;}}</code></td>
+<td><p><lord-icon speed="2.0" src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop"></lord-icon></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="colors" class="level3">
+<h3 class="anchored" data-anchor-id="colors">Colors</h3>
+<p><code>colors</code> controls the icon’s coloring. Outline icons typically have just a primary and secondary color, but flat and lineal icons can have many more. Each color should be given in <code>rank:color</code> format (where ranks are primary, secondary, tertiary, etc.) and multiple colors should be separated by commas. Colors can be given in HTML color names or hexcodes.</p>
+<table class="table">
+<colgroup>
+<col style="width: 52%">
+<col style="width: 47%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Shortcode</th>
@@ -132,10 +222,135 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td><code>{{&lt; li lupuorrc &gt;}}</code></td>
-<td><p><lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop"></lord-icon></p></td>
+<td><p><lord-icon src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li lupuorrc colors=primary:gold &gt;}}</code></td>
+<td><p><lord-icon colors="primary:gold" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc colors=primary:gray,secondary:orange &gt;}}</code></td>
+<td><p><lord-icon colors="primary:gray,secondary:orange" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li lupuorrc colors=primary:#4030e8,secondary:#ee66aa &gt;}}</code></td>
+<td><p><lord-icon colors="primary:#4030e8,secondary:#ee66aa" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="stroke" class="level3">
+<h3 class="anchored" data-anchor-id="stroke">Stroke</h3>
+<p><code>stroke</code> controls how thick the lines in an icon are.</p>
+<table class="table">
+<colgroup>
+<col style="width: 52%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Shortcode</th>
+<th>Icon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc stroke=50 &gt;}}</code></td>
+<td><p><lord-icon stroke="50" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li lupuorrc stroke=100 &gt;}}</code></td>
+<td><p><lord-icon stroke="100" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc stroke=150 &gt;}}</code></td>
+<td><p><lord-icon stroke="150" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="scale" class="level3">
+<h3 class="anchored" data-anchor-id="scale">Scale</h3>
+<p><code>scale</code> controls how large or zoomed in the icon is.</p>
+<table class="table">
+<colgroup>
+<col style="width: 52%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Shortcode</th>
+<th>Icon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc scale=25 &gt;}}</code></td>
+<td><p><lord-icon scale="25" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li lupuorrc scale=50 &gt;}}</code></td>
+<td><p><lord-icon scale="50" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc scale=100 &gt;}}</code></td>
+<td><p><lord-icon scale="100" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="axis-x" class="level3">
+<h3 class="anchored" data-anchor-id="axis-x">Axis X</h3>
+<p><code>x</code> controls the horizontal position of the center of the icon.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Shortcode</th>
+<th>Icon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc x=25 &gt;}}</code></td>
+<td><p><lord-icon axis-x="25" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li lupuorrc x=50 &gt;}}</code></td>
+<td><p><lord-icon axis-x="50" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc x=100 &gt;}}</code></td>
+<td><p><lord-icon axis-x="100" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="axis-y" class="level3">
+<h3 class="anchored" data-anchor-id="axis-y">Axis Y</h3>
+<p><code>y</code> controls the vertical position of the center of the icon.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Shortcode</th>
+<th>Icon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc y=25 &gt;}}</code></td>
+<td><p><lord-icon axis-y="25" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="even">
+<td><code>{{&lt; li lupuorrc y=50 &gt;}}</code></td>
+<td><p><lord-icon axis-y="50" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li lupuorrc y=100 &gt;}}</code></td>
+<td><p><lord-icon axis-y="100" src="https://cdn.lordicon.com/lupuorrc.json"></lord-icon></p></td>
+</tr>
+</tbody>
+</table>
+</section>
 
 </main>
 <!-- /main column -->
