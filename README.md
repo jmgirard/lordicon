@@ -1,6 +1,6 @@
 # Lordicon Extension for Quarto
 
-This extension provides support including free icons provided by Lordicon. Icons can be used in HTML and Revealjs formats and customized in appearance. Loading icons (including premium ones) from JSON files is coming soon...
+This extension provides support for embedding icons from Lordicon into Quarto HTML and Revealjs formats; they can also be customized in appearance. Loading icons from downloaded/edited JSON files is coming soon...
 
 ## Installing
 
@@ -49,3 +49,6 @@ lord-icon.small {
 Here is the source code for a minimal example: [example.qmd](https://github.com/jmgirard/lordicon/blob/main/example.qmd)
 
 This is the output of `example.qmd` for [HTML](https://jmgirard.github.io/lordicon/example.html)
+
+Note that there is currently a bug where the icons won't appear in the RStudio Viewer but will appear when the HTML file is opened in a modern browser.
+
