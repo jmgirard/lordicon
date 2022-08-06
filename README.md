@@ -15,23 +15,26 @@ This will install the extension under the `_extensions` subdirectory. If you're 
 To embed an icon from the CDN, use the `{{< li code >}}` shortcode. For example:
 
 ```
-{{< li wxnxiano >}}
-{{< li surjmvno >}}
-{{< li jluicbpf >}}
+{{< li wlpxtupd >}}
+{{< li lupuorrc >}}
 ```
 
-Look up an icon's `code` by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the HTML button. The `code` is displayed at the bottom left of the modal and can be copied to the clipboard by clicking it.
+Look up an icon's `code` by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the HTML button (see Figure 1). The `code` is displayed at the bottom left of the modal and can be copied to the clipboard by clicking it (see Figure 2).
+
+| Figure 1              | Figure 2           |
+|:---------------------:|:------------------:|
+| ![](docs/sidebar.png) | ![](docs/code.png) |
 
 ---
 
-To embed an icon from a local .json file, use teh `{{< lif file >}}` shortcode. For example:
+To embed an icon from a local .json file, use the `{{< lif file >}}` shortcode. For example:
 
 ```
 {{< lif church.json >}}
 {{< lif confetti.json >}}
 ```
 
-Download an icon's .json file by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the LOTTIE button. This will download the file, which you can move and rename as desired.
+Download an icon's .json file by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the LOTTIE button (see Figure 1). This will download the file, which you can move and rename as desired.
 
 ---
 
