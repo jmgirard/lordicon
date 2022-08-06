@@ -1,6 +1,6 @@
 # Lordicon Extension for Quarto
 
-This extension provides support for embedding icons from Lordicon into Quarto HTML and Revealjs formats; they can also be customized in appearance. Loading icons from downloaded/edited JSON files is coming soon...
+This extension provides support for embedding icons from Lordicon into Quarto HTML files (including RevealJS presentations). The icons can be pulled directly from the official CDN or loaded via local .json files; they can also be customized in appearance on-the-fly (without needing to edit the .json files).
 
 ## Installing
 
@@ -12,7 +12,7 @@ This will install the extension under the `_extensions` subdirectory. If you're 
 
 ## Using
 
-To embed an icon, use the `{{< li code >}}` shortcode. For example:
+To embed an icon from the CDN, use the `{{< li code >}}` shortcode. For example:
 
 ```
 {{< li wxnxiano >}}
@@ -20,11 +20,22 @@ To embed an icon, use the `{{< li code >}}` shortcode. For example:
 {{< li jluicbpf >}}
 ```
 
-Look up the `code` for an icon by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the HTML button. The `code` is displayed at the bottom left of the modal and can be copied to the clipboard using the COPY HTML CODE button (see screenshot of the modal below).
+Look up an icon's `code` by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the HTML button. The `code` is displayed at the bottom left of the modal and can be copied to the clipboard by clicking it.
 
-<img src="docs/screenshot.png" />
+---
 
-You can also customize various aspects of the icon's appearance, such as their animation trigger, delay, speed, colors, stroke, scale, and position (see the [HTML example](https://jmgirard.github.io/lordicon/example.html) to see these options in action). 
+To embed an icon from a local .json file, use teh `{{< lif file >}}` shortcode. For example:
+
+```
+{{< lif church.json >}}
+{{< lif confetti.json >}}
+```
+
+Download an icon's .json file by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the LOTTIE button. This will download the file, which you can move and rename as desired.
+
+---
+
+You can also customize various aspects of the icon's appearance, such as the animation trigger, delay, speed, colors, stroke, scale, and position (see the [HTML example](https://jmgirard.github.io/lordicon/example.html) to see these options in action). 
 
 Icons sizes are controlled by setting CSS for `lord-icon` HTML elements:
 
@@ -50,5 +61,4 @@ Here is the source code for a minimal example: [example.qmd](https://github.com/
 
 This is the output of `example.qmd` for [HTML](https://jmgirard.github.io/lordicon/example.html)
 
-Note that there is currently a bug where the icons won't appear in the RStudio Viewer but will appear when the HTML file is opened in a modern browser.
-
+Note that there is currently a bug where the icons won't appear in the RStudio Viewer but will appear when the HTML file is opened in a modern browser. This issue will be resolved in the 2022-11 version of RStudio, which updates the Viewer to support newer JavaScript features. You can gain early access to this version of RStudio through the [daily builds](https://dailies.rstudio.com/).
