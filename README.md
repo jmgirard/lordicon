@@ -60,8 +60,10 @@ lord-icon.small {
 
 ## Example
 
-Here is the source code for a minimal example: [example.qmd](https://github.com/jmgirard/lordicon/blob/main/example.qmd)
+| Figure 3 | 
+|:--------:|
+| [![](docs/example.png)](https://jmgirard.github.io/lordicon/example.html)<br />[Source Code](https://github.com/jmgirard/lordicon/blob/main/example.qmd) \| [HTML Output](https://jmgirard.github.io/lordicon/example.html) |
 
-This is the output of `example.qmd` for [HTML](https://jmgirard.github.io/lordicon/example.html)
+## Note
 
 Note that there is currently a bug where the icons won't appear in the RStudio Viewer but will appear when the HTML file is opened in a modern browser. This issue will be resolved in the 2022-11 version of RStudio, which updates the Viewer to support newer JavaScript features. You can gain early access to this version of RStudio through the [daily builds](https://dailies.rstudio.com/).
