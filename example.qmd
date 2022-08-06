@@ -3,11 +3,16 @@ title: Lordicon Quarto Extension
 format: html
 ---
 
-This extension allows you to use lordicon icons in your Quarto HTML documents. It provides an `{{{< li >}}}` shortcode:
+This extension allows you to use lordicon icons in your Quarto HTML documents. 
 
-``` markdown
-{{{< li code >}}}
-```
+### Shortcodes
+
+The `{{{< li >}}}` shortcode renders an icon (specified by its code) after downloading it the lordicon CDN. The `{{{< lif >}}}` shortcode renders an icon (specified by its filepath) from a local .json file. Both shortcodes support the same arguments for customization, described below.
+
+| Pseudocode           | Example Code                | Rendered                |
+|----------------------|-----------------------------|-------------------------|
+| `{{{< li code >}}}`  | `{{{< li wlpxtupd >}}}`     | {{< li wlpxtupd >}}     |
+| `{{{< lif file >}}}` | `{{{< lif church.json >}}}` | {{< lif church.json >}} |
 
 ### Triggers
 
