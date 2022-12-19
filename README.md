@@ -66,4 +66,4 @@ lord-icon.small {
 
 ## Note
 
-Note that there is currently a bug where the icons won't appear in the RStudio Viewer but will appear when the HTML file is opened in a modern browser. This issue will be resolved in the 2022-11 version of RStudio, which updates the Viewer to support newer JavaScript features. You can gain early access to this version of RStudio through the [daily builds](https://dailies.rstudio.com/).
+In order for the icons to appear properly in your RStudio Viewer pane, you need to update to RStudio version 2022.12.0+353 or newer. You can still use older versions of RStudio, but to view your icons you will need to view the rendered HTML files in an external browser.
