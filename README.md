@@ -5,7 +5,7 @@ This extension provides support for embedding icons from Lordicon into Quarto HT
 ## Installing
 
 ```
-$ quarto install extension jmgirard/lordicon
+$ quarto add jmgirard/lordicon
 ```
 
 This will install the extension under the `_extensions` subdirectory. If you're using version control, you will want to check in this directory.

@@ -1,5 +1,5 @@
 ---
-title: Lordicon Quarto Extension
+title: Lordicon Extension for Quarto
 format: html
 self-contained: true
 ---
