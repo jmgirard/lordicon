@@ -1,6 +1,6 @@
-1. winget install -e --id Nodist.Nodist
-2. npm install webpack
-3. npm audit fix
-4. npm install lottie-web
-5. npm install lord-icon-element
-6. npx webpack
+winget install -e --id Nodist.Nodist
+npm install webpack
+npm audit fix
+npm install lottie-web
+npm install @lordicon/element
+npx webpack
