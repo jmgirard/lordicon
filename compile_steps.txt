@@ -1,0 +1,6 @@
+1. winget install -e --id Nodist.Nodist
+2. npm install webpack
+3. npm audit fix
+4. npm install lottie-web
+5. npm install lord-icon-element
+6. npx webpack
