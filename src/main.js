@@ -1,6 +1,6 @@
 require('./styles.css');
 
 import lottie from 'lottie-web';
-import { defineLordIconElement } from 'lord-icon-element';
+import { defineElement } from '@lordicon/element';
 
-defineLordIconElement(lottie.loadAnimation);
+defineElement(lottie.loadAnimation);

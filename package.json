@@ -1,13 +1,13 @@
 {
-  "name": "lord-icon-bundle",
-  "version": "3.4.4",
+  "name": "lordicon-bundle",
+  "version": "1.4.2",
   "private": true,
   "main": "index.js",
   "scripts": {
     "build": "webpack"
   },
   "dependencies": {
-    "lord-icon-element": "^3.4.4",
+    "@lordicon/element": "^1.4.2",
     "lottie-web": "^5.12.2"
   },
   "devDependencies": {
