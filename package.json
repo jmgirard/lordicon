@@ -1,13 +1,13 @@
 {
   "name": "lordicon-bundle",
-  "version": "1.4.2",
+  "version": "1.5.1",
   "private": true,
   "main": "index.js",
   "scripts": {
     "build": "webpack"
   },
   "dependencies": {
-    "@lordicon/element": "^1.4.2",
+    "@lordicon/element": "^1.5.1",
     "lottie-web": "^5.12.2"
   },
   "devDependencies": {
@@ -19,7 +19,7 @@
     "core-js": "^3.23.5",
     "css-loader": "^6.7.1",
     "style-loader": "^3.3.1",
-    "webpack": "^5.89.0",
+    "webpack": "^5.90.3",
     "webpack-cli": "^4.10.0"
   }
 }
