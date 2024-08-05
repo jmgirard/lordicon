@@ -25,11 +25,7 @@ To embed an icon from the CDN, use the `{{< li code >}}` shortcode. For example:
 {{< li lupuorrc >}}
 ```
 
-Look up an icon's `code` by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the HTML button (see Figure 1). The `code` is displayed at the bottom left of the modal and can be copied to the clipboard by clicking it (see Figure 2).
-
-| Figure 1              | Figure 2           |
-|:---------------------:|:------------------:|
-| ![](docs/sidebar.png) | ![](docs/code.png) |
+Look up an icon's `code` by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like and choosing Export to (HTML or Lottie).
 
 ---
 
