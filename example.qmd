@@ -128,6 +128,15 @@ Many icons support different animation states. These are viewable from the [lord
 | `{{{< li laqlvddb trigger=loop state=loop-3d-roll >}}}` | {{< li laqlvddb trigger=loop state=loop-3d-roll >}} |
 | `{{{< li laqlvddb trigger=loop state=loop-smoke >}}}` | {{< li laqlvddb trigger=loop state=loop-smoke >}} |
 
+### Delay
+
+Animations can be delayed by a specified number of milliseconds.
+
+| Shortcode                             | Icon                             |
+|---------------------------------------|----------------------------------|
+| `{{{< li laqlvddb trigger=loop  >}}}` | {{< li laqlvddb trigger=loop >}} |
+| `{{{< li laqlvddb trigger=loop delay=3000 >}}}` | {{< li laqlvddb trigger=loop delay=3000 >}} |
+
 ### Class
 
 Each icon object can be given a CSS class (defined in your style element or external CSS file, as described above).
