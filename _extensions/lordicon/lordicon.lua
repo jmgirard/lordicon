@@ -1,7 +1,7 @@
 function ensureHtmlDeps()
   quarto.doc.addHtmlDependency({
     name = 'lordicon-bundle',
-    version = '1.4.2',
+    version = '1.8.0',
     scripts = {'assets/js/bundle.js'}
   })
 end
