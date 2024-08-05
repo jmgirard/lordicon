@@ -4,9 +4,9 @@ This extension provides support for embedding animated icons from Lordicon into 
 
 ## Example
 
-[![](https://i.imgur.com/QXSSUNG.png)](https://jmgirard.github.io/lordicon/example.html)
+[![](./docs/showcase.gif)](https://jmgirard.github.io/lordicon/example.html)
 
-View the animations in this [HTML Demo](https://jmgirard.github.io/lordicon/example.html)! ([Source Code](https://github.com/jmgirard/lordicon/blob/main/example.qmd))
+View example code and previews in this [HTML Demo](https://jmgirard.github.io/lordicon/example.html)!
 
 ## Installing
 
