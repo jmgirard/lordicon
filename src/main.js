@@ -1,5 +1,3 @@
-require('./styles.css');
-
 import lottie from 'lottie-web';
 import { defineElement } from '@lordicon/element';
 

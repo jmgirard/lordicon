@@ -6,40 +6,79 @@ self-contained: true
 
 This extension allows you to use lordicon icons in your Quarto HTML documents. 
 
-### Shortcodes
+### CSS Sizing
 
-The `{{{< li >}}}` shortcode renders an icon (specified by its code) after downloading it the lordicon CDN. The `{{{< lif >}}}` shortcode renders an icon (specified by its filepath) from a local .json file. Both shortcodes support the same arguments for customization, described below.
+To quickly change the size of all icons on a page, use one of the following options. To change the size of specific icons or sets of icons, see the Class and Style sections below.
 
-| Pseudocode           | Example Code                | Rendered                |
-|----------------------|-----------------------------|-------------------------|
-| `{{{< li code >}}}`  | `{{{< li wlpxtupd >}}}`     | {{< li wlpxtupd >}}     |
-| `{{{< lif file >}}}` | `{{{< lif church.json >}}}` | {{< lif church.json >}} |
+1) Add an HTML chunk with the `<style>` element to your .qmd file
 
-### Triggers
+```{=html}
+<style>
+  lord-icon {
+    width: 100px;
+    height: 100px;
+  }
+</style>
+```
 
-`trigger` controls the icon's animation type. When using the `loop` or `loop-on-hover` triggers, you can also set an optional `delay` (in ms) between loops.
+```{=html}
+<blockquote><p>Added to .qmd file</p>
+```
 
-| Shortcode                            | Icon                             |
-|--------------------------------------|----------------------------------|
-| `{{{< li wxnxiano >}}}`              | {{< li wxnxiano >}}              |
-| `{{{< li wxnxiano trigger=click >}}}` | {{< li wxnxiano trigger=click >}} |
-| `{{{< li wxnxiano trigger=hover >}}}` | {{< li wxnxiano trigger=hover >}} |
-| `{{{< li wxnxiano trigger=loop >}}}` | {{< li wxnxiano trigger=loop >}} |
-| `{{{< li wxnxiano trigger=loop delay=1000 >}}}` | {{< li wxnxiano trigger=loop delay=1000 >}} |
-| `{{{< li wxnxiano trigger=loop-on-hover >}}}` | {{< li wxnxiano trigger=loop-on-hover >}} |
-| `{{{< li wxnxiano trigger=loop-on-hover delay=1000 >}}}` | {{< li wxnxiano trigger=loop-on-hover delay=1000 >}} |
-| `{{{< li wxnxiano trigger=morph >}}}` | {{< li wxnxiano trigger=morph >}} |
-| `{{{< li wxnxiano trigger=boomerang >}}}` | {{< li wxnxiano trigger=boomerang >}} |
+````
+```{html}
+<style>
+  lord-icon {
+    width: 100px;
+    height: 100px;
+  }
+</style>
+```
+````
 
-### Speed
+```{=html}
+</blockquote>
+```
 
-`speed` controls how quickly the icon's animation plays.
+2) Create an external .css file and point to it in your YAML header.
 
-| Shortcode                            | Icon                             |
-|--------------------------------------|----------------------------------|
-| `{{{< li lupuorrc trigger=loop speed=0.5 >}}}`   | {{< li lupuorrc trigger=loop speed=0.5 >}}   |
-| `{{{< li lupuorrc trigger=loop speed=1.0 >}}}`   | {{< li lupuorrc trigger=loop speed=1.0 >}}   |
-| `{{{< li lupuorrc trigger=loop speed=2.0 >}}}`   | {{< li lupuorrc trigger=loop speed=2.0 >}}   |
+```{=html}
+<blockquote><p>Added to styles.css</p>
+```
+```
+lord-icon {
+  width: 100px;
+  height: 100px;
+}
+```
+```{=html}
+</blockquote>
+```
+
+```{=html}
+<blockquote><p>Added to .qmd header</p>
+```
+````
+---
+format: 
+  html:
+    css: styles.css
+---
+````
+```{=html}
+</blockquote>
+```
+
+### Source
+
+The `{{{< li >}}}` shortcode renders an icon (specified by its code) after downloading it from the lordicon CDN. The code of each icon can be found on [lordicon](https://lordicon.com) by clicking Export and then "Embed HTML." The code will be displayed towards the bottom of the popup screen.
+
+The `{{{< lif >}}}` shortcode renders an icon (specified by its filepath) from a local .json file. The file can be downloaded from [lordicon](https://lordicon.com) by clicking Export and then "JSON (Lottie)." Note that some customization options may only be available with the larger "Raw" file type.
+
+| ShortCode                   | Rendered                |
+|-----------------------------|-------------------------|
+| `{{{< li wlpxtupd >}}}`     | {{< li wlpxtupd >}}     |
+| `{{{< lif church.json >}}}` | {{< lif church.json >}} |
 
 ### Colors
 
@@ -49,6 +88,7 @@ The `{{{< li >}}}` shortcode renders an icon (specified by its code) after downl
 |--------------------------------------|----------------------------------|
 | `{{{< li lupuorrc >}}}`              | {{< li lupuorrc >}}              |
 | `{{{< li lupuorrc colors=primary:gold >}}}`   | {{< li lupuorrc colors=primary:gold >}}   |
+| `{{{< li lupuorrc colors=secondary:gold >}}}`   | {{< li lupuorrc colors=secondary:gold >}}   |
 | `{{{< li lupuorrc colors=primary:gray,secondary:orange >}}}`   | {{< li lupuorrc colors=primary:gray,secondary:orange >}}   |
 | `{{{< li lupuorrc colors=primary:#4030e8,secondary:#ee66aa >}}}`   | {{< li lupuorrc colors=primary:#4030e8,secondary:#ee66aa >}}   |
 
@@ -56,38 +96,80 @@ The `{{{< li >}}}` shortcode renders an icon (specified by its code) after downl
 
 `stroke` controls how thick the lines in an icon are.
 
+| Shortcode                             | Icon                               |
+|---------------------------------------|------------------------------------|
+| `{{{< li lupuorrc stroke=25 >}}}`     | {{< li lupuorrc stroke=25 >}}      |
+| `{{{< li lupuorrc stroke=50 >}}}`     | {{< li lupuorrc stroke=50 >}}      |
+| `{{{< li lupuorrc stroke=75 >}}}`     | {{< li lupuorrc stroke=75 >}}      |
+
+### Trigger
+
+`trigger` controls the icon's animation type. When using the `loop` or `loop-on-hover` triggers, you can also set an optional `delay` (in ms) between loops.
+
 | Shortcode                            | Icon                             |
 |--------------------------------------|----------------------------------|
-| `{{{< li lupuorrc stroke=50 >}}}`    | {{< li lupuorrc stroke=50 >}}    |
-| `{{{< li lupuorrc stroke=100 >}}}`   | {{< li lupuorrc stroke=100 >}}   |
-| `{{{< li lupuorrc stroke=150 >}}}`   | {{< li lupuorrc stroke=150 >}}   |
+| `{{{< li wxnxiano >}}}`              | {{< li wxnxiano >}}              |
+| `{{{< li wxnxiano trigger=click >}}}` | {{< li wxnxiano trigger=click >}} |
+| `{{{< li wxnxiano trigger=hover >}}}` | {{< li wxnxiano trigger=hover >}} |
+| `{{{< li wxnxiano trigger=loop >}}}` | {{< li wxnxiano trigger=loop >}} |
+| `{{{< li wxnxiano trigger=loop-on-hover >}}}` | {{< li wxnxiano trigger=loop-on-hover >}} |
+| `{{{< li wxnxiano trigger=morph >}}}` | {{< li wxnxiano trigger=morph >}} |
+| `{{{< li wxnxiano trigger=boomerang >}}}` | {{< li wxnxiano trigger=boomerang >}} |
+| `{{{< li wxnxiano trigger=in >}}}` | {{< li wxnxiano trigger=in >}} |
 
-### Scale
+### State
 
-`scale` controls how large or zoomed in the icon is.
+Many icons support different animation states. These are viewable from the [lordicon](https://lordicon.com) website. 
 
-| Shortcode                            | Icon                             |
-|--------------------------------------|----------------------------------|
-| `{{{< li lupuorrc scale=25 >}}}`     | {{< li lupuorrc scale=25 >}}     |
-| `{{{< li lupuorrc scale=50 >}}}`     | {{< li lupuorrc scale=50 >}}     |
-| `{{{< li lupuorrc scale=100 >}}}`    | {{< li lupuorrc scale=100 >}}    |
+| Shortcode                             | Icon                             |
+|---------------------------------------|----------------------------------|
+| `{{{< li laqlvddb trigger=morph state=morph-mantion >}}}` | {{< li laqlvddb trigger=morph state=morph-mantion >}} |
+| `{{{< li laqlvddb trigger=morph state=morph-neighbourhood >}}}` | {{< li laqlvddb trigger=morph state=morph-neighbourhood >}} |
+| `{{{< li laqlvddb trigger=loop state=loop-3d-roll >}}}` | {{< li laqlvddb trigger=loop state=loop-3d-roll >}} |
+| `{{{< li laqlvddb trigger=loop state=loop-smoke >}}}` | {{< li laqlvddb trigger=loop state=loop-smoke >}} |
 
-### Axis X
+### Class
 
-`x` controls the horizontal position of the center of the icon.
+Each icon object can be given a CSS class (defined in your style element or external CSS file, as described above).
 
-| Shortcode                        | Icon                       |
-|----------------------------------|----------------------------|
-| `{{{< li lupuorrc x=25 >}}}`     | {{< li lupuorrc x=25 >}}   |
-| `{{{< li lupuorrc x=50 >}}}`     | {{< li lupuorrc x=50 >}}   |
-| `{{{< li lupuorrc x=100 >}}}`    | {{< li lupuorrc x=100 >}}  |
+```{=html}
+<style>
+  lord-icon.myclass {
+    width: 50px;
+    height: 50px;
+  }
+</style>
+```
 
-### Axis Y
+```{=html}
+<blockquote><p>Added to .qmd file</p>
+```
 
-`y` controls the vertical position of the center of the icon.
+````
+```{html}
+<style>
+  lord-icon.myclass {
+    width: 50px;
+    height: 50px;
+  }
+</style>
+```
+````
 
-| Shortcode                        | Icon                       |
-|----------------------------------|----------------------------|
-| `{{{< li lupuorrc y=25 >}}}`     | {{< li lupuorrc y=25 >}}   |
-| `{{{< li lupuorrc y=50 >}}}`     | {{< li lupuorrc y=50 >}}   |
-| `{{{< li lupuorrc y=100 >}}}`    | {{< li lupuorrc y=100 >}}  |
+```{=html}
+</blockquote>
+```
+
+| Shortcode                             | Icon                             |
+|---------------------------------------|----------------------------------|
+| `{{{< li laqlvddb >}}}` | {{< li laqlvddb >}} |
+| `{{{< li laqlvddb class=myclass >}}}` | {{< li laqlvddb class=myclass >}} |
+
+### Style
+
+Each icon object can also be styled "on-the-fly" using style.
+
+| Shortcode                             | Icon                             |
+|---------------------------------------|----------------------------------|
+| `{{{< li laqlvddb >}}}` | {{< li laqlvddb >}} |
+| `{{{< li laqlvddb style=width:50px;height:50px; >}}}` | {{< li laqlvddb style=width:50px;height:50px; >}} |
