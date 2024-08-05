@@ -25,7 +25,7 @@ To embed an icon from the CDN, use the `{{< li code >}}` shortcode. For example:
 {{< li lupuorrc >}}
 ```
 
-Look up an icon's `code` by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like and choosing Export to (HTML or Lottie).
+Look up an icon's `code` by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon and choosing Export > Embed HTML.
 
 ---
 
@@ -36,7 +36,7 @@ To embed an icon from a local .json file, use the `{{< lif file >}}` shortcode. 
 {{< lif confetti.json >}}
 ```
 
-Download an icon's .json file by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon you like, going to the sidebar, and clicking on the LOTTIE button (see Figure 1). This will download the file, which you can move and rename as desired.
+Download an icon's .json file by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon, and choosing Export > JSON (Lottie).
 
 ---
 
