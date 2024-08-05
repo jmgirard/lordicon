@@ -4,7 +4,7 @@ This extension provides support for embedding icons from Lordicon into Quarto HT
 
 ## Example
 
-![](https://i.imgur.com/4uC2Mqy.png)
+[![](https://i.imgur.com/4uC2Mqy.png)](https://jmgirard.github.io/lordicon/example.html)
 
 [HTML Demo](https://jmgirard.github.io/lordicon/example.html) ([Source Code](https://github.com/jmgirard/lordicon/blob/main/example.qmd))
 
