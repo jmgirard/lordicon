@@ -6,7 +6,7 @@ This extension provides support for embedding animated icons from Lordicon into 
 
 [![](https://i.imgur.com/QXSSUNG.png)](https://jmgirard.github.io/lordicon/example.html)
 
-[HTML Demo](https://jmgirard.github.io/lordicon/example.html) ([Source Code](https://github.com/jmgirard/lordicon/blob/main/example.qmd))
+View the animations in this [HTML Demo](https://jmgirard.github.io/lordicon/example.html)! ([Source Code](https://github.com/jmgirard/lordicon/blob/main/example.qmd))
 
 ## Installing
 
