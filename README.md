@@ -22,7 +22,7 @@ To embed an icon from the CDN, use the `{{< li code >}}` shortcode. For example:
 
 ```
 {{< li wlpxtupd >}}
-{{< li lupuorrc >}}
+{{< li rehjpyyh >}}
 ```
 
 Look up an icon's `code` by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon and choosing Export > Embed HTML.
