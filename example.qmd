@@ -4,7 +4,11 @@ format: html
 self-contained: true
 ---
 
-This extension allows you to use lordicon icons in your Quarto HTML documents. 
+This extension allows you to use animated [lordicon](https://lordicon.com) icons in your Quarto HTML documents. 
+
+### Showcase
+
+{{< li laqlvddb trigger=loop delay=1000 >}}  {{< li egmlnyku trigger=loop delay=2000 >}} {{< li bmlkvhui trigger=loop delay=3000 >}} {{< li aqrzgjfy trigger=loop delay=4000 >}}
 
 ### CSS Sizing
 

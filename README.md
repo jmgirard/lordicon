@@ -4,7 +4,7 @@ This extension provides support for embedding animated icons from Lordicon into 
 
 ## Example
 
-[![](https://i.imgur.com/4uC2Mqy.png)](https://jmgirard.github.io/lordicon/example.html)
+[![](https://i.imgur.com/QXSSUNG.png)](https://jmgirard.github.io/lordicon/example.html)
 
 [HTML Demo](https://jmgirard.github.io/lordicon/example.html) ([Source Code](https://github.com/jmgirard/lordicon/blob/main/example.qmd))
 
