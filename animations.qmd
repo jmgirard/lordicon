@@ -1,0 +1,49 @@
+---
+title: "Animations"
+format: html
+---
+
+```{=html}
+<style>
+  lord-icon {
+    width: 75px;
+    height: 75px;
+  }
+</style>
+```
+
+
+### Trigger
+
+Animations can be triggered by different events (e.g., being clicked, hovered over, being loaded).
+
+| Shortcode                            | Icon                             |
+|--------------------------------------|----------------------------------|
+| `{{{< li jjoolpwc trigger=empty >}}}`              | {{< li jjoolpwc trigger=empty >}}              |
+| `{{{< li jjoolpwc trigger=click >}}}` | {{< li jjoolpwc trigger=click >}} |
+| `{{{< li jjoolpwc trigger=hover >}}}` | {{< li jjoolpwc trigger=hover >}} |
+| `{{{< li jjoolpwc trigger=loop >}}}` | {{< li jjoolpwc trigger=loop >}} |
+| `{{{< li jjoolpwc trigger=loop-on-hover >}}}` | {{< li jjoolpwc trigger=loop-on-hover >}} |
+| `{{{< li jjoolpwc trigger=morph >}}}` | {{< li jjoolpwc trigger=morph >}} |
+| `{{{< li jjoolpwc trigger=boomerang >}}}` | {{< li jjoolpwc trigger=boomerang >}} |
+| `{{{< li jjoolpwc trigger=in >}}}` | {{< li jjoolpwc trigger=in >}} |
+
+### State
+
+Many icons support different animation states. These are viewable from the [lordicon](https://lordicon.com) website. 
+
+| Shortcode                             | Icon                             |
+|---------------------------------------|----------------------------------|
+| `{{{< li laqlvddb trigger=morph state=morph-mantion >}}}` | {{< li laqlvddb trigger=morph state=morph-mantion >}} |
+| `{{{< li laqlvddb trigger=morph state=morph-neighbourhood >}}}` | {{< li laqlvddb trigger=morph state=morph-neighbourhood >}} |
+| `{{{< li laqlvddb trigger=loop state=loop-3d-roll >}}}` | {{< li laqlvddb trigger=loop state=loop-3d-roll >}} |
+| `{{{< li laqlvddb trigger=loop state=loop-smoke >}}}` | {{< li laqlvddb trigger=loop state=loop-smoke >}} |
+
+### Delay
+
+Looping animations can be delayed by a specified number of milliseconds.
+
+| Shortcode                             | Icon                             |
+|---------------------------------------|----------------------------------|
+| `{{{< li laqlvddb trigger=loop  >}}}` | {{< li laqlvddb trigger=loop >}} |
+| `{{{< li laqlvddb trigger=loop delay=3000 >}}}` | {{< li laqlvddb trigger=loop delay=3000 >}} |

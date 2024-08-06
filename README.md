@@ -2,13 +2,14 @@
 
 This extension provides support for embedding animated icons from Lordicon into Quarto HTML files (including RevealJS presentations). The icons can be pulled directly from the official CDN or loaded via local .json files; they can also be customized in appearance on-the-fly (without needing to edit the .json files).
 
-## Example
+## Examples
 
 [![](./docs/showcase.gif)](https://jmgirard.github.io/lordicon/example.html)
 
 - View example code and previews in this [HTML Demo](https://jmgirard.github.io/lordicon/example.html)!
-- Advanced: Learn about [CSS Styling](https://jmgirard.github.io/lordicon/css_styling.html)
-- Advanced: Learn more about [Targets](https://jmgirard.github.io/lordicon/targets.html)
+- Intermediate: Learn about [CSS Styling](https://jmgirard.github.io/lordicon/css_styling.html)
+- Intermediate: Learn about [Animations](https://jmgirard.github.io/lordicon/animations.html)
+- Advanced: Learn about [Targets](https://jmgirard.github.io/lordicon/targets.html)
 
 ## Installing
 
@@ -42,7 +43,7 @@ Download an icon's .json file by browsing [lordicon.com](https://lordicon.com/ic
 
 ---
 
-You can also customize various aspects of the icon's appearance and animation (see the [HTML example](https://jmgirard.github.io/lordicon/example.html) to see these options in action). 
+You can also customize various aspects of the icon's appearance and animation. See the examples above.
 
 ## Note
 

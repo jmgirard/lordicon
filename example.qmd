@@ -1,5 +1,5 @@
 ---
-title: Lordicon Extension for Quarto
+title: "Lordicon Extension for Quarto"
 format: html
 self-contained: true
 ---
@@ -43,42 +43,8 @@ The `{{{< lif >}}}` shortcode renders an icon (specified by its filepath) from a
 | `{{{< li rehjpyyh stroke=regular >}}}`     | {{< li rehjpyyh stroke=regular >}}      |
 | `{{{< li rehjpyyh stroke=bold >}}}`     | {{< li rehjpyyh stroke=bold >}}      |
 
-### Trigger
-
-`trigger` controls the icon's animation type.
-
-| Shortcode                            | Icon                             |
-|--------------------------------------|----------------------------------|
-| `{{{< li jjoolpwc trigger=empty >}}}`              | {{< li jjoolpwc trigger=empty >}}              |
-| `{{{< li jjoolpwc trigger=click >}}}` | {{< li jjoolpwc trigger=click >}} |
-| `{{{< li jjoolpwc trigger=hover >}}}` | {{< li jjoolpwc trigger=hover >}} |
-| `{{{< li jjoolpwc trigger=loop >}}}` | {{< li jjoolpwc trigger=loop >}} |
-| `{{{< li jjoolpwc trigger=loop-on-hover >}}}` | {{< li jjoolpwc trigger=loop-on-hover >}} |
-| `{{{< li jjoolpwc trigger=morph >}}}` | {{< li jjoolpwc trigger=morph >}} |
-| `{{{< li jjoolpwc trigger=boomerang >}}}` | {{< li jjoolpwc trigger=boomerang >}} |
-| `{{{< li jjoolpwc trigger=in >}}}` | {{< li jjoolpwc trigger=in >}} |
-
-### State
-
-Many icons support different animation states. These are viewable from the [lordicon](https://lordicon.com) website. 
-
-| Shortcode                             | Icon                             |
-|---------------------------------------|----------------------------------|
-| `{{{< li laqlvddb trigger=morph state=morph-mantion >}}}` | {{< li laqlvddb trigger=morph state=morph-mantion >}} |
-| `{{{< li laqlvddb trigger=morph state=morph-neighbourhood >}}}` | {{< li laqlvddb trigger=morph state=morph-neighbourhood >}} |
-| `{{{< li laqlvddb trigger=loop state=loop-3d-roll >}}}` | {{< li laqlvddb trigger=loop state=loop-3d-roll >}} |
-| `{{{< li laqlvddb trigger=loop state=loop-smoke >}}}` | {{< li laqlvddb trigger=loop state=loop-smoke >}} |
-
-### Delay
-
-Looping animations can be delayed by a specified number of milliseconds.
-
-| Shortcode                             | Icon                             |
-|---------------------------------------|----------------------------------|
-| `{{{< li laqlvddb trigger=loop  >}}}` | {{< li laqlvddb trigger=loop >}} |
-| `{{{< li laqlvddb trigger=loop delay=3000 >}}}` | {{< li laqlvddb trigger=loop delay=3000 >}} |
-
 ### Advanced
 
-- See [CSS Styling](css_styling.qmd) to resize and style icons
-- Use [target](target.qmd) to trigger animations from other objects
+- See [CSS styling](https://jmgirard.github.io/lordicon/css_styling.html) to resize and style icons
+- See [Animations](https://jmgirard.github.io/lordicon/animations.html) to control icon animations
+- See [Target](https://jmgirard.github.io/lordicon/target.html) to trigger animations from other objects
