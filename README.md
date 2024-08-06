@@ -9,7 +9,7 @@ This extension provides support for embedding animated icons from Lordicon into 
 - View example code and previews in this [HTML Demo](https://jmgirard.github.io/lordicon/example.html)!
 - Intermediate: Learn about [CSS Styling](https://jmgirard.github.io/lordicon/css_styling.html)
 - Intermediate: Learn about [Animations](https://jmgirard.github.io/lordicon/animations.html)
-- Advanced: Learn about [Targets](https://jmgirard.github.io/lordicon/targets.html)
+- Advanced: Learn about [Targets](https://jmgirard.github.io/lordicon/target.html)
 
 ## Installing
 
