@@ -6,7 +6,7 @@ function ensureHtmlDeps()
   })
 end
 
-function buildElement(src, colors, stroke, trigger, state, delay, class, style)
+function buildElement(src, colors, stroke, trigger, target, state, delay, class, style)
 
   if colors ~= '' then
     colors = 'colors="' .. colors .. '" '
@@ -18,6 +18,10 @@ function buildElement(src, colors, stroke, trigger, state, delay, class, style)
 
   if trigger ~= '' then
     trigger = 'trigger="' .. trigger .. '" '
+  end
+  
+  if target ~= '' then
+    target = 'target="' .. target .. '" '  
   end
 
   if state ~= '' then
@@ -39,7 +43,7 @@ function buildElement(src, colors, stroke, trigger, state, delay, class, style)
   -- detect html
   if quarto.doc.isFormat("html:js") then
     ensureHtmlDeps()
-    return pandoc.RawInline('html', '<lord-icon ' .. src .. colors .. stroke .. trigger .. state .. delay .. class .. style .. '></lord-icon>')
+    return pandoc.RawInline('html', '<lord-icon ' .. src .. colors .. stroke .. trigger .. target .. state .. delay .. class .. style .. '></lord-icon>')
   else
     return pandoc.Null()
   end
@@ -51,12 +55,13 @@ function li(args, kwargs)
   local colors = pandoc.utils.stringify(kwargs['colors'])
   local stroke = pandoc.utils.stringify(kwargs['stroke'])
   local trigger = pandoc.utils.stringify(kwargs['trigger'])
+  local target = pandoc.utils.stringify(kwargs['target'])
   local state = pandoc.utils.stringify(kwargs['state'])
   local delay = pandoc.utils.stringify(kwargs['delay'])
   local class = pandoc.utils.stringify(kwargs['class'])
   local style = pandoc.utils.stringify(kwargs['style'])
   local src = 'src="https://cdn.lordicon.com/' .. code .. '.json" '
-  return buildElement(src, colors, stroke, trigger, state, delay, class, style)
+  return buildElement(src, colors, stroke, trigger, target, state, delay, class, style)
 end
 
 
@@ -65,10 +70,11 @@ function lif(args, kwargs)
   local colors = pandoc.utils.stringify(kwargs['colors'])
   local stroke = pandoc.utils.stringify(kwargs['stroke'])
   local trigger = pandoc.utils.stringify(kwargs['trigger'])
+  local target = pandoc.utils.stringify(kwargs['target'])
   local state = pandoc.utils.stringify(kwargs['state'])
   local delay = pandoc.utils.stringify(kwargs['delay'])
   local class = pandoc.utils.stringify(kwargs['class'])
   local style = pandoc.utils.stringify(kwargs['style'])
   local src = 'src="' .. file .. '" '
-  return buildElement(src, colors, stroke, trigger, state, delay, class, style)
+  return buildElement(src, colors, stroke, trigger, target, state, delay, class, style)
 end

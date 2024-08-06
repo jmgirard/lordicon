@@ -10,69 +10,6 @@ This extension allows you to use animated [lordicon](https://lordicon.com) icons
 
 {{< li laqlvddb trigger=loop delay=1000 >}}  {{< li egmlnyku trigger=loop delay=2000 >}} {{< li bmlkvhui trigger=loop delay=3000 >}} {{< li aqrzgjfy trigger=loop delay=4000 >}}
 
-### CSS Sizing
-
-To quickly change the size of all icons on a page, use one of the following options. To change the size of specific icons or sets of icons, see the Class and Style sections below.
-
-1) Add an HTML chunk with the `<style>` element to your .qmd file
-
-```{=html}
-<style>
-  lord-icon {
-    width: 100px;
-    height: 100px;
-  }
-</style>
-```
-
-```{=html}
-<blockquote><p>Added to .qmd file</p>
-```
-
-````
-```{html}
-<style>
-  lord-icon {
-    width: 100px;
-    height: 100px;
-  }
-</style>
-```
-````
-
-```{=html}
-</blockquote>
-```
-
-2) Create an external .css file and point to it in your YAML header.
-
-```{=html}
-<blockquote><p>Added to styles.css</p>
-```
-```
-lord-icon {
-  width: 100px;
-  height: 100px;
-}
-```
-```{=html}
-</blockquote>
-```
-
-```{=html}
-<blockquote><p>Added to .qmd header</p>
-```
-````
----
-format: 
-  html:
-    css: styles.css
----
-````
-```{=html}
-</blockquote>
-```
-
 ### Source
 
 The `{{{< li >}}}` shortcode renders an icon (specified by its code) after downloading it from the lordicon CDN. The code of each icon can be found on [lordicon](https://lordicon.com) by clicking Export and then "Embed HTML." The code will be displayed towards the bottom of the popup screen.
@@ -141,48 +78,7 @@ Looping animations can be delayed by a specified number of milliseconds.
 | `{{{< li laqlvddb trigger=loop  >}}}` | {{< li laqlvddb trigger=loop >}} |
 | `{{{< li laqlvddb trigger=loop delay=3000 >}}}` | {{< li laqlvddb trigger=loop delay=3000 >}} |
 
-### Class
+### Advanced
 
-Each icon object can be given a CSS class (defined in your style element or external CSS file, as described above).
-
-```{=html}
-<style>
-  lord-icon.myclass {
-    width: 50px;
-    height: 50px;
-  }
-</style>
-```
-
-```{=html}
-<blockquote><p>Added to .qmd file</p>
-```
-
-````
-```{html}
-<style>
-  lord-icon.myclass {
-    width: 50px;
-    height: 50px;
-  }
-</style>
-```
-````
-
-```{=html}
-</blockquote>
-```
-
-| Shortcode                             | Icon                             |
-|---------------------------------------|----------------------------------|
-| `{{{< li laqlvddb >}}}` | {{< li laqlvddb >}} |
-| `{{{< li laqlvddb class=myclass >}}}` | {{< li laqlvddb class=myclass >}} |
-
-### Style
-
-Each icon object can also be styled with CSS "in-place" using style.
-
-| Shortcode                             | Icon                             |
-|---------------------------------------|----------------------------------|
-| `{{{< li laqlvddb >}}}` | {{< li laqlvddb >}} |
-| `{{{< li laqlvddb style=width:50px;height:50px; >}}}` | {{< li laqlvddb style=width:50px;height:50px; >}} |
+- See [CSS Styling](css_styling.qmd) to resize and style icons
+- Use [target](target.qmd) to trigger animations from other objects

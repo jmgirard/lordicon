@@ -1,0 +1,90 @@
+---
+title: "Target Example"
+format: html
+---
+
+## Explanation
+
+Normally, triggers such as `hover` and `click` only occur when the icon itself is interacted with. However, we can use the `target` argument to trigger the icon from some other class of object.
+
+In the example below, we place the icon within a div with the class "block" and use `target=.block`. Thus, the animation is triggered when any part of the div is clicked. We can use further CSS to do some styling.
+
+## Demo
+
+```{=html}
+<style>
+  lord-icon {
+    width: 100px;
+    height: 100px;
+  }
+  .block {
+    background: #e8e8e8;
+    border-radius: 10px;
+    padding: 20px;
+    display: block;
+    width: 200px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .block:hover {
+    box-shadow: 0 4px 18px 0 rgb(0 0 0 / 10%);
+    color: var(--palette-primary);
+  }
+</style>
+```
+
+```{=html}
+  <div class="block">
+    <div class="icon">
+```
+{{< li lbjtvqiv trigger=click target=.block state=morph-unlocked >}}
+```{=html}
+    </div>
+    <p>Click here to trigger.</p>
+  </div>
+```
+
+## Code
+
+### Set up CSS
+
+````
+```{=html}
+<style>
+  lord-icon {
+    width: 100px;
+    height: 100px;
+  }
+  .block {
+    background: #e8e8e8;
+    border-radius: 10px;
+    padding: 20px;
+    display: block;
+    width: 200px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .block:hover {
+    box-shadow: 0 4px 18px 0 rgb(0 0 0 / 10%);
+    color: var(--palette-primary);
+  }
+</style>
+```
+
+### Set up div and icon with target
+
+```{=html}
+  <div class="block">
+    <div class="icon">
+```
+{{{< li lbjtvqiv trigger=click target=.block state=morph-unlocked >}}}
+```{=html}
+    </div>
+    <p>Click here to trigger.</p>
+  </div>
+```
+````

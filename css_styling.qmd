@@ -1,0 +1,165 @@
+---
+title: "CSS Options"
+format: html
+---
+
+## Explanation
+
+Icons can be styled in a variety of ways (e.g., size, location, background, and border) using cascading style sheets (CSS). There are a number of different options for applying CSS to a Quarto HTML document. Below are four common options.
+
+
+## Approach 1: Global CSS via HTML chunk
+
+To quickly style all the icons on the page, you can style the `lord-icon` element. There are two main ways to accomplish this. First is to add an HTML chunk with the `<style>` element to your .qmd file.
+
+### Code
+
+```{=html}
+<blockquote><p>Added to .qmd file</p>
+```
+
+````
+```{html}
+<style>
+  lord-icon {
+    width: 100px;
+    height: 100px;
+    border: 1px solid blue;
+  }
+</style>
+```
+````
+
+`{{{< li laqlvddb >}} {{< li surcxhka >}}}`
+
+```{=html}
+</blockquote>
+```
+
+### Demo
+
+```{=html}
+<style>
+  lord-icon {
+    width: 100px;
+    height: 100px;
+    border: 1px solid blue;
+  }
+</style>
+```
+
+{{< li laqlvddb >}} {{< li surcxhka >}}
+
+
+## Approach 2: Global CSS via .css File
+
+The second option for global styling is to create a separate .css file that you link to via the Quarto document's YAML header. Again, we style the `lord-icon` element.
+
+### Code
+
+```{=html}
+<blockquote><p>Added to styles.css</p>
+```
+```
+lord-icon {
+  width: 100px;
+  height: 100px;
+  border: 1px solid blue;
+}
+```
+```{=html}
+</blockquote>
+```
+
+```{=html}
+<blockquote><p>Added to .qmd header</p>
+```
+````
+---
+format: 
+  html:
+    css: styles.css
+---
+````
+
+`{{{< li laqlvddb >}} {{< li surcxhka >}}}`
+
+```{=html}
+</blockquote>
+```
+
+
+### Demo
+
+{{< li laqlvddb >}} {{< li surcxhka >}}
+
+
+## Approach 2: CSS Classes
+
+To style groups of icons on a page, you can create CSS styles and assign individual icons one or more classes via the `class` argument. In the example below, we create two classes that control the icon size and border and then apply each class to two icons.
+
+### Code
+
+```{=html}
+<blockquote><p>Added to .qmd file</p>
+```
+
+````
+```{html}
+<style>
+  lord-icon.smaller {
+    width: 50px;
+    height: 50px;
+    border: 1px dashed red;
+  }
+  lord-icon.larger {
+    width: 75px;
+    height: 75px;
+    border: 1px solid green;
+  }
+</style>
+```
+````
+
+```{=html}
+</blockquote>
+```
+
+`{{{< li laqlvddb class=smaller >}}}` 
+`{{{< li surcxhka class=smaller >}}}` 
+`{{{< li laqlvddb class=larger >}}}` 
+`{{{< li surcxhka class=larger >}}}`
+
+
+### Demo
+
+```{=html}
+<style>
+  lord-icon.smaller {
+    width: 50px;
+    height: 50px;
+    border: 1px dashed red;
+  }
+  lord-icon.larger {
+    width: 75px;
+    height: 75px;
+    border: 1px solid green;
+  }
+</style>
+```
+
+{{< li laqlvddb class=smaller >}} {{< li surcxhka class=smaller >}} {{< li laqlvddb class=larger >}} {{< li surcxhka class=larger >}}
+
+## Approach 3: Shortcode Style
+
+To style individual icons in-place with no need for the HTML chunk or .css file, you can put styling directly into the `style` argument.
+
+### Code
+
+`{{{< li laqlvddb style=width:50px;height:50px;border:0; >}}}` 
+
+`{{{< li laqlvddb style=width:100px;height:100px;border:0; >}}}` 
+
+### Demo
+
+{{< li laqlvddb style=width:50px;height:50px;border:0; >}} {{< li laqlvddb style=width:100px;height:100px;border:0; >}}

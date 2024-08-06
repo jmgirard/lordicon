@@ -6,7 +6,9 @@ This extension provides support for embedding animated icons from Lordicon into 
 
 [![](./docs/showcase.gif)](https://jmgirard.github.io/lordicon/example.html)
 
-View example code and previews in this [HTML Demo](https://jmgirard.github.io/lordicon/example.html)!
+- View example code and previews in this [HTML Demo](https://jmgirard.github.io/lordicon/example.html)!
+- Advanced: Learn about [CSS Styling](https://jmgirard.github.io/lordicon/css_styling.html)
+- Advanced: Learn more about [Targets](https://jmgirard.github.io/lordicon/targets.html)
 
 ## Installing
 
