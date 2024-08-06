@@ -74,9 +74,11 @@ In the example below, we place the icon within a div with the class "block" and 
   }
 </style>
 ```
+````
 
 ### Set up div and icon with target
 
+````
 ```{=html}
   <div class="block">
     <div class="icon">
