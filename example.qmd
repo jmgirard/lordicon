@@ -4,6 +4,15 @@ format: html
 self-contained: true
 ---
 
+```{=html}
+<style>
+  lord-icon {
+    width: 75px;
+    height: 75px;
+  }
+</style>
+```
+
 This extension allows you to use animated [lordicon](https://lordicon.com) icons in your Quarto HTML documents. 
 
 ### Showcase
