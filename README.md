@@ -43,7 +43,37 @@ Download an icon's .json file by browsing [lordicon.com](https://lordicon.com/ic
 
 ---
 
-You can also customize various aspects of the icon's appearance and animation. See the examples above.
+## Customizing
+
+Both shortcodes forward any `key=value` pairs directly to the underlying
+[`<lord-icon>` element](https://lordicon.com/docs/web), so you can use the full
+element API without the extension needing to know each option:
+
+| Argument   | Description                                                                 |
+|------------|-----------------------------------------------------------------------------|
+| `colors`   | Recolor the icon, e.g. `colors=primary:gold,secondary:#ee66aa`.             |
+| `stroke`   | Line thickness: `light`, `regular`, or `bold` (supported icons).           |
+| `trigger`  | Animation trigger: `in`, `click`, `hover`, `loop`, `loop-on-hover`, `morph`, `boomerang`, `sequence`. |
+| `state`    | A named animation state exported with the icon (e.g. `state=morph-open`).   |
+| `target`   | CSS selector of an ancestor element that fires the trigger (see Targets).    |
+| `delay`    | Milliseconds to wait between loops (with `trigger=loop`).                    |
+| `speed`    | Playback speed multiplier (e.g. `speed=2`).                                  |
+| `loading`  | Defer loading: `lazy` or `interaction`.                                      |
+| `class`    | CSS class(es) to apply for styling.                                         |
+| `style`    | Inline CSS, e.g. `style=width:50px;height:50px;`.                            |
+| `label`    | Accessible label (see below).                                               |
+
+Any other attribute the element supports can be passed the same way.
+
+### Accessibility
+
+By default icons are treated as decorative and marked `aria-hidden="true"` so
+screen readers skip them. If an icon conveys meaning, give it a `label` and it
+will be exposed with `role="img"` and that label instead:
+
+```
+{{< li wlpxtupd label="Loading complete" >}}
+```
 
 ## Note
 

@@ -5,3 +5,5 @@
 *.Rproj
 .Rhistory
 README.html
+
+**/*.quarto_ipynb

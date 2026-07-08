@@ -19,7 +19,7 @@ To quickly style all the icons on the page, you can style the `lord-icon` elemen
 ```
 
 ````
-```{html}
+```html
 <style>
   lord-icon {
     width: 100px;
@@ -105,7 +105,7 @@ To style groups of icons on a page, you can create CSS styles and assign individ
 ```
 
 ````
-```{html}
+```html
 <style>
   lord-icon.smaller {
     width: 50px;
