@@ -1,6 +1,6 @@
 {
   "name": "lordicon-bundle",
-  "version": "1.11.0",
+  "version": "2.3.1",
   "private": true,
   "description": "Bundled Lordicon element + lottie-web player for the Quarto lordicon extension.",
   "license": "MIT",
@@ -8,8 +8,7 @@
     "build": "webpack"
   },
   "dependencies": {
-    "@lordicon/element": "^1.11.0",
-    "lottie-web": "^5.13.0"
+    "@lordicon/element": "^2.3.1"
   },
   "devDependencies": {
     "webpack": "^5.101.3",

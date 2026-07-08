@@ -13,7 +13,7 @@
 
 -- Cache-busting identifier for the bundled player. Keep in sync with the
 -- @lordicon/element version pinned in package.json.
-local BUNDLE_VERSION = "1.11.0"
+local BUNDLE_VERSION = "2.3.1"
 
 -- Shortcode keys that are handled specially rather than forwarded as-is.
 local RESERVED = {
