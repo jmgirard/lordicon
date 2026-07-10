@@ -1,0 +1,20 @@
+/*-- scss:defaults --*/
+
+// Slightly roomier default type for the demo site.
+$font-size-root: 17px;
+
+/*-- scss:rules --*/
+
+// Consistent default size for demo icons across all pages. Individual pages
+// (CSS Styling, Targets) intentionally override this to make their point.
+lord-icon {
+  width: 75px;
+  height: 75px;
+  vertical-align: middle;
+}
+
+// Give the shortcode/rendered demo tables a little more breathing room so the
+// animated icons are not cramped against the code column.
+table td {
+  vertical-align: middle;
+}

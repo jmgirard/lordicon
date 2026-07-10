@@ -1,15 +1,21 @@
 # Lordicon Extension for Quarto
 
-This extension provides support for embedding animated icons from Lordicon into Quarto HTML files (including RevealJS presentations). The icons can be pulled directly from the official CDN or loaded via local .json files; they can also be customized in appearance on-the-fly (without needing to edit the .json files).
+[![Release](https://img.shields.io/github/v/tag/jmgirard/lordicon?label=release&sort=semver)](https://github.com/jmgirard/lordicon/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+[![Quarto](https://img.shields.io/badge/Quarto-%E2%89%A51.3-75AADB?logo=quarto&logoColor=white)](https://quarto.org)
+
+This extension embeds animated [Lordicon](https://lordicon.com) icons in Quarto HTML documents, including Reveal.js presentations. Icons can be pulled directly from the official CDN or loaded from local `.json` files, and their appearance can be customized on the fly — no need to edit the `.json` files.
 
 ## Examples
 
-[![](./docs/showcase.gif)](https://jmgirard.github.io/lordicon/example.html)
+[![Showcase of animated Lordicon icons](./showcase.gif)](https://jmgirard.github.io/lordicon/)
 
-- View example code and previews in this [HTML Demo](https://jmgirard.github.io/lordicon/example.html)!
-- Intermediate: Learn about [CSS Styling](https://jmgirard.github.io/lordicon/css_styling.html)
-- Intermediate: Learn about [Animations](https://jmgirard.github.io/lordicon/animations.html)
-- Advanced: Learn about [Targets](https://jmgirard.github.io/lordicon/target.html)
+Explore the live demo site for runnable examples and previews:
+
+- [**Home**](https://jmgirard.github.io/lordicon/) — codes, colors, stroke, and accessibility
+- [**CSS Styling**](https://jmgirard.github.io/lordicon/css_styling.html) — resize, position, and style icons
+- [**Animations**](https://jmgirard.github.io/lordicon/animations.html) — triggers, states, delay, speed, and sequences
+- [**Targets**](https://jmgirard.github.io/lordicon/target.html) — trigger an icon from another element
 
 ## Installing
 
@@ -58,7 +64,7 @@ element API without the extension needing to know each option:
 | `target`   | CSS selector of an ancestor element that fires the trigger (see Targets).    |
 | `delay`    | Milliseconds to wait between loops (with `trigger=loop`).                    |
 | `speed`    | Playback speed multiplier (e.g. `speed=2`).                                  |
-| `loading`  | Defer loading: `lazy` or `interaction`.                                      |
+| `loading`  | Defer loading: `lazy` (when scrolled into view), `interaction` (first user action), or `delay` (paired with `loading-delay=MS`). |
 | `class`    | CSS class(es) to apply for styling.                                         |
 | `style`    | Inline CSS, e.g. `style=width:50px;height:50px;`.                            |
 | `label`    | Accessible label (see below).                                               |

@@ -1,13 +1,12 @@
 ---
-title: "Target Example"
-format: html
+title: "Targets"
 ---
 
-## Explanation
+## Overview
 
-Normally, triggers such as `hover` and `click` only occur when the icon itself is interacted with. However, we can use the `target` argument to trigger the icon from some other class of object.
+By default, triggers such as `hover` and `click` only fire when the icon itself is interacted with. The `target` argument lets another element fire the trigger instead — its value is a CSS selector for an ancestor of the icon.
 
-In the example below, we place the icon within a div with the class "block" and use `target=.block`. Thus, the animation is triggered when any part of the div is clicked. We can use further CSS to do some styling.
+In the example below the icon sits inside a `div` with class `block`, and `target=.block` makes the whole card clickable. A little extra CSS handles the styling.
 
 ## Demo
 

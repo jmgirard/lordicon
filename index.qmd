@@ -1,0 +1,59 @@
+---
+title: "Lordicon Extension for Quarto"
+resources:
+  - gift_raw.json
+---
+
+This extension lets you embed animated [Lordicon](https://lordicon.com) icons in your Quarto HTML documents (including Reveal.js slides). Icons can be pulled from the official CDN or loaded from local `.json` files, and customized on the fly without editing the source files.
+
+## Showcase
+
+{{< li laqlvddb trigger=loop delay=1000 >}}  {{< li egmlnyku trigger=loop delay=2000 >}} {{< li bmlkvhui trigger=loop delay=3000 >}} {{< li aqrzgjfy trigger=loop delay=4000 >}}
+
+## Source
+
+The `{{{< li >}}}` shortcode downloads an icon from the Lordicon CDN and renders it by its **code**. Find the code on [lordicon.com](https://lordicon.com/icons) by opening an icon and choosing Export → Embed HTML; the code appears near the bottom of the popup.
+
+The `{{{< lif >}}}` shortcode renders an icon from a local `.json` **file** instead. Download one by opening an icon and choosing Export → JSON (Lottie). Some options (such as `state`) require the larger "Raw" file type.
+
+| Shortcode                       | Rendered                    |
+|---------------------------------|-----------------------------|
+| `{{{< li ibydboev >}}}`         | {{< li ibydboev >}}         |
+| `{{{< lif gift_raw.json >}}}`   | {{< lif gift_raw.json >}}   |
+
+## Colors
+
+`colors` recolors an icon. Outline icons usually have just a primary and secondary color, while flat and lineal icons can have many more. Give each color in `rank:color` form (ranks are `primary`, `secondary`, `tertiary`, …) and separate multiple colors with commas. Colors accept HTML color names or hex codes.
+
+| Shortcode                            | Icon                             |
+|--------------------------------------|----------------------------------|
+| `{{{< li rehjpyyh >}}}`              | {{< li rehjpyyh >}}              |
+| `{{{< li rehjpyyh colors=primary:gold >}}}`   | {{< li rehjpyyh colors=primary:gold >}}   |
+| `{{{< li rehjpyyh colors=secondary:gold >}}}`   | {{< li rehjpyyh colors=secondary:gold >}}   |
+| `{{{< li rehjpyyh colors=primary:gray,secondary:orange >}}}`   | {{< li rehjpyyh colors=primary:gray,secondary:orange >}}   |
+| `{{{< li rehjpyyh colors=primary:#4030e8,secondary:#ee66aa >}}}`   | {{< li rehjpyyh colors=primary:#4030e8,secondary:#ee66aa >}}   |
+
+## Stroke
+
+`stroke` sets how thick the lines of a (supported) icon are: `light`, `regular`, or `bold`.
+
+| Shortcode                             | Icon                               |
+|---------------------------------------|------------------------------------|
+| `{{{< li rehjpyyh stroke=light >}}}`     | {{< li rehjpyyh stroke=light >}}      |
+| `{{{< li rehjpyyh stroke=regular >}}}`     | {{< li rehjpyyh stroke=regular >}}      |
+| `{{{< li rehjpyyh stroke=bold >}}}`     | {{< li rehjpyyh stroke=bold >}}      |
+
+## Accessibility
+
+Icons are decorative by default and hidden from assistive technology (`aria-hidden="true"`). When an icon carries meaning, pass a `label` and it is exposed to screen readers with `role="img"` and that name.
+
+| Shortcode                             | Icon                               |
+|---------------------------------------|------------------------------------|
+| `{{{< li ibydboev >}}}` *(decorative)* | {{< li ibydboev >}}      |
+| `{{{< li ibydboev label="Money bag" >}}}` | {{< li ibydboev label="Money bag" >}}      |
+
+## Advanced
+
+- [CSS Styling](css_styling.qmd) — resize, position, and style icons
+- [Animations](animations.qmd) — control triggers, states, speed, and sequences
+- [Targets](target.qmd) — trigger an icon's animation from another element

@@ -1,36 +1,29 @@
 ---
 title: "Animations"
-format: html
+resources:
+  - gift_raw.json
 ---
 
-```{=html}
-<style>
-  lord-icon {
-    width: 75px;
-    height: 75px;
-  }
-</style>
-```
+Every icon ships with one or more animations. These arguments control when an animation plays, which one plays, and how it plays.
 
+## Trigger
 
-### Trigger
-
-Animations can be triggered by different events (e.g., being clicked, hovered over, being loaded).
+The `trigger` argument controls which event plays an icon's animation. The supported values are `in`, `click`, `hover`, `loop`, `loop-on-hover`, `morph`, `boomerang`, and `sequence`. With no `trigger`, the icon simply rests on its first frame.
 
 | Shortcode                            | Icon                             |
 |--------------------------------------|----------------------------------|
-| `{{{< li jjoolpwc trigger=empty >}}}`              | {{< li jjoolpwc trigger=empty >}}              |
+| `{{{< li jjoolpwc >}}}` *(no trigger)* | {{< li jjoolpwc >}} |
+| `{{{< li jjoolpwc trigger=in >}}}` | {{< li jjoolpwc trigger=in >}} |
 | `{{{< li jjoolpwc trigger=click >}}}` | {{< li jjoolpwc trigger=click >}} |
 | `{{{< li jjoolpwc trigger=hover >}}}` | {{< li jjoolpwc trigger=hover >}} |
 | `{{{< li jjoolpwc trigger=loop >}}}` | {{< li jjoolpwc trigger=loop >}} |
 | `{{{< li jjoolpwc trigger=loop-on-hover >}}}` | {{< li jjoolpwc trigger=loop-on-hover >}} |
 | `{{{< li jjoolpwc trigger=morph >}}}` | {{< li jjoolpwc trigger=morph >}} |
 | `{{{< li jjoolpwc trigger=boomerang >}}}` | {{< li jjoolpwc trigger=boomerang >}} |
-| `{{{< li jjoolpwc trigger=in >}}}` | {{< li jjoolpwc trigger=in >}} |
 
-### State
+## State
 
-Many icons support different animation states. These are viewable from the [lordicon](https://lordicon.com) website. 
+Many icons bundle several named animation **states**. Select one with the `state` argument (browse an icon's states on the [lordicon.com](https://lordicon.com) website).
 
 | Shortcode                             | Icon                             |
 |---------------------------------------|----------------------------------|
@@ -39,11 +32,29 @@ Many icons support different animation states. These are viewable from the [lord
 | `{{{< li laqlvddb trigger=loop state=loop-3d-roll >}}}` | {{< li laqlvddb trigger=loop state=loop-3d-roll >}} |
 | `{{{< li laqlvddb trigger=loop state=loop-smoke >}}}` | {{< li laqlvddb trigger=loop state=loop-smoke >}} |
 
-### Delay
+## Delay
 
-Looping animations can be delayed by a specified number of milliseconds.
+Looping animations can pause between each loop for a set number of milliseconds using the `delay` argument.
 
 | Shortcode                             | Icon                             |
 |---------------------------------------|----------------------------------|
 | `{{{< li laqlvddb trigger=loop  >}}}` | {{< li laqlvddb trigger=loop >}} |
 | `{{{< li laqlvddb trigger=loop delay=3000 >}}}` | {{< li laqlvddb trigger=loop delay=3000 >}} |
+
+## Speed
+
+The `speed` argument multiplies the playback rate. Values below `1` play in slow motion; values above `1` play faster.
+
+| Shortcode                             | Icon                             |
+|---------------------------------------|----------------------------------|
+| `{{{< li laqlvddb trigger=loop speed=0.5 >}}}` | {{< li laqlvddb trigger=loop speed=0.5 >}} |
+| `{{{< li laqlvddb trigger=loop >}}}` | {{< li laqlvddb trigger=loop >}} |
+| `{{{< li laqlvddb trigger=loop speed=2 >}}}` | {{< li laqlvddb trigger=loop speed=2 >}} |
+
+## Sequence
+
+The `sequence` trigger chains states, plays, and delays together into a custom scenario defined by the `sequence` argument. Steps are separated by commas: `state:NAME` selects an animation, `play` (or `play:reverse`) runs it, and `delay:MS` pauses. The available state names come from the icon's own markers.
+
+| Shortcode                             | Icon                             |
+|---------------------------------------|----------------------------------|
+| `{{{< lif gift_raw.json trigger=sequence sequence="state:hover-squeeze,play,delay:500,state:hover-roll,play,delay:500" >}}}` | {{< lif gift_raw.json trigger=sequence sequence="state:hover-squeeze,play,delay:500,state:hover-roll,play,delay:500" >}} |
