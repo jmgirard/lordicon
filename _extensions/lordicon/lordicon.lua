@@ -20,6 +20,19 @@ local RESERVED = {
   label = true,
 }
 
+-- Attributes that only work when the icon's Lottie JSON still carries the
+-- "control" null layer (holding the primary/secondary/stroke effects) and its
+-- full set of animation layers. lordicon.com's export defaults to "Minified",
+-- which bakes the chosen colors and stroke into the shapes and keeps only the
+-- selected animation. That is a perfectly good trade for a smaller file when
+-- the icon is already styled the way you want; it just cannot be combined with
+-- these attributes, which would have nothing left to act on.
+local CONTROL_DEPENDENT = {
+  colors = true,
+  state = true,
+  stroke = true,
+}
+
 local function ensure_deps()
   quarto.doc.addHtmlDependency({
     name = "lordicon-bundle",
@@ -89,9 +102,71 @@ local function li(args, kwargs)
   return build_element("https://cdn.lordicon.com/" .. code .. ".json", kwargs)
 end
 
+-- Open a shortcode file path, trying it as given and then relative to the
+-- document being rendered. Returns nil when the file cannot be read, in which
+-- case checks that depend on its contents are skipped rather than guessed at.
+local function open_icon_file(file)
+  local fh = io.open(file, "rb")
+  if fh then
+    return fh
+  end
+  local input = quarto.doc.input_file
+  local dir = input and input:match("^(.*)[/\\][^/\\]+$")
+  if dir then
+    return io.open(dir .. "/" .. file, "rb")
+  end
+  return nil
+end
+
+-- Warn once per file when control-dependent attributes are used with an icon
+-- that was exported in Lordicon's "Minified" format.
+local warned_minified = {}
+
+local function check_minified(file, kwargs)
+  if warned_minified[file] then
+    return
+  end
+
+  local used = {}
+  for key in pairs(CONTROL_DEPENDENT) do
+    if value_of(kwargs[key]) ~= "" then
+      used[#used + 1] = key
+    end
+  end
+  if #used == 0 then
+    return
+  end
+
+  local fh = open_icon_file(file)
+  if not fh then
+    return
+  end
+  local content = fh:read("a")
+  fh:close()
+  if not content or content:find('"nm"%s*:%s*"control"') then
+    return
+  end
+
+  table.sort(used)
+  warned_minified[file] = true
+  quarto.log.warning(
+    string.format(
+      "lordicon: %s looks like a Minified Lottie export, so %s will have no "
+        .. "effect. Either re-export it as Raw (lordicon.com > Edit and "
+        .. "download > format menu > the options icon next to Lottie), or set "
+        .. "these in the editor before exporting and drop the argument.",
+      file,
+      table.concat(used, ", ")
+    )
+  )
+end
+
 -- {{< lif FILE ... >}} — icon from a local Lottie .json file.
 local function lif(args, kwargs)
   local file = pandoc.utils.stringify(args[1])
+  if quarto.doc.isFormat("html:js") then
+    check_minified(file, kwargs)
+  end
   return build_element(file, kwargs)
 end
 

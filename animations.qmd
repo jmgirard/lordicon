@@ -23,7 +23,7 @@ The `trigger` argument controls which event plays an icon's animation. The suppo
 
 ## State
 
-Many icons bundle several named animation **states**. Select one with the `state` argument (browse an icon's states on the [lordicon.com](https://lordicon.com) website).
+Many icons bundle several named animation **states**. Select one with the `state` argument (browse an icon's states on the [lordicon.com](https://lordicon.com) website). For local files, `state` needs a **Raw** export, which carries every animation; the smaller **Minified** export keeps only the one chosen in the editor. See [Source](index.qmd#source).
 
 | Shortcode                             | Icon                             |
 |---------------------------------------|----------------------------------|

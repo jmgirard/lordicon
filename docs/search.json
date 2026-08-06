@@ -18,7 +18,7 @@
     "href": "index.html#source",
     "title": "Lordicon Extension for Quarto",
     "section": "Source",
-    "text": "Source\nThe {{&lt; li &gt;}} shortcode downloads an icon from the Lordicon CDN and renders it by its code. Find the code on lordicon.com by opening an icon and choosing Export → Embed HTML; the code appears near the bottom of the popup.\nThe {{&lt; lif &gt;}} shortcode renders an icon from a local .json file instead. Download one by opening an icon and choosing Export → JSON (Lottie). Some options (such as state) require the larger “Raw” file type.\n\n\n\n\n\n\n\nShortcode\nRendered\n\n\n\n\n{{&lt; li ibydboev &gt;}}\n\n\n\n{{&lt; lif gift_raw.json &gt;}}"
+    "text": "Source\nThe {{&lt; li &gt;}} shortcode downloads an icon from the Lordicon CDN and renders it by its code — the eight-character identifier in https://cdn.lordicon.com/CODE.json. Lordicon used to hand these out under Export → Embed HTML; the redesigned export UI no longer offers that, so existing codes still resolve but new icons are easier to use via {{&lt; lif &gt;}}.\nThe {{&lt; lif &gt;}} shortcode renders an icon from a local .json file instead. Download one by opening an icon on lordicon.com, clicking Edit and download, then in the right-hand panel opening the format menu and clicking the options icon next to Lottie.\nThat options icon offers two Lottie flavors, and which one you want depends on where you plan to customize the icon:\n\nMinified (the default) bakes the editor’s colors and stroke into the shapes and keeps only the animation you picked. Much smaller file, and the right choice when the icon already looks the way you want.\nRaw keeps every animation along with the control layer that colors, stroke, and state write into. Choose this to customize per use from the shortcode.\n\n\n\n\n\n\n\nNote\n\n\n\nThe two approaches don’t combine: colors, stroke, and state have no effect on a minified file, since those values were baked in at export. Either re-export as Raw or set them in the editor and leave the arguments off. The extension prints a warning when it sees that combination.\n\n\n\n\n\n\n\n\n\nShortcode\nRendered\n\n\n\n\n{{&lt; li ibydboev &gt;}}\n\n\n\n{{&lt; lif gift_raw.json &gt;}}"
   },
   {
     "objectID": "index.html#colors",
@@ -67,7 +67,7 @@
     "href": "animations.html#state",
     "title": "Animations",
     "section": "State",
-    "text": "State\nMany icons bundle several named animation states. Select one with the state argument (browse an icon’s states on the lordicon.com website).\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li laqlvddb trigger=morph state=morph-mantion &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=morph state=morph-neighbourhood &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop state=loop-3d-roll &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop state=loop-smoke &gt;}}"
+    "text": "State\nMany icons bundle several named animation states. Select one with the state argument (browse an icon’s states on the lordicon.com website). For local files, state needs a Raw export, which carries every animation; the smaller Minified export keeps only the one chosen in the editor. See Source.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li laqlvddb trigger=morph state=morph-mantion &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=morph state=morph-neighbourhood &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop state=loop-3d-roll &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop state=loop-smoke &gt;}}"
   },
   {
     "objectID": "animations.html#delay",

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,10 +42,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dbb1f55485a18dea5946e244d4da6ac3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-32251a682ae26c400e8234ed85f2f735.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/lordicon-bundle-2.3.1/bundle.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -169,8 +172,26 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="source" class="level2">
 <h2 class="anchored" data-anchor-id="source">Source</h2>
-<p>The <code>{{&lt; li &gt;}}</code> shortcode downloads an icon from the Lordicon CDN and renders it by its <strong>code</strong>. Find the code on <a href="https://lordicon.com/icons">lordicon.com</a> by opening an icon and choosing Export → Embed HTML; the code appears near the bottom of the popup.</p>
-<p>The <code>{{&lt; lif &gt;}}</code> shortcode renders an icon from a local <code>.json</code> <strong>file</strong> instead. Download one by opening an icon and choosing Export → JSON (Lottie). Some options (such as <code>state</code>) require the larger “Raw” file type.</p>
+<p>The <code>{{&lt; li &gt;}}</code> shortcode downloads an icon from the Lordicon CDN and renders it by its <strong>code</strong> — the eight-character identifier in <code>https://cdn.lordicon.com/CODE.json</code>. Lordicon used to hand these out under Export → Embed HTML; the redesigned export UI no longer offers that, so existing codes still resolve but new icons are easier to use via <code>{{&lt; lif &gt;}}</code>.</p>
+<p>The <code>{{&lt; lif &gt;}}</code> shortcode renders an icon from a local <code>.json</code> <strong>file</strong> instead. Download one by opening an icon on <a href="https://lordicon.com/icons">lordicon.com</a>, clicking <strong>Edit and download</strong>, then in the right-hand panel opening the format menu and clicking the options icon next to <strong>Lottie</strong>.</p>
+<p>That options icon offers two Lottie flavors, and which one you want depends on where you plan to customize the icon:</p>
+<ul>
+<li><strong>Minified</strong> (the default) bakes the editor’s colors and stroke into the shapes and keeps only the animation you picked. Much smaller file, and the right choice when the icon already looks the way you want.</li>
+<li><strong>Raw</strong> keeps every animation along with the control layer that <code>colors</code>, <code>stroke</code>, and <code>state</code> write into. Choose this to customize per use from the shortcode.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The two approaches don’t combine: <code>colors</code>, <code>stroke</code>, and <code>state</code> have no effect on a minified file, since those values were baked in at export. Either re-export as Raw or set them in the editor and leave the arguments off. The extension prints a warning when it sees that combination.</p>
+</div>
+</div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 53%">

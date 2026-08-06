@@ -34,7 +34,7 @@ To embed an icon from the CDN, use the `{{< li code >}}` shortcode. For example:
 {{< li rehjpyyh >}}
 ```
 
-Look up an icon's `code` by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon and choosing Export > Embed and clicking the code to copy it.
+A `code` is the eight-character identifier in an icon's CDN URL (`https://cdn.lordicon.com/CODE.json`), which lordicon.com used to hand out under Export > Embed. That option is no longer part of the redesigned export UI, so codes you already have keep working but new ones may be hard to come by. Prefer `{{< lif file >}}` with a downloaded `.json` for new icons.
 
 ---
 
@@ -45,7 +45,15 @@ To embed an icon from a local .json file, use the `{{< lif file >}}` shortcode. 
 {{< lif confetti.json >}}
 ```
 
-Download an icon's .json file by browsing [lordicon.com](https://lordicon.com/icons), clicking on an icon, and choosing Export > Lottie > Raw.
+Download an icon's .json file by browsing [lordicon.com](https://lordicon.com/icons), opening an icon, and clicking **Edit and download**. In the panel on the right, open the format menu (it starts on GIF), click the options icon next to **Lottie**, then **Select** and **Export**.
+
+The format menu's options icon offers two Lottie flavors, and the choice depends on how you plan to use the icon:
+
+- **Minified** (the default) bakes the editor's colors and stroke into the shapes and keeps only the animation you selected. The file is much smaller, so this is the better choice when you're happy with how the icon looks in the editor and won't be customizing it from the shortcode.
+- **Raw** keeps every animation plus the control layer that `colors`, `stroke`, and `state` write into. Choose this when you want to set those arguments per use — configure the icon from the shortcode rather than in the editor.
+
+> [!NOTE]
+> The two don't mix: passing `colors`, `stroke`, or `state` to a minified file has no effect, because the values it would change were already baked in. Either re-export as Raw or drop the argument and set it in the editor instead. The extension warns at render time when it spots that combination.
 
 ---
 
