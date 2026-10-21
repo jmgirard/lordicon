@@ -83,3 +83,24 @@ Review pass 1, 2026-10-20, branch head 774fd4b, synced with origin/main d201f39.
 - AC6 evidence: `git show origin/main:_extensions/lordicon/_extension.yml` reads `version: 0.7.1`, and the branch reads `version: 0.7.2`.
 - Gate: `cairn_validate` passed all checks. `cairn_impact --changed` listed 5 IP1 references. IP1's text is unchanged on the branch (the plan commit only moved its colon), and the references agree with it. `quarto render` exit 0 left `docs/` unchanged. `version:` is the only marker that release-walk names. Changelog slot reads as none (`CHANGELOG.md` absent).
 - spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: the check script passes with the `passed` guards removed, because Quarto drops the second same-name attribute — fix now, fixed 8fe774b: added `_tests/raw_output.lua` and a filter stage in `check_aria.py`; a guard-removal mutant then failed hidden-li, label-role, label-arialabel, label-both with "attribute twice".
+- diff-bug #2: labelledby-li, arialabel-escaped, describedby did not assert `role`/`aria-label` — fix now, fixed 8fe774b: assertions added.
+- diff-bug #3: a failed render printed no Quarto output — fix now, fixed 8fe774b: the script prints the command's stdout and stderr and exits 1.
+- diff-bug #4: docs advise `role="img"` only with `aria-label`, not with `aria-labelledby` — fix now, fixed 8fe774b: README and `index.qmd` name both.
+- diff-bug #5: "the icon is not marked `aria-hidden="true"`" is false when the user passes `aria-hidden="true"` — fix now, fixed 8fe774b: reworded to "the extension does not add".
+- diff-bug #6: `label` plus `aria-labelledby` lets `aria-labelledby` set the name — reject (planned change): the user's attribute winning is the milestone's rule (IP1), and the name order is ARIA's.
+- diff-bug #7: a whitespace-only value counts as passed — reject (planned change): it matches the "non-empty" criterion wording, and IP1 passes values through unchanged.
+- diff-bug #8: attribute names are written unescaped (pre-existing line) — follow-up: candidate row "Guard attribute names against bad markup".
+- blame-history #1 / ripple #1: GP5 text says an icon without `label` is `aria-hidden` — follow-up: candidate row "Reword GP5 for user ARIA precedence", because a principle changes only by the user's decision.
+- blame-history #2: `role="img"` alone gives an unhidden icon with no name and no warning — follow-up: candidate row "Warn when a role icon has no name".
+- blame-history #3: mixed-case names are not matched — follow-up: already held by candidate row "Stop duplicate src and ARIA attributes".
+- blame-history #4: `label` text is dropped silently when the user passes `aria-label` — reject (planned change): the question set chose a silent user win.
+- blame-history #5: the `render` list would leave out a future root `.md` page — fix now, fixed 8fe774b: DESIGN.md Architecture names the list and what it excludes.
+- prior-review: no prior-review evidence (no archived reviews, no PR comments).
+- ripple #2, #3: ROADMAP rows for the ARIA bug and the render check still read open — reject (planned change): post-merge hygiene graduates and narrows them.
+- ripple #4, #5, #6: README and `index.qmd` say `label` gives `role="img"` and no label gives `aria-hidden` — reject (false): the paragraph after each states the exception for user attributes.
+- ripple #7: PROFILE greenfield-openers line names the verify fixture — reject (false): that slot is template text for new repos, not this repo's verify.
+- ripple #8: test-doctrine says "by rendering" — reject (false): the reviewer reports no contradiction.
+- ripple #9: DESIGN Architecture omits `_tests/` and the render list — fix now, fixed 8fe774b: both added.
+- ripple #10: ROADMAP mixed-case row is still accurate — noted.
+- After the fixes (8fe774b): `python3 _tests/check_aria.py` reports "page: 15 icons read, 15 cases", "filter: 15 icons read, 15 cases", "0 failures", exit 0. `quarto render` exit 0, and `cairn_validate` passes. AC1 to AC5 evidence holds on this head: the README and `index.qmd` text still names the four attributes and the `label` rule.
