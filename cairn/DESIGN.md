@@ -112,6 +112,10 @@ are never reused or renumbered; retiring one takes a D-entry.
   `npm run build` rebuilds it (`webpack.config.js`).
 - Demo site: `_quarto.yml`, `index.qmd`, `css_styling.qmd`, `animations.qmd`,
   `target.qmd`, `custom.scss`, rendered to the committed `docs/` directory.
+  The `render: ["*.qmd"]` list in `_quarto.yml` limits the site to root `.qmd`
+  pages, so a new page in another format must be added to that list.
+- `_tests/`: `check_aria.py` checks the ARIA attributes of `aria.qmd` icons in
+  the rendered page and in the raw filter output from `raw_output.lua`.
 
 ## Known issues
 
