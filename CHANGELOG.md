@@ -10,6 +10,8 @@ This file lists the user-visible changes in each version of the extension, newes
 
 - If a Minified Lottie export gets `colors`, `stroke`, or `state`, `lif` warns at render time. These arguments have no effect on that export. The warning names the two fixes.
 - The README explains the Raw and Minified Lottie exports and the new download path on lordicon.com.
+- The README says what a CDN code is and that lordicon.com no longer gives out new ones. It recommends `lif` with a downloaded `.json` file for new icons.
+- The README lists the `delay` value of `loading`, used with `loading-delay=MS`.
 - The demo site is now a themed Quarto website with Speed, Sequence, and accessibility examples.
 
 ## 0.7.0
@@ -19,7 +21,7 @@ This file lists the user-visible changes in each version of the extension, newes
 ## 0.6.0
 
 - The extension now requires Quarto 1.3.0 or later.
-- Both shortcodes forward every `key=value` pair to the `<lord-icon>` element as an attribute. Options such as `speed`, `loading`, and `id` work with no extension update.
+- Both shortcodes forward each `key=value` pair with a non-empty value, except `label`, to the `<lord-icon>` element as an attribute. Options such as `speed`, `loading`, and `id` work with no extension update.
 - Attribute values are HTML-escaped.
 - New `label` argument. It gives the icon `role="img"` and `aria-label`. An icon without `label` gets `aria-hidden="true"`.
 
@@ -41,6 +43,7 @@ This file lists the user-visible changes in each version of the extension, newes
 
 - New `target` argument: a CSS selector of an ancestor element that fires the icon's trigger.
 - The README and demo pages add animation and target examples, and every example icon is a free icon.
+- A new CSS Styling demo page shows how to size and style icons. The README's CSS sizing text moved there.
 
 ## 0.5.0
 
@@ -72,8 +75,9 @@ This file lists the user-visible changes in each version of the extension, newes
 
 ## 0.3.0
 
-- The extension no longer sets the text color and background of the page `body`, which broke the dark mode toggle (#2). Icons keep their default size of 128 by 128 pixels.
+- The extension no longer sets the text color and background of the page `body`, which broke the dark mode toggle (#2).
 - The bundled player is updated to `lord-icon-element` 3.4.4 and `lottie-web` 5.10.2.
+- The README says that the RStudio Viewer shows icons from RStudio 2022.12.0+353.
 
 ## 0.2.0
 

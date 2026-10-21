@@ -1,6 +1,6 @@
 # M002: Start CHANGELOG.md for past releases
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -28,7 +28,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 ## Coverage
 
 - AC1 → T2, T3
-- AC2 → T1, T2
+- AC2 → T1, T2, T4
 - AC3 → T2
 
 ## Tasks
@@ -36,6 +36,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - [x] T1: For each tag, newest first, read its range with `git log --format='%h %s' <previous>..<tag>` and `git diff --stat <previous>..<tag>`. Draft the user-visible changes from the subjects and diffs, or "No user-visible changes."
 - [x] T2: Write `CHANGELOG.md` with plain `## <version>` headings and no Unreleased heading. Add the README link. Update the PROFILE `## changelog` slot and the DESIGN Conventions bullet.
 - [x] T3: Compare the file's `## ` headings with the `git tag -l 'v*'` list by a one-line script, and record the result in the work log.
+- [x] T4: Review return 1: add the missing 0.3.0, 0.5.1, and 0.7.1 README entries, narrow the 0.6.0 forwarding wording, and drop the 0.3.0 sentence that names no change.
 
 ## Work log
 
@@ -52,6 +53,8 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - 2026-10-20: T3 done: `diff` of the `## ` headings against `git tag -l 'v*' | sort -rV` matched 19 sections. A planted missing 0.5.2 heading made it exit 1. Verify: `check_aria.py` 0 failures, `quarto render` ok; the render's `docs/sitemap.xml` date change was dropped.
 - 2026-10-20: claim audit: 57 claims read, 5 corrected — CHANGELOG.md (0.1.0 Babel claim dropped and the RStudio note moved there from 0.2.0, 0.3.1 player versions split with 0.3.0, 0.5.0 screenshot is static, 0.3.0 cause tied to the #2 issue title). Five omissions added after a check against the tags: 0.3.0 player versions, 0.5.0 default size removed, 0.5.2 version-number fix, 0.6.0 Quarto 1.3.0 minimum, 0.5.4 README export steps.
 - 2026-10-20: review return 1: AC2 fails as written. 0.3.0 omits the README RStudio version note (4ea39f2). 0.7.1 omits the README CDN-code text (825985a) and the `loading` values (4cf5d0a). 0.5.1 omits the CSS Styling page and the removed README sizing text. Also fix the too-broad 0.6.0 "every pair" wording and drop the 0.3.0 no-change sentence. The 0.7.2 rewording is already on disk.
+- 2026-10-20: T4 added for review return 1 (minor amendment) and done. Added the 0.3.0 RStudio note, the 0.5.1 CSS Styling page, and the 0.7.1 CDN-code and `loading` entries, each checked with `git show` at its commit or tag. The 0.6.0 wording now excludes `label` and empty values, and the 0.3.0 size sentence is gone. Verify: 19 headings match the tags, `check_aria.py` 0 failures, render ok.
+- 2026-10-20: claim audit: not re-run for T4. Each added claim was read against its commit in this session, and review return 1's reviewers read the same ranges.
 
 ## Decisions
 
