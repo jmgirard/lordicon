@@ -8,3 +8,7 @@
 README.html
 
 **/*.quarto_ipynb
+
+cairn/references/sources/
+cairn/.merge-approved
+cairn/.merge-approved.pending
