@@ -22,7 +22,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 ## Acceptance criteria
 
 - [x] AC1: At M002's review head, `CHANGELOG.md` at the repo root has one `## <version>` section for each tag that `git tag -l 'v*'` lists, newest first, and no other `## ` section. The version is the tag name without its `v`.
-- [ ] AC2: Each section names each change in its version's diff that affects the installed extension. The diff is `git diff <previous v* tag> <tag> -- _extensions/lordicon/ src/ package.json package-lock.json ':(exclude)_extensions/lordicon/assets/js/bundle.js'`, and the first tag diffs against the empty tree. The changes that count are to the shortcodes, their arguments, and their output in each format, render warnings, the required Quarto version, the CSS that the extension adds, and the bundled `lord-icon-element`, `@lordicon/element`, or `lottie-web` version, added, removed, or changed. A section with no such change names another change or says "No changes to the installed extension." Each entry names a change that a commit in `git log <previous v* tag>..<tag>` makes, or for the first tag, a commit up to that tag.
+- [x] AC2: Each section names each change in its version's diff that affects the installed extension. The diff is `git diff <previous v* tag> <tag> -- _extensions/lordicon/ src/ package.json package-lock.json ':(exclude)_extensions/lordicon/assets/js/bundle.js'`, and the first tag diffs against the empty tree. The changes that count are to the shortcodes, their arguments, and their output in each format, render warnings, the required Quarto version, the CSS that the extension adds, and the bundled `lord-icon-element`, `@lordicon/element`, or `lottie-web` version, added, removed, or changed. A section with no such change names another change or says "No changes to the installed extension." Each entry names a change that a commit in `git log <previous v* tag>..<tag>` makes, or for the first tag, a commit up to that tag.
 - [x] AC3: README links to `CHANGELOG.md`.
 
 ## Coverage
@@ -106,3 +106,17 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - ripple #1 (pass 2): same as diff-bug #4 — fix now, same edit
 - blame-history #1 (pass 2): the 0.3.0 edit dropped the true 128-pixel context sentence — reject, planned change: return 1 removed it because it names no change, and 0.5.0 records the size removal
 - prior-review #1 (pass 2): the 0.7.2 entry matches M001's fixed ARIA wording — noted, no action
+- pass 3 (after the AC2 amendment): main still at c61003d. AC1 diff empty. `check_aria.py` 0 failures, and `quarto render` ok, with the sitemap date change dropped.
+- spawned: diff-bug, blame-history, prior-review, ripple (the last three as one Haiku reader on the T5 diff)
+- AC2 (amended): the diff-bug lens ran the named `git diff` for all 19 tags. Every change in AC2's categories has an entry, and every entry names a change made by a commit in its range. Player versions match `package-lock.json` at each tag. 0.1.0 and 0.3.2 meet the fallback.
+- diff-bug #1 (pass 3): the 0.7.1 warning entry read as unconditional — fix now, it now says once per file, in HTML output, and only for files the extension can open
+- diff-bug #2 (pass 3): 0.1.0 drops the stylesheet link but the bundle keeps the same CSS — reject, false as a defect: no effect on the installed extension, and the reviewer agrees
+- diff-bug #3 (pass 3): the 0.4.0 dependency folder rename — reject, false as a defect: no effect on behavior (as pass 2 #9)
+- diff-bug #4 (pass 3): the 0.6.0 attribute order — reject, false as a defect: cosmetic
+- diff-bug #5, #6 (pass 3): the `speed` and bundle-size claims hold — noted
+- diff-bug #7 (pass 3): the T4 claim-audit work-log line sits after the T5 lines — reject, false as a defect: the work log is append-only, and each line carries its date
+- blame-history #1 (pass 3): the opening line "lists the changes" contradicts D-002 — reject, false: the line claims less than D-002, not something else, and the work log records the gap
+- ripple #1 (pass 3): the README link and the PROFILE gate wording differ — reject, false: the gate governs later milestones' entries, and the README line makes no completeness claim
+- blame-history #2 (pass 3): 0.5.0 "The README has a screenshot of the demo" names no change, because v0.4.2 already had one — fix now, line removed
+- ripple #2 (pass 3): "Every example icon is a free icon" (0.5.1) was not checked against the licenses — noted, it restates commit 8360c54 and IP6
+- prior-review (pass 3): nothing found

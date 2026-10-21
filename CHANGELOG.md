@@ -9,7 +9,7 @@ This file lists the changes in each version of the extension, newest first.
 
 ## 0.7.1
 
-- If a Minified Lottie export gets `colors`, `stroke`, or `state`, `lif` warns at render time. These arguments have no effect on that export. The warning names the two fixes.
+- If a Minified Lottie export gets `colors`, `stroke`, or `state`, `lif` warns once per file at render time in HTML output. These arguments have no effect on that export. The warning names the two fixes. A file that the extension cannot open gets no warning.
 - The README explains the Raw and Minified Lottie exports and the new download path on lordicon.com.
 - The README says what a CDN code is and that the export UI on lordicon.com no longer offers codes. It recommends `lif` with a downloaded `.json` file for new icons.
 - The README lists the `delay` value of `loading`, used with `loading-delay=MS`.
@@ -52,8 +52,6 @@ This file lists the changes in each version of the extension, newest first.
 - The `speed`, `scale`, `x`, and `y` arguments are removed.
 - The extension no longer gives icons a default size of 128 by 128 pixels. Set the size with `class` or `style`.
 - The README's lordicon.com steps change to Export > Embed HTML for a code and Export > JSON (Lottie) for a file.
-- The README has a screenshot of the demo.
-
 ## 0.4.2
 
 - The bundled player is updated to `@lordicon/element` 1.8.0.
