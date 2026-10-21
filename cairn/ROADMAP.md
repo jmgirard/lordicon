@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-20 (design interview added four candidates)_
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M001 | Let user ARIA attributes beat defaults | planned | — | high | milestones/M001-user-aria-beats-defaults.md |
+| M001 | Let user ARIA attributes beat defaults | in-progress | — | high | milestones/M001-user-aria-beats-defaults.md |
 
 ## Candidates
 <!-- unnumbered ideas; one line each, ordered high → normal → low → parked:

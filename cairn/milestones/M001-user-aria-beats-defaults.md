@@ -1,13 +1,13 @@
 # M001: Let user ARIA attributes beat defaults
 
-- **Status:** planned
+- **Status:** in-progress
 - **Priority:** high
 - **Depends on:** —
 - **Driving RR:** —
 - **Principles touched:** IP1, IP2, GP4, GP5
 - **Resolves:** —
 - **Surface tier:** user-facing — it changes the HTML that every `li` and `lif` shortcode gives
-- **Branch/PR:** —
+- **Branch/PR:** m001-user-aria-beats-defaults
 
 ## Goal
 
@@ -39,7 +39,7 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 
 ## Tasks
 
-- [ ] T1: Add a test `.qmd` and a check script that renders it and reads the attributes of each `<lord-icon>`. Keep the test document out of the demo site, and make sure that `docs/` gets no page for it. Cases: each of the four attributes through `li`, and one through `lif`. A value with `&` and `"`. `aria-label=""` alone and `label=""` alone, which expect the default. A bare icon. An icon with only `class` and `aria-describedby`. `label` alone, `label` with `role`, `label` with `aria-label`, `label` with both, and a label with `&` and `"`. Run the script on the unchanged filter and log which cases fail.
+- [x] T1: Add a test `.qmd` and a check script that renders it and reads the attributes of each `<lord-icon>`. Keep the test document out of the demo site, and make sure that `docs/` gets no page for it. Cases: each of the four attributes through `li`, and one through `lif`. A value with `&` and `"`. `aria-label=""` alone and `label=""` alone, which expect the default. A bare icon. An icon with only `class` and `aria-describedby`. `label` alone, `label` with `role`, `label` with `aria-label`, `label` with both, and a label with `&` and `"`. Run the script on the unchanged filter and log which cases fail.
 - [ ] T2: Change `build_element` (`lordicon.lua:86-93`) so that the `aria-hidden` default yields to the four attributes, and `label` adds only the `role` and `aria-label` that the user did not pass. Run the check script until every case passes.
 - [ ] T3: Update the README and `index.qmd` Accessibility text. Add a demo row with `role="img"` and `aria-label`, and advise `role="img"` with a user `aria-label`. Run `quarto render` and look at the page in a browser.
 - [ ] T4: Name the check script in the `verify` slot of `cairn/PROFILE.md`. Raise `version:` one patch, then run the check script and `quarto render` again.
@@ -57,6 +57,11 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 - 2026-10-20: plan gate chose a silent user win over a warning because the icon does not fail (GP2); falsified by user reports that `label` had no visible effect.
 - 2026-10-20: plan gate chose a test document and check script over checking by eye because the repo has no regression guard; falsified by the script being unable to run where `quarto render` runs.
 - 2026-10-20: `cairn_validate` failed "principles slot valid" because DESIGN.md wrote principles as `- IP1 (Name):` and the check reads `- IP1:`. Moved the colon on all 11 principle lines, with no change to their text.
+- 2026-10-20: implement started on branch m001-user-aria-beats-defaults. Untracked `.DS_Store` left unstaged.
+- 2026-10-20: T1 chose `_tests/aria.qmd` (Quarto skips `_` paths in a project render) and `_tests/check_aria.py` (Python standard library only, no new dependency). The script renders the fixture in a temporary directory with a copy of `_extensions/` and `gift_raw.json`, and identifies each case by its `id`.
+- 2026-10-20: T1 run on the unchanged filter: 5 of 15 cases fail (arialabel-li, labelledby-li, role-li, arialabel-lif, arialabel-escaped), each with `aria-hidden` 'true' where none is expected.
+- 2026-10-20: T1 finding: Quarto 1.10.19's HTML post-processing keeps only the first of two same-name attributes, so the old filter's duplicates never reach the page and hidden-li and the label-clash cases pass on the unchanged filter. T2 plants a defect to show those cases can fail.
+- 2026-10-20: minor amendment: `quarto inspect` listed the `cairn/*.md` files as site inputs, so a root render would publish them to `docs/`. Added `render: ["*.qmd"]` to `_quarto.yml`; `quarto inspect` now lists only the four root pages.
 
 ## Decisions
 
