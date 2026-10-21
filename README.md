@@ -90,8 +90,8 @@ will be exposed with `role="img"` and that label instead:
 ```
 
 ARIA attributes you pass yourself take precedence over these defaults. If you
-pass `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`, the icon is not
-marked `aria-hidden="true"`. With `label`, your own `role` or `aria-label`
+pass a non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`, the
+icon is not marked `aria-hidden="true"`. With `label`, your own `role` or `aria-label`
 replaces the one `label` would add. When you set `aria-label` directly, also
 pass `role="img"` so screen readers announce the icon:
 

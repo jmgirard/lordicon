@@ -1,6 +1,6 @@
 # M001: Let user ARIA attributes beat defaults
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** high
 - **Depends on:** —
 - **Driving RR:** —
@@ -66,6 +66,8 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 - 2026-10-20: T2 planted defect (extension ARIA attributes inserted before the user's): the check reported 10 failures, among them hidden-li, label-role, label-arialabel, and label-both, so those cases can fail. Plant removed, and the check is back to 0 failures.
 - 2026-10-20: T3 updated the README and `index.qmd` Accessibility text and added the `role="img" aria-label="Money bag"` demo row. `quarto render` passed. The other pages' diffs in `docs/` come from Quarto 1.10.18 → 1.10.19 (generator tag, syntax CSS hash). On a local server, all three Accessibility icons were defined and ready, and each had an SVG.
 - 2026-10-20: T4 named `python3 _tests/check_aria.py` in the PROFILE `verify` slot and raised `version:` to 0.7.2. The check reported 0 failures, and `quarto render` left `docs/` unchanged. DESIGN.md Conventions and Known issues were updated to match the code (corrected M001).
+- 2026-10-20: claim audit: 13 claims read, 1 corrected — README.md, index.qmd (the four attributes count only with a non-empty value). The reader re-read the corrected wording and found it TRUE. `docs/` was re-rendered.
+- 2026-10-20: implement complete: all four tasks done, the check reports 0 failures, and `quarto render` passes. Status set to review.
 
 ## Decisions
 
