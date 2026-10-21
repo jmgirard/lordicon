@@ -18,6 +18,7 @@ This file lists the user-visible changes in each version of the extension, newes
 
 ## 0.6.0
 
+- The extension now requires Quarto 1.3.0 or later.
 - Both shortcodes forward every `key=value` pair to the `<lord-icon>` element as an attribute. Options such as `speed`, `loading`, and `id` work with no extension update.
 - Attribute values are HTML-escaped.
 - New `label` argument. It gives the icon `role="img"` and `aria-label`. An icon without `label` gets `aria-hidden="true"`.
@@ -25,6 +26,7 @@ This file lists the user-visible changes in each version of the extension, newes
 ## 0.5.4
 
 - The bundled player is updated to `@lordicon/element` 1.11.0 and `lottie-web` 5.13.0.
+- The README's lordicon.com steps follow the site's new export menu.
 
 ## 0.5.3
 
@@ -33,6 +35,7 @@ This file lists the user-visible changes in each version of the extension, newes
 ## 0.5.2
 
 - The bundled player is updated to `@lordicon/element` 1.9.0.
+- `_extension.yml` now reads 0.5.2. In the 0.5.1 release it still read 0.5.0.
 
 ## 0.5.1
 
@@ -43,7 +46,8 @@ This file lists the user-visible changes in each version of the extension, newes
 
 - New `state` and `style` arguments.
 - The `speed`, `scale`, `x`, and `y` arguments are removed.
-- The README has new usage instructions and an animated screenshot.
+- The extension no longer gives icons a default size of 128 by 128 pixels. Set the size with `class` or `style`.
+- The README has new usage instructions and a screenshot of the demo.
 
 ## 0.4.2
 
@@ -63,21 +67,22 @@ This file lists the user-visible changes in each version of the extension, newes
 
 ## 0.3.1
 
-- The bundled player is rebuilt with `lord-icon-element` 3.4.4 and `lottie-web` 5.12.2.
+- The bundled player is rebuilt with `lottie-web` 5.12.2.
 - The README install command is now `quarto add jmgirard/lordicon`.
 
 ## 0.3.0
 
-- The extension no longer sets the text color and background of the page `body`, which broke dark mode (#2). Icons keep their default size of 128 by 128 pixels.
+- The extension no longer sets the text color and background of the page `body`, which broke the dark mode toggle (#2). Icons keep their default size of 128 by 128 pixels.
+- The bundled player is updated to `lord-icon-element` 3.4.4 and `lottie-web` 5.10.2.
 
 ## 0.2.0
 
 - New `lif` shortcode: an icon from a local Lottie `.json` file, with the same arguments as `li`.
-- The README describes a bug in the RStudio Viewer.
+- The README's RStudio Viewer note says which RStudio release fixes the bug.
 
 ## 0.1.0
 
-- The bundled player is built with Babel and core-js for older browsers.
+- The README notes a bug: icons do not appear in the RStudio Viewer.
 
 ## 0.0.2
 

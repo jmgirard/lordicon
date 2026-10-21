@@ -1,6 +1,6 @@
 # M002: Start CHANGELOG.md for past releases
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -50,6 +50,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - 2026-10-20: decided: entries cover the extension's behavior, the bundled player version, and README or demo changes users act on. Build-tool-only and internal refactor changes get no entry.
 - 2026-10-20: T2 done: CHANGELOG.md with 19 sections, README link under Installing, PROFILE `changelog` slot and DESIGN Conventions bullet updated. The 0.7.0 entry says the bundle is smaller from `git cat-file -s` on bundle.js at v0.6.0 and v0.7.0. The README's older text keeps its plain-English linter hits, which this task does not touch.
 - 2026-10-20: T3 done: `diff` of the `## ` headings against `git tag -l 'v*' | sort -rV` matched 19 sections. A planted missing 0.5.2 heading made it exit 1. Verify: `check_aria.py` 0 failures, `quarto render` ok; the render's `docs/sitemap.xml` date change was dropped.
+- 2026-10-20: claim audit: 57 claims read, 5 corrected — CHANGELOG.md (0.1.0 Babel claim dropped and the RStudio note moved there from 0.2.0, 0.3.1 player versions split with 0.3.0, 0.5.0 screenshot is static, 0.3.0 cause tied to the #2 issue title). Five omissions added after a check against the tags: 0.3.0 player versions, 0.5.0 default size removed, 0.5.2 version-number fix, 0.6.0 Quarto 1.3.0 minimum, 0.5.4 README export steps.
 
 ## Decisions
 
