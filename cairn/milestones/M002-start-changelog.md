@@ -1,13 +1,13 @@
 # M002: Start CHANGELOG.md for past releases
 
-- **Status:** planned
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
 - **Principles touched:** —
 - **Resolves:** —
 - **Surface tier:** user-facing — users read the changelog to see what each version changed
-- **Branch/PR:** —
+- **Branch/PR:** m002-start-changelog
 
 ## Goal
 
@@ -33,7 +33,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 
 ## Tasks
 
-- [ ] T1: For each tag, newest first, read its range with `git log --format='%h %s' <previous>..<tag>` and `git diff --stat <previous>..<tag>`. Draft the user-visible changes from the subjects and diffs, or "No user-visible changes."
+- [x] T1: For each tag, newest first, read its range with `git log --format='%h %s' <previous>..<tag>` and `git diff --stat <previous>..<tag>`. Draft the user-visible changes from the subjects and diffs, or "No user-visible changes."
 - [ ] T2: Write `CHANGELOG.md` with plain `## <version>` headings and no Unreleased heading. Add the README link. Update the PROFILE `## changelog` slot and the DESIGN Conventions bullet.
 - [ ] T3: Compare the file's `## ` headings with the `git tag -l 'v*'` list by a one-line script, and record the result in the work log.
 
@@ -45,6 +45,9 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - 2026-10-20: criteria audit (full, fresh Opus reader): 2 findings, both fixed. AC1 clashed with M003's 0.7.3 section, so it now holds at M002's review head. AC2 checked only that entries were true and bound the review's recording act, so it now asks each section to list its changes or say none, and the recording sentence is gone.
 - 2026-10-20: plan gate chose a separate changelog milestone over folding it into M003 because the user chose it and it keeps M003's review on code; falsified by M002's review needing M003's code to judge an entry.
 - 2026-10-20: decided: plain `## <version>` headings and no Unreleased heading, because the version rises at each shipping merge (D-001) and the release-walk reads `## <version>`.
+- 2026-10-20: implement started on branch m002-start-changelog, cut from main at c61003d. `.DS_Store` stays untracked and unstaged.
+- 2026-10-20: T1 done: read all 19 tag ranges (`git log`, filter and package.json diffs, full messages of the big commits). The 0.3.1 and 0.5.1 tags carry an `_extension.yml` that still names the previous version.
+- 2026-10-20: decided: entries cover the extension's behavior, the bundled player version, and README or demo changes users act on. Build-tool-only and internal refactor changes get no entry.
 
 ## Decisions
 

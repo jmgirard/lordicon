@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-20 (M001 done: ARIA row graduated, render-check row
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M002 | Start CHANGELOG.md for past releases | planned | — | normal | milestones/M002-start-changelog.md |
+| M002 | Start CHANGELOG.md for past releases | in-progress | — | normal | milestones/M002-start-changelog.md |
 | M003 | Stop key clashes and bad attribute names | planned | M002 | normal | milestones/M003-key-clashes.md |
 | M001 | Let user ARIA attributes beat defaults | done | — | high | milestones/archive/M001-user-aria-beats-defaults.md |
 
