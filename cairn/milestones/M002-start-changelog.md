@@ -63,6 +63,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - 2026-10-20: amendment return: AC2 — "Each section names each change in its version's diff that affects the installed extension."
 - 2026-10-20: note: D-002 and the PROFILE gate ask for an entry for each user-visible change. AC2 now promises completeness only for the installed extension, and README and demo entries are best effort. This is a deliberate difference, not drift.
 - 2026-10-20: T5 done. Verify: 19 headings match the tags, `cairn_validate.py` passed.
+- 2026-10-20: step-7 approval: m002-start-changelog approved for merge
 - 2026-10-20: claim audit: not re-run for T4. Each added claim was read against its commit in this session, and review return 1's reviewers read the same ranges.
 
 ## Decisions
