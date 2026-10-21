@@ -1,13 +1,13 @@
 # M003: Stop key clashes and bad attribute names
 
-- **Status:** planned
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** M002
 - **Driving RR:** —
 - **Principles touched:** IP1, IP2, IP3, IP5, GP2, GP4, GP5
 - **Resolves:** —
 - **Surface tier:** user-facing — changes the `<lord-icon>` markup that `li` and `lif` emit
-- **Branch/PR:** —
+- **Branch/PR:** m003-key-clashes
 
 ## Goal
 
@@ -60,6 +60,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-20: plan gate chose skipping bad keys now over a warning release first because these keys never gave one valid attribute; falsified by a document whose output relies on such a key's stray attributes, such as `"a b"=1` giving `a` and `b`.
 - 2026-10-20: plan gate chose comparing `key:lower()` over writing lowercase names because IP1 forbids rewriting a user attribute; falsified by an output format where attribute-name case changes meaning.
 - 2026-10-20: decided: new cases go into `_tests/aria.qmd` and `check_aria.py`, because the PROFILE `verify` slot already names them. A wider check stays with its candidate row.
+- 2026-10-20: implement started on branch m003-key-clashes, cut from main at 0c6e04b. The untracked `.DS_Store` stays unstaged.
 
 ## Decisions
 
