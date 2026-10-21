@@ -21,9 +21,9 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 
 ## Acceptance criteria
 
-- [ ] AC1: At M002's review head, `CHANGELOG.md` at the repo root has one `## <version>` section for each tag that `git tag -l 'v*'` lists, newest first, and no other `## ` section. The version is the tag name without its `v`.
+- [x] AC1: At M002's review head, `CHANGELOG.md` at the repo root has one `## <version>` section for each tag that `git tag -l 'v*'` lists, newest first, and no other `## ` section. The version is the tag name without its `v`.
 - [ ] AC2: Each section lists the user-visible changes in its range, `git log <previous v* tag>..<tag>`, or says "No user-visible changes." The first tag's range is all history up to it. Each entry names a change that a commit in its range makes.
-- [ ] AC3: README links to `CHANGELOG.md`.
+- [x] AC3: README links to `CHANGELOG.md`.
 
 ## Coverage
 
@@ -55,3 +55,8 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 ## Decisions
 
 ## Review
+
+- 2026-10-20 sync: branch cut from origin/main c61003d, which has not moved; no PR exists yet (route d); the Copilot round is off.
+- AC1: `diff` of `grep '^## ' CHANGELOG.md` against `git tag -l 'v*' | sort -rV` with the `v` removed is empty: 19 sections, 19 tags, same order, no other `## ` section. T3's planted missing heading made the same diff exit 1.
+- AC3: `README.md:28` holds `[CHANGELOG.md](CHANGELOG.md) lists the changes in each version.`
+- gate: `cairn_validate.py` all checks passed. No principle changed, so `cairn_impact` was skipped. Toolchain: the one version marker (`_extension.yml`) reads 0.7.2, unchanged. `python3 _tests/check_aria.py` 0 failures, and `quarto render` succeeded (its `docs/sitemap.xml` date change was dropped). The changelog check needs no entry, because M002 changes nothing that `quarto add` installs.
