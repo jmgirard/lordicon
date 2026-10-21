@@ -21,12 +21,12 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 
 ## Acceptance criteria
 
-- [ ] AC1: A `li` or `lif` shortcode with no non-empty `label` can pass a non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`. Its `<lord-icon>` then has that attribute with the escaped value and no other `aria-hidden` attribute.
-- [ ] AC2: A shortcode with no non-empty `label`, and with none of those four attributes at a non-empty value, still gets `aria-hidden="true"`.
-- [ ] AC3: A shortcode with a non-empty `label` gets `role="img"` and an `aria-label` that holds the escaped label. If the user passes a non-empty `role` or `aria-label`, the element keeps the user's value and the extension adds no second attribute with that name.
-- [ ] AC4: The README "Accessibility" section and the `index.qmd` "Accessibility" section say that a user `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` replaces the `aria-hidden` default. They also say that with `label`, a user `role` or `aria-label` takes the place of the one that `label` adds.
-- [ ] AC5: `docs/index.html` holds the new Accessibility text and a demo row whose `<lord-icon>` has a user `role="img"` and `aria-label`.
-- [ ] AC6: `version:` in `_extensions/lordicon/_extension.yml` is one patch above the version on `main` at merge (`0.7.2` at planning, D-001).
+- [x] AC1: A `li` or `lif` shortcode with no non-empty `label` can pass a non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`. Its `<lord-icon>` then has that attribute with the escaped value and no other `aria-hidden` attribute.
+- [x] AC2: A shortcode with no non-empty `label`, and with none of those four attributes at a non-empty value, still gets `aria-hidden="true"`.
+- [x] AC3: A shortcode with a non-empty `label` gets `role="img"` and an `aria-label` that holds the escaped label. If the user passes a non-empty `role` or `aria-label`, the element keeps the user's value and the extension adds no second attribute with that name.
+- [x] AC4: The README "Accessibility" section and the `index.qmd` "Accessibility" section say that a user `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` replaces the `aria-hidden` default. They also say that with `label`, a user `role` or `aria-label` takes the place of the one that `label` adds.
+- [x] AC5: `docs/index.html` holds the new Accessibility text and a demo row whose `<lord-icon>` has a user `role="img"` and `aria-label`.
+- [x] AC6: `version:` in `_extensions/lordicon/_extension.yml` is one patch above the version on `main` at merge (`0.7.2` at planning, D-001).
 
 ## Coverage
 
@@ -72,3 +72,14 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 ## Decisions
 
 ## Review
+
+Review pass 1, 2026-10-20, branch head 774fd4b, synced with origin/main d201f39.
+
+- AC1 evidence: `python3 _tests/check_aria.py` exit 0, "15 icons read, 15 cases, 0 failures". The cases hidden-li (`aria-hidden` 'false'), arialabel-li, labelledby-li, role-li, arialabel-lif, and arialabel-escaped (value `Tom & "Jerry"` read back unchanged) have the user attribute and no `aria-hidden` 'true'. The script fails on any attribute name that appears twice on one element.
+- AC2 evidence: same run. The cases bare, empty-arialabel, empty-label, and describedby (`class` + `aria-describedby`) have `aria-hidden` 'true'.
+- AC3 evidence: same run. The case label has `role` 'img' and `aria-label` 'Bell'. label-role keeps 'presentation', label-arialabel keeps 'Other', and label-both keeps both user values. label-escaped has `aria-label` `Tom & "Jerry"`. No attribute name appears twice. The T2 planted defect made these cases fail (work log).
+- AC4 evidence: the README Accessibility section (lines 12 to 15 of the section) and `index.qmd:59` name the four attributes as replacing the `aria-hidden` default when non-empty. Both also say that with `label`, a user `role` or `aria-label` "replaces the one `label` would add".
+- AC5 evidence: `docs/index.html` holds "Passing a non-empty" once and the element `<lord-icon src="https://cdn.lordicon.com/ibydboev.json" aria-label="Money bag" role="img">`, which has no `aria-hidden`.
+- AC6 evidence: `git show origin/main:_extensions/lordicon/_extension.yml` reads `version: 0.7.1`, and the branch reads `version: 0.7.2`.
+- Gate: `cairn_validate` passed all checks. `cairn_impact --changed` listed 5 IP1 references. IP1's text is unchanged on the branch (the plan commit only moved its colon), and the references agree with it. `quarto render` exit 0 left `docs/` unchanged. `version:` is the only marker that release-walk names. Changelog slot reads as none (`CHANGELOG.md` absent).
+- spawned: diff-bug, blame-history, prior-review, ripple
