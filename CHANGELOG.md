@@ -1,10 +1,11 @@
 # Changelog
 
-This file lists the user-visible changes in each version of the extension, newest first.
+This file lists the changes in each version of the extension, newest first.
 
 ## 0.7.2
 
 - ARIA attributes that you pass now take precedence over the extension's defaults. If you pass a non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`, the extension does not add `aria-hidden="true"`. With `label`, your own `role` or `aria-label` replaces the one that `label` adds.
+- If you set `aria-label` or `aria-labelledby` yourself, the README and the demo home page now advise you to also pass `role="img"`.
 
 ## 0.7.1
 
@@ -12,7 +13,7 @@ This file lists the user-visible changes in each version of the extension, newes
 - The README explains the Raw and Minified Lottie exports and the new download path on lordicon.com.
 - The README says what a CDN code is and that the export UI on lordicon.com no longer offers codes. It recommends `lif` with a downloaded `.json` file for new icons.
 - The README lists the `delay` value of `loading`, used with `loading-delay=MS`.
-- The demo site is now a themed Quarto website with Speed, Sequence, and accessibility examples.
+- The demo site is now a themed Quarto website with Speed, Sequence, and accessibility examples. Its home page moved from `example.html` to the site root, so old links to `example.html` no longer work.
 
 ## 0.7.0
 
@@ -42,15 +43,16 @@ This file lists the user-visible changes in each version of the extension, newes
 ## 0.5.1
 
 - New `target` argument: a CSS selector of an ancestor element that fires the icon's trigger.
-- The README and demo pages add animation and target examples, and every example icon is a free icon.
-- A new CSS Styling demo page shows how to size and style icons. The README's CSS sizing text moved there.
+- New demo pages for animations, targets, and CSS styling, linked from the README. The README's CSS sizing text moved to the CSS Styling page.
+- Every example icon is a free icon.
 
 ## 0.5.0
 
 - New `state` and `style` arguments.
 - The `speed`, `scale`, `x`, and `y` arguments are removed.
 - The extension no longer gives icons a default size of 128 by 128 pixels. Set the size with `class` or `style`.
-- The README has new usage instructions and a screenshot of the demo.
+- The README's lordicon.com steps change to Export > Embed HTML for a code and Export > JSON (Lottie) for a file.
+- The README has a screenshot of the demo.
 
 ## 0.4.2
 
@@ -83,6 +85,7 @@ This file lists the user-visible changes in each version of the extension, newes
 
 - New `lif` shortcode: an icon from a local Lottie `.json` file, with the same arguments as `li`.
 - The README's RStudio Viewer note says which RStudio release fixes the bug.
+- The README explains how to find an icon's code and how to download its `.json` file on lordicon.com.
 
 ## 0.1.0
 
@@ -92,7 +95,8 @@ This file lists the user-visible changes in each version of the extension, newes
 
 - New arguments: `trigger`, `speed`, `delay`, `colors`, `stroke`, `scale`, `x`, `y`, and `class`. The `x` and `y` arguments set `axis-x` and `axis-y`.
 - `li` no longer sets `trigger="loop"` by default.
+- The README explains how to size icons with CSS and how to style groups of icons with `class`.
 
 ## 0.0.1
 
-- First release. The `li` shortcode embeds the icon at `https://cdn.lordicon.com/CODE.json` with `trigger="loop"` in HTML output. Other formats get no output. The extension's CSS sets the page `body` colors and a 128 by 128 pixel icon size.
+- First release. The `li` shortcode embeds the icon at `https://cdn.lordicon.com/CODE.json` with `trigger="loop"` in HTML output. Other formats get no output. The extension's CSS sets the page `body` colors and a 128 by 128 pixel icon size. The bundled player is `lord-icon-element` 3.4.2 with `lottie-web` 5.9.6.

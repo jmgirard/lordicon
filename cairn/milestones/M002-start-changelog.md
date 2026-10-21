@@ -28,7 +28,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 ## Coverage
 
 - AC1 → T2, T3
-- AC2 → T1, T2, T4
+- AC2 → T1, T2, T4, T5
 - AC3 → T2
 
 ## Tasks
@@ -37,6 +37,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - [x] T2: Write `CHANGELOG.md` with plain `## <version>` headings and no Unreleased heading. Add the README link. Update the PROFILE `## changelog` slot and the DESIGN Conventions bullet.
 - [x] T3: Compare the file's `## ` headings with the `git tag -l 'v*'` list by a one-line script, and record the result in the work log.
 - [x] T4: Review return 1: add the missing 0.3.0, 0.5.1, and 0.7.1 README entries, narrow the 0.6.0 forwarding wording, and drop the 0.3.0 sentence that names no change.
+- [ ] T5: Review pass 2: add the README and demo entries found (0.0.2, 0.2.0, 0.5.0, 0.5.1, 0.7.1, 0.7.2), name the 0.0.1 player versions, change the opening line to "lists the changes", and amend AC2.
 
 ## Work log
 
@@ -55,6 +56,9 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - 2026-10-20: review return 1: AC2 fails as written. 0.3.0 omits the README RStudio version note (4ea39f2). 0.7.1 omits the README CDN-code text (825985a) and the `loading` values (4cf5d0a). 0.5.1 omits the CSS Styling page and the removed README sizing text. Also fix the too-broad 0.6.0 "every pair" wording and drop the 0.3.0 no-change sentence. The 0.7.2 rewording is already on disk.
 - 2026-10-20: T4 added for review return 1 (minor amendment) and done. Added the 0.3.0 RStudio note, the 0.5.1 CSS Styling page, and the 0.7.1 CDN-code and `loading` entries, each checked with `git show` at its commit or tag. The 0.6.0 wording now excludes `label` and empty values, and the 0.3.0 size sentence is gone. Verify: 19 headings match the tags, `check_aria.py` 0 failures, render ok.
 - 2026-10-20: amendment routed: AC2 — pass 2 found README how-to changes still missing after return 1. "Lists the user-visible changes" has no procedure that decides which README edits count, so each pass finds more. AC2 needs a promise that `git diff` over named files settles.
+- 2026-10-20: T5 added (minor amendment). The seven README and demo entries from pass 2 are in CHANGELOG.md, each checked with `git show` or `git diff` at its tag. The 0.0.1 section names `lord-icon-element` 3.4.2 and `lottie-web` 5.9.6 from `package-lock.json`, and the opening line says "lists the changes".
+- 2026-10-20: re-audit: AC2 (full) — first reader on the drafted amendment: 2 blocking findings. The diff paths read as excluding `src/` and `package-lock.json`, and the range definition was dropped. Also a new shortcode fit no category, the fallback could hide README changes, and the wording addressed the verifier. All five were fixed in the second draft.
+- 2026-10-20: re-audit: AC2 (full) — second reader: pass on reachability, bounded promise, instrument, and proportionality, and confirmed as a narrowing. It asked for three wording fixes: a working pathspec exclude, "added, removed, or changed" for player versions, and "their output in each format". It also asked for a note that D-002's "each user-visible change" goes beyond AC2, because README entries are best effort. This is the second re-audit line for AC2, so the further wording change goes to the user.
 - 2026-10-20: claim audit: not re-run for T4. Each added claim was read against its commit in this session, and review return 1's reviewers read the same ranges.
 
 ## Decisions
