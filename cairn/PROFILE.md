@@ -114,5 +114,5 @@ universal openers (distribution ambition and numeric-work oracles):
   - Lands in: CLAUDE.md conventions and the `release-walk` marker list.
 
 ## changelog
-`CHANGELOG.md` (D-002). The file does not exist yet; a ROADMAP candidate
-creates it. Until it exists, read this slot as "none".
+`CHANGELOG.md` (D-002), at the repo root, with one `## <version>` section per
+version, newest first (created by M002).

@@ -57,7 +57,8 @@ Convenience shorthands do not qualify.
   A breaking change ships only after one release that warns about it.
 - The extension version is `version:` in `_extensions/lordicon/_extension.yml`.
 - The extension version rises in each merge that ships a user-visible change
-  (D-001). The changelog is `CHANGELOG.md` (D-002), not yet created.
+  (D-001). The changelog is `CHANGELOG.md` (D-002), with one `## <version>`
+  section per version, newest first.
 
 ## Design Principles
 
