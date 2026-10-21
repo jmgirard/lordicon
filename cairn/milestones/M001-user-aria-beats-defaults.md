@@ -1,0 +1,63 @@
+# M001: Let user ARIA attributes beat defaults
+
+- **Status:** planned
+- **Priority:** high
+- **Depends on:** —
+- **Driving RR:** —
+- **Principles touched:** IP1, IP2, GP4, GP5
+- **Resolves:** —
+- **Surface tier:** user-facing — it changes the HTML that every `li` and `lif` shortcode gives
+- **Branch/PR:** —
+
+## Goal
+
+The extension's ARIA defaults give way to ARIA attributes that the user passes.
+
+## Scope
+
+**In:** `build_element` in `_extensions/lordicon/lordicon.lua` skips `aria-hidden="true"` when the user passes `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`. With `label`, the filter adds only the `role` and `aria-label` that the user did not pass. A test document and a check script cover these cases. README, `index.qmd`, and `docs/` show the new rule. The version rises one patch (D-001).
+
+**Out:** A user `src` that gives a second `src`, and mixed-case names such as `Role`, go to the candidate row "Stop duplicate src and ARIA attributes". A render check for other shortcode behavior stays in the candidate row "Add a render check with fixtures". The changelog entry waits for the candidate row "Start a CHANGELOG.md for releases", because the PROFILE `changelog` slot reads as none until that file exists. The `v0.7.2` tag is handed over in the close after the merge.
+
+## Acceptance criteria
+
+- [ ] AC1: A `li` or `lif` shortcode with no non-empty `label` can pass a non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`. Its `<lord-icon>` then has that attribute with the escaped value and no other `aria-hidden` attribute.
+- [ ] AC2: A shortcode with no non-empty `label`, and with none of those four attributes at a non-empty value, still gets `aria-hidden="true"`.
+- [ ] AC3: A shortcode with a non-empty `label` gets `role="img"` and an `aria-label` that holds the escaped label. If the user passes a non-empty `role` or `aria-label`, the element keeps the user's value and the extension adds no second attribute with that name.
+- [ ] AC4: The README "Accessibility" section and the `index.qmd` "Accessibility" section say that a user `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` replaces the `aria-hidden` default. They also say that with `label`, a user `role` or `aria-label` takes the place of the one that `label` adds.
+- [ ] AC5: `docs/index.html` holds the new Accessibility text and a demo row whose `<lord-icon>` has a user `role="img"` and `aria-label`.
+- [ ] AC6: `version:` in `_extensions/lordicon/_extension.yml` is one patch above the version on `main` at merge (`0.7.2` at planning, D-001).
+
+## Coverage
+
+- AC1 → T1, T2
+- AC2 → T1, T2
+- AC3 → T1, T2
+- AC4 → T3
+- AC5 → T3
+- AC6 → T4
+
+## Tasks
+
+- [ ] T1: Add a test `.qmd` and a check script that renders it and reads the attributes of each `<lord-icon>`. Keep the test document out of the demo site, and make sure that `docs/` gets no page for it. Cases: each of the four attributes through `li`, and one through `lif`. A value with `&` and `"`. `aria-label=""` alone and `label=""` alone, which expect the default. A bare icon. An icon with only `class` and `aria-describedby`. `label` alone, `label` with `role`, `label` with `aria-label`, `label` with both, and a label with `&` and `"`. Run the script on the unchanged filter and log which cases fail.
+- [ ] T2: Change `build_element` (`lordicon.lua:86-93`) so that the `aria-hidden` default yields to the four attributes, and `label` adds only the `role` and `aria-label` that the user did not pass. Run the check script until every case passes.
+- [ ] T3: Update the README and `index.qmd` Accessibility text. Add a demo row with `role="img"` and `aria-label`, and advise `role="img"` with a user `aria-label`. Run `quarto render` and look at the page in a browser.
+- [ ] T4: Name the check script in the `verify` slot of `cairn/PROFILE.md`. Raise `version:` one patch, then run the check script and `quarto render` again.
+
+## Work log
+
+- 2026-10-20: created by /milestone-plan.
+- 2026-10-20: tier check: milestone — the set of user attributes that turn off the default is a design choice, and the README and demo text change with it.
+- 2026-10-20: collision check: absorbs candidate "Let user ARIA attributes beat defaults" in full and "Add a render check with fixtures" in part (test document and script for the ARIA cases only). DECISIONS has no overlap. LESSONS.md is empty.
+- 2026-10-20: inbox sweep: 0 open issues and 0 open PRs on jmgirard/lordicon.
+- 2026-10-20: criteria audit (full mode, fresh Opus reader): 12 findings, all applied. Empty values count as not passed, escape and `lif` probes moved to T1, fixture and check wording moved out of the criteria, the duplicate promise narrowed to `role` and `aria-label`, AC4 covers the `label` case, AC5 states the `docs/` result, the demo row uses `role="img"`, AC6 is relative to `main`, T4 adds the PROFILE `verify` line, T1 keeps the fixture out of `docs/`.
+- 2026-10-20: audit finding on duplicate `src` and mixed-case names decided toward the narrower promise: lowercase names only, and the rest became candidate row "Stop duplicate src and ARIA attributes".
+- 2026-10-20: question set: which attributes turn off the default — the four named ones. Label clash — the user value wins with no warning. Testing — test document and check script.
+- 2026-10-20: plan gate chose the four named attributes over any `aria-*` or `role` because `aria-describedby` alone would unhide an icon with no name; falsified by ARIA guidance or a user report that another attribute must unhide an icon.
+- 2026-10-20: plan gate chose a silent user win over a warning because the icon does not fail (GP2); falsified by user reports that `label` had no visible effect.
+- 2026-10-20: plan gate chose a test document and check script over checking by eye because the repo has no regression guard; falsified by the script being unable to run where `quarto render` runs.
+- 2026-10-20: `cairn_validate` failed "principles slot valid" because DESIGN.md wrote principles as `- IP1 (Name):` and the check reads `- IP1:`. Moved the colon on all 11 principle lines, with no change to their text.
+
+## Decisions
+
+## Review

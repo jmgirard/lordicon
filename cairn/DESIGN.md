@@ -64,41 +64,41 @@ are never reused or renumbered; retiring one takes a D-entry.
 
 ### Inviolable
 
-- IP1 (Passthrough): Every user attribute reaches `<lord-icon>` unchanged.
+- IP1: (Passthrough) Every user attribute reaches `<lord-icon>` unchanged.
   The extension may warn about a value but never drops or rewrites one. A
   default the extension adds (such as `aria-hidden`) yields to a user-supplied
   attribute. Reserved keys (`label`) are the documented exception.
-- IP2 (Escaping): Every user value in emitted HTML is escaped: attribute
+- IP2: (Escaping) Every user value in emitted HTML is escaped: attribute
   values, the label, and the `li` code inside `src`.
-- IP3 (A shortcode never fails a render): Non-HTML formats get no output, and
+- IP3: (A shortcode never fails a render) Non-HTML formats get no output, and
   problems become warnings, not errors. Whether a given problem earns a warning
   is a GP2 matter.
-- IP4 (Self-hosted player): The extension never loads a script from a
+- IP4: (Self-hosted player) The extension never loads a script from a
   third-party host at read time. The icon JSON that `li` fetches from
   cdn.lordicon.com is the author's choice per icon, not the player.
-- IP5 (Stable surface): `li`, `lif`, `label`, and the passthrough meaning do
+- IP5: (Stable surface) `li`, `lif`, `label`, and the passthrough meaning do
   not break without one release that warns first. This covers removal of `li`
   too: no silent break, not "forever". An upstream change to an attribute's
   meaning is Lordicon's break, not the extension's.
-- IP6 (Free-license icons only): Every icon in the repo (demo pages, `docs/`,
+- IP6: (Free-license icons only) Every icon in the repo (demo pages, `docs/`,
   README examples, sample `.json` files) is one that Lordicon's free license
   lets anyone redistribute.
 
 ### Guiding
 
-- GP1 (Containment): The extension adds only the player bundle and
+- GP1: (Containment) The extension adds only the player bundle and
   `<lord-icon>` elements to a page, with no page-level CSS or script (issue #2,
   fixed in 4dd3edc). Page styling is the author's job through `class` or `style`.
-- GP2 (Guardrails for silent failures): A check is added only where an icon
+- GP2: (Guardrails for silent failures) A check is added only where an icon
   fails with no visible error, and its warning says in plain words what to do.
   The Minified-export warning (825985a) is the model.
-- GP3 (New surface only where passthrough cannot reach): A new argument or
+- GP3: (New surface only where passthrough cannot reach) A new argument or
   shortcode is added only for extension-side behavior, such as `label` to ARIA.
   Convenience shorthands do not qualify.
-- GP4 (The demo site ships with the feature): Each user-facing feature gets an
+- GP4: (The demo site ships with the feature) Each user-facing feature gets an
   example on the demo site, and `docs/` is re-rendered in the same change. A
   hotfix with no new surface needs only the re-render.
-- GP5 (Decorative by default): An icon without `label` is `aria-hidden`; a
+- GP5: (Decorative by default) An icon without `label` is `aria-hidden`; a
   labeled icon gets `role="img"` and `aria-label`.
 
 ## Architecture
