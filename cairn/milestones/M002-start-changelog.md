@@ -1,6 +1,6 @@
 # M002: Start CHANGELOG.md for past releases
 
-- **Status:** review
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -51,6 +51,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - 2026-10-20: T2 done: CHANGELOG.md with 19 sections, README link under Installing, PROFILE `changelog` slot and DESIGN Conventions bullet updated. The 0.7.0 entry says the bundle is smaller from `git cat-file -s` on bundle.js at v0.6.0 and v0.7.0. The README's older text keeps its plain-English linter hits, which this task does not touch.
 - 2026-10-20: T3 done: `diff` of the `## ` headings against `git tag -l 'v*' | sort -rV` matched 19 sections. A planted missing 0.5.2 heading made it exit 1. Verify: `check_aria.py` 0 failures, `quarto render` ok; the render's `docs/sitemap.xml` date change was dropped.
 - 2026-10-20: claim audit: 57 claims read, 5 corrected — CHANGELOG.md (0.1.0 Babel claim dropped and the RStudio note moved there from 0.2.0, 0.3.1 player versions split with 0.3.0, 0.5.0 screenshot is static, 0.3.0 cause tied to the #2 issue title). Five omissions added after a check against the tags: 0.3.0 player versions, 0.5.0 default size removed, 0.5.2 version-number fix, 0.6.0 Quarto 1.3.0 minimum, 0.5.4 README export steps.
+- 2026-10-20: review return 1: AC2 fails as written. 0.3.0 omits the README RStudio version note (4ea39f2). 0.7.1 omits the README CDN-code text (825985a) and the `loading` values (4cf5d0a). 0.5.1 omits the CSS Styling page and the removed README sizing text. Also fix the too-broad 0.6.0 "every pair" wording and drop the 0.3.0 no-change sentence. The 0.7.2 rewording is already on disk.
 
 ## Decisions
 
@@ -60,3 +61,21 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - AC1: `diff` of `grep '^## ' CHANGELOG.md` against `git tag -l 'v*' | sort -rV` with the `v` removed is empty: 19 sections, 19 tags, same order, no other `## ` section. T3's planted missing heading made the same diff exit 1.
 - AC3: `README.md:28` holds `[CHANGELOG.md](CHANGELOG.md) lists the changes in each version.`
 - gate: `cairn_validate.py` all checks passed. No principle changed, so `cairn_impact` was skipped. Toolchain: the one version marker (`_extension.yml`) reads 0.7.2, unchanged. `python3 _tests/check_aria.py` 0 failures, and `quarto render` succeeded (its `docs/sitemap.xml` date change was dropped). The changelog check needs no entry, because M002 changes nothing that `quarto add` installs.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- AC2: not ticked. The diff-bug lens's 19-section ledger finds every entry true and in range, but three sections miss README changes users act on (diff-bug #1, #2, #5), so the criterion fails as written. This is a floor return.
+- diff-bug #1: 0.3.0 omits the README RStudio note change in 4ea39f2 (update to RStudio 2022.12.0+353) — fix now (floor return 1)
+- diff-bug #2: 0.7.1 omits the README CDN-code explanation (825985a) and the corrected `loading` values with `delay` (4cf5d0a) — fix now (floor return 1)
+- diff-bug #3: 0.6.0 "forward every `key=value` pair" is too broad: `label` is reserved and empty values are dropped (verified in `git show v0.6.0:…/lordicon.lua` lines 19-20 and 69) — fix now (return 1)
+- diff-bug #4: the 0.7.2 opening sentence is too broad — fix now, same edit as prior-review #1
+- diff-bug #5: 0.5.1 omits the new CSS Styling demo page and the README's removed CSS sizing text — fix now (floor return 1)
+- diff-bug #6: 0.1.0 has no Babel transpile entry — reject, planned change: the work log's build-tool-only rule, and the bundle stayed in effect the same (claim audit item 1)
+- diff-bug #7: the 0.3.0 sentence about the 128-pixel size names no change — fix now (return 1)
+- diff-bug #8: 0.6.0's removal of Babel and core-js has no entry — reject, planned change: build-tool-only rule
+- diff-bug #9: D-002 Consequences still says the file does not exist — reject, false as a defect: DECISIONS.md is append-only history (IP4), and its consequence came true
+- diff-bug #10: the PROFILE release-walk "retitle the development heading" text — reject, false: it is one remedy that applies only when such a heading exists, and the tag-only arm needs none
+- diff-bug #11: old player version strings in `lordicon.lua` HTML dependencies get no entry — reject, false as a defect: the reviewer agrees that no entry is correct
+- prior-review #1: the 0.7.2 entry said any passed ARIA attribute turns off `aria-hidden="true"`, which the M001 review fixed (8fe774b) — fix now, entry reworded to the README's wording
+- prior-review #2: the 0.7.2 entry left out "non-empty" — fix now, same edit
+- blame-history #1: the branch does not raise the version — reject, planned change: M002 changes nothing `quarto add` installs (D-001; plan Out)
+- blame-history #2: the ROADMAP row moves to review — reject, false as a defect: a normal status step
+- ripple #1: the "Start a CHANGELOG.md for releases" candidate row still reads open — reject, planned change: post-merge hygiene graduates a `started M002` row

@@ -4,7 +4,7 @@ This file lists the user-visible changes in each version of the extension, newes
 
 ## 0.7.2
 
-- An ARIA attribute that you pass now replaces the default that the extension adds. The attributes are `aria-hidden`, `aria-label`, `aria-labelledby`, and `role`. Without `label`, any of these attributes turns off `aria-hidden="true"`. With `label`, a `role` or `aria-label` that you pass replaces `role="img"` or the label text.
+- ARIA attributes that you pass now take precedence over the extension's defaults. If you pass a non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`, the extension does not add `aria-hidden="true"`. With `label`, your own `role` or `aria-label` replaces the one that `label` adds.
 
 ## 0.7.1
 
