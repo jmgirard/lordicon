@@ -34,8 +34,8 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 ## Tasks
 
 - [x] T1: For each tag, newest first, read its range with `git log --format='%h %s' <previous>..<tag>` and `git diff --stat <previous>..<tag>`. Draft the user-visible changes from the subjects and diffs, or "No user-visible changes."
-- [ ] T2: Write `CHANGELOG.md` with plain `## <version>` headings and no Unreleased heading. Add the README link. Update the PROFILE `## changelog` slot and the DESIGN Conventions bullet.
-- [ ] T3: Compare the file's `## ` headings with the `git tag -l 'v*'` list by a one-line script, and record the result in the work log.
+- [x] T2: Write `CHANGELOG.md` with plain `## <version>` headings and no Unreleased heading. Add the README link. Update the PROFILE `## changelog` slot and the DESIGN Conventions bullet.
+- [x] T3: Compare the file's `## ` headings with the `git tag -l 'v*'` list by a one-line script, and record the result in the work log.
 
 ## Work log
 
@@ -48,6 +48,8 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - 2026-10-20: implement started on branch m002-start-changelog, cut from main at c61003d. `.DS_Store` stays untracked and unstaged.
 - 2026-10-20: T1 done: read all 19 tag ranges (`git log`, filter and package.json diffs, full messages of the big commits). The 0.3.1 and 0.5.1 tags carry an `_extension.yml` that still names the previous version.
 - 2026-10-20: decided: entries cover the extension's behavior, the bundled player version, and README or demo changes users act on. Build-tool-only and internal refactor changes get no entry.
+- 2026-10-20: T2 done: CHANGELOG.md with 19 sections, README link under Installing, PROFILE `changelog` slot and DESIGN Conventions bullet updated. The 0.7.0 entry says the bundle is smaller from `git cat-file -s` on bundle.js at v0.6.0 and v0.7.0. The README's older text keeps its plain-English linter hits, which this task does not touch.
+- 2026-10-20: T3 done: `diff` of the `## ` headings against `git tag -l 'v*' | sort -rV` matched 19 sections. A planted missing 0.5.2 heading made it exit 1. Verify: `check_aria.py` 0 failures, `quarto render` ok; the render's `docs/sitemap.xml` date change was dropped.
 
 ## Decisions
 

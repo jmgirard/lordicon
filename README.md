@@ -25,6 +25,8 @@ $ quarto add jmgirard/lordicon
 
 This will install the extension under the `_extensions` subdirectory. If you're using version control, you will want to check in this directory.
 
+[CHANGELOG.md](CHANGELOG.md) lists the changes in each version.
+
 ## Using
 
 To embed an icon from the CDN, use the `{{< li code >}}` shortcode. For example:
