@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-32251a682ae26c400e8234ed85f2f735.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -286,6 +286,7 @@ Note
 <section id="accessibility" class="level2">
 <h2 class="anchored" data-anchor-id="accessibility">Accessibility</h2>
 <p>Icons are decorative by default and hidden from assistive technology (<code>aria-hidden="true"</code>). When an icon carries meaning, pass a <code>label</code> and it is exposed to screen readers with <code>role="img"</code> and that name.</p>
+<p>ARIA attributes you pass yourself take precedence. Passing <code>aria-hidden</code>, <code>aria-label</code>, <code>aria-labelledby</code>, or <code>role</code> stops the icon from being marked <code>aria-hidden="true"</code>. With <code>label</code>, your own <code>role</code> or <code>aria-label</code> replaces the one <code>label</code> would add. When you set <code>aria-label</code> directly, also pass <code>role="img"</code> so screen readers announce the icon.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 52%">
@@ -305,6 +306,10 @@ Note
 <tr class="even">
 <td><code>{{&lt; li ibydboev label="Money bag" &gt;}}</code></td>
 <td><p><lord-icon src="https://cdn.lordicon.com/ibydboev.json" role="img" aria-label="Money bag"></lord-icon></p></td>
+</tr>
+<tr class="odd">
+<td><code>{{&lt; li ibydboev role="img" aria-label="Money bag" &gt;}}</code></td>
+<td><p><lord-icon src="https://cdn.lordicon.com/ibydboev.json" aria-label="Money bag" role="img"></lord-icon></p></td>
 </tr>
 </tbody>
 </table>

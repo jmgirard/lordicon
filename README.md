@@ -89,6 +89,16 @@ will be exposed with `role="img"` and that label instead:
 {{< li wlpxtupd label="Loading complete" >}}
 ```
 
+ARIA attributes you pass yourself take precedence over these defaults. If you
+pass `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`, the icon is not
+marked `aria-hidden="true"`. With `label`, your own `role` or `aria-label`
+replaces the one `label` would add. When you set `aria-label` directly, also
+pass `role="img"` so screen readers announce the icon:
+
+```
+{{< li wlpxtupd role="img" aria-label="Loading complete" >}}
+```
+
 ## Note
 
 In order for the icons to appear properly in your RStudio Viewer pane, you need to update to RStudio version 2022.12.0+353 or newer. You can still use older versions of RStudio, but to view your icons you will need to view the rendered HTML files in an external browser.

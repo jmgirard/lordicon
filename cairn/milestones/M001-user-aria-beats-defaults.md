@@ -41,7 +41,7 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 
 - [x] T1: Add a test `.qmd` and a check script that renders it and reads the attributes of each `<lord-icon>`. Keep the test document out of the demo site, and make sure that `docs/` gets no page for it. Cases: each of the four attributes through `li`, and one through `lif`. A value with `&` and `"`. `aria-label=""` alone and `label=""` alone, which expect the default. A bare icon. An icon with only `class` and `aria-describedby`. `label` alone, `label` with `role`, `label` with `aria-label`, `label` with both, and a label with `&` and `"`. Run the script on the unchanged filter and log which cases fail.
 - [x] T2: Change `build_element` (`lordicon.lua:86-93`) so that the `aria-hidden` default yields to the four attributes, and `label` adds only the `role` and `aria-label` that the user did not pass. Run the check script until every case passes.
-- [ ] T3: Update the README and `index.qmd` Accessibility text. Add a demo row with `role="img"` and `aria-label`, and advise `role="img"` with a user `aria-label`. Run `quarto render` and look at the page in a browser.
+- [x] T3: Update the README and `index.qmd` Accessibility text. Add a demo row with `role="img"` and `aria-label`, and advise `role="img"` with a user `aria-label`. Run `quarto render` and look at the page in a browser.
 - [ ] T4: Name the check script in the `verify` slot of `cairn/PROFILE.md`. Raise `version:` one patch, then run the check script and `quarto render` again.
 
 ## Work log
@@ -64,6 +64,7 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 - 2026-10-20: minor amendment: `quarto inspect` listed the `cairn/*.md` files as site inputs, so a root render would publish them to `docs/`. Added `render: ["*.qmd"]` to `_quarto.yml`; `quarto inspect` now lists only the four root pages.
 - 2026-10-20: T2 added `ARIA_OVERRIDES` and a `passed` set in `build_element`. The check script reports 15 icons, 15 cases, 0 failures.
 - 2026-10-20: T2 planted defect (extension ARIA attributes inserted before the user's): the check reported 10 failures, among them hidden-li, label-role, label-arialabel, and label-both, so those cases can fail. Plant removed, and the check is back to 0 failures.
+- 2026-10-20: T3 updated the README and `index.qmd` Accessibility text and added the `role="img" aria-label="Money bag"` demo row. `quarto render` passed. The other pages' diffs in `docs/` come from Quarto 1.10.18 → 1.10.19 (generator tag, syntax CSS hash). On a local server, all three Accessibility icons were defined and ready, and each had an SVG.
 
 ## Decisions
 

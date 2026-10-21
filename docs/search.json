@@ -1,96 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Lordicon Extension for Quarto",
-    "section": "",
-    "text": "This extension lets you embed animated Lordicon icons in your Quarto HTML documents (including Reveal.js slides). Icons can be pulled from the official CDN or loaded from local .json files, and customized on the fly without editing the source files."
-  },
-  {
-    "objectID": "index.html#showcase",
-    "href": "index.html#showcase",
-    "title": "Lordicon Extension for Quarto",
-    "section": "Showcase",
-    "text": "Showcase"
-  },
-  {
-    "objectID": "index.html#source",
-    "href": "index.html#source",
-    "title": "Lordicon Extension for Quarto",
-    "section": "Source",
-    "text": "Source\nThe {{&lt; li &gt;}} shortcode downloads an icon from the Lordicon CDN and renders it by its code — the eight-character identifier in https://cdn.lordicon.com/CODE.json. Lordicon used to hand these out under Export → Embed HTML; the redesigned export UI no longer offers that, so existing codes still resolve but new icons are easier to use via {{&lt; lif &gt;}}.\nThe {{&lt; lif &gt;}} shortcode renders an icon from a local .json file instead. Download one by opening an icon on lordicon.com, clicking Edit and download, then in the right-hand panel opening the format menu and clicking the options icon next to Lottie.\nThat options icon offers two Lottie flavors, and which one you want depends on where you plan to customize the icon:\n\nMinified (the default) bakes the editor’s colors and stroke into the shapes and keeps only the animation you picked. Much smaller file, and the right choice when the icon already looks the way you want.\nRaw keeps every animation along with the control layer that colors, stroke, and state write into. Choose this to customize per use from the shortcode.\n\n\n\n\n\n\n\nNote\n\n\n\nThe two approaches don’t combine: colors, stroke, and state have no effect on a minified file, since those values were baked in at export. Either re-export as Raw or set them in the editor and leave the arguments off. The extension prints a warning when it sees that combination.\n\n\n\n\n\n\n\n\n\nShortcode\nRendered\n\n\n\n\n{{&lt; li ibydboev &gt;}}\n\n\n\n{{&lt; lif gift_raw.json &gt;}}"
-  },
-  {
-    "objectID": "index.html#colors",
-    "href": "index.html#colors",
-    "title": "Lordicon Extension for Quarto",
-    "section": "Colors",
-    "text": "Colors\ncolors recolors an icon. Outline icons usually have just a primary and secondary color, while flat and lineal icons can have many more. Give each color in rank:color form (ranks are primary, secondary, tertiary, …) and separate multiple colors with commas. Colors accept HTML color names or hex codes.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li rehjpyyh &gt;}}\n\n\n\n{{&lt; li rehjpyyh colors=primary:gold &gt;}}\n\n\n\n{{&lt; li rehjpyyh colors=secondary:gold &gt;}}\n\n\n\n{{&lt; li rehjpyyh colors=primary:gray,secondary:orange &gt;}}\n\n\n\n{{&lt; li rehjpyyh colors=primary:#4030e8,secondary:#ee66aa &gt;}}"
-  },
-  {
-    "objectID": "index.html#stroke",
-    "href": "index.html#stroke",
-    "title": "Lordicon Extension for Quarto",
-    "section": "Stroke",
-    "text": "Stroke\nstroke sets how thick the lines of a (supported) icon are: light, regular, or bold.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li rehjpyyh stroke=light &gt;}}\n\n\n\n{{&lt; li rehjpyyh stroke=regular &gt;}}\n\n\n\n{{&lt; li rehjpyyh stroke=bold &gt;}}"
-  },
-  {
-    "objectID": "index.html#accessibility",
-    "href": "index.html#accessibility",
-    "title": "Lordicon Extension for Quarto",
-    "section": "Accessibility",
-    "text": "Accessibility\nIcons are decorative by default and hidden from assistive technology (aria-hidden=\"true\"). When an icon carries meaning, pass a label and it is exposed to screen readers with role=\"img\" and that name.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li ibydboev &gt;}} (decorative)\n\n\n\n{{&lt; li ibydboev label=\"Money bag\" &gt;}}"
-  },
-  {
-    "objectID": "index.html#advanced",
-    "href": "index.html#advanced",
-    "title": "Lordicon Extension for Quarto",
-    "section": "Advanced",
-    "text": "Advanced\n\nCSS Styling — resize, position, and style icons\nAnimations — control triggers, states, speed, and sequences\nTargets — trigger an icon’s animation from another element"
-  },
-  {
-    "objectID": "animations.html",
-    "href": "animations.html",
-    "title": "Animations",
-    "section": "",
-    "text": "Every icon ships with one or more animations. These arguments control when an animation plays, which one plays, and how it plays."
-  },
-  {
-    "objectID": "animations.html#trigger",
-    "href": "animations.html#trigger",
-    "title": "Animations",
-    "section": "Trigger",
-    "text": "Trigger\nThe trigger argument controls which event plays an icon’s animation. The supported values are in, click, hover, loop, loop-on-hover, morph, boomerang, and sequence. With no trigger, the icon simply rests on its first frame.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li jjoolpwc &gt;}} (no trigger)\n\n\n\n{{&lt; li jjoolpwc trigger=in &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=click &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=hover &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=loop &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=loop-on-hover &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=morph &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=boomerang &gt;}}"
-  },
-  {
-    "objectID": "animations.html#state",
-    "href": "animations.html#state",
-    "title": "Animations",
-    "section": "State",
-    "text": "State\nMany icons bundle several named animation states. Select one with the state argument (browse an icon’s states on the lordicon.com website). For local files, state needs a Raw export, which carries every animation; the smaller Minified export keeps only the one chosen in the editor. See Source.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li laqlvddb trigger=morph state=morph-mantion &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=morph state=morph-neighbourhood &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop state=loop-3d-roll &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop state=loop-smoke &gt;}}"
-  },
-  {
-    "objectID": "animations.html#delay",
-    "href": "animations.html#delay",
-    "title": "Animations",
-    "section": "Delay",
-    "text": "Delay\nLooping animations can pause between each loop for a set number of milliseconds using the delay argument.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li laqlvddb trigger=loop  &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop delay=3000 &gt;}}"
-  },
-  {
-    "objectID": "animations.html#speed",
-    "href": "animations.html#speed",
-    "title": "Animations",
-    "section": "Speed",
-    "text": "Speed\nThe speed argument multiplies the playback rate. Values below 1 play in slow motion; values above 1 play faster.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li laqlvddb trigger=loop speed=0.5 &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop speed=2 &gt;}}"
-  },
-  {
-    "objectID": "animations.html#sequence",
-    "href": "animations.html#sequence",
-    "title": "Animations",
-    "section": "Sequence",
-    "text": "Sequence\nThe sequence trigger chains states, plays, and delays together into a custom scenario defined by the sequence argument. Steps are separated by commas: state:NAME selects an animation, play (or play:reverse) runs it, and delay:MS pauses. The available state names come from the icon’s own markers.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; lif gift_raw.json trigger=sequence sequence=\"state:hover-squeeze,play,delay:500,state:hover-roll,play,delay:500\" &gt;}}"
-  },
-  {
     "objectID": "target.html",
     "href": "target.html",
     "title": "Targets",
@@ -159,5 +68,96 @@
     "title": "CSS Styling",
     "section": "Approach 4: Shortcode Style",
     "text": "Approach 4: Shortcode Style\nTo style individual icons in-place with no need for the HTML chunk or .css file, you can put styling directly into the style argument.\n\nCode\n{{&lt; li laqlvddb style=width:50px;height:50px;border:0; &gt;}}\n{{&lt; li laqlvddb style=width:100px;height:100px;border:0; &gt;}}\n\n\nDemo"
+  },
+  {
+    "objectID": "animations.html",
+    "href": "animations.html",
+    "title": "Animations",
+    "section": "",
+    "text": "Every icon ships with one or more animations. These arguments control when an animation plays, which one plays, and how it plays."
+  },
+  {
+    "objectID": "animations.html#trigger",
+    "href": "animations.html#trigger",
+    "title": "Animations",
+    "section": "Trigger",
+    "text": "Trigger\nThe trigger argument controls which event plays an icon’s animation. The supported values are in, click, hover, loop, loop-on-hover, morph, boomerang, and sequence. With no trigger, the icon simply rests on its first frame.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li jjoolpwc &gt;}} (no trigger)\n\n\n\n{{&lt; li jjoolpwc trigger=in &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=click &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=hover &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=loop &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=loop-on-hover &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=morph &gt;}}\n\n\n\n{{&lt; li jjoolpwc trigger=boomerang &gt;}}"
+  },
+  {
+    "objectID": "animations.html#state",
+    "href": "animations.html#state",
+    "title": "Animations",
+    "section": "State",
+    "text": "State\nMany icons bundle several named animation states. Select one with the state argument (browse an icon’s states on the lordicon.com website). For local files, state needs a Raw export, which carries every animation; the smaller Minified export keeps only the one chosen in the editor. See Source.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li laqlvddb trigger=morph state=morph-mantion &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=morph state=morph-neighbourhood &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop state=loop-3d-roll &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop state=loop-smoke &gt;}}"
+  },
+  {
+    "objectID": "animations.html#delay",
+    "href": "animations.html#delay",
+    "title": "Animations",
+    "section": "Delay",
+    "text": "Delay\nLooping animations can pause between each loop for a set number of milliseconds using the delay argument.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li laqlvddb trigger=loop  &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop delay=3000 &gt;}}"
+  },
+  {
+    "objectID": "animations.html#speed",
+    "href": "animations.html#speed",
+    "title": "Animations",
+    "section": "Speed",
+    "text": "Speed\nThe speed argument multiplies the playback rate. Values below 1 play in slow motion; values above 1 play faster.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li laqlvddb trigger=loop speed=0.5 &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop &gt;}}\n\n\n\n{{&lt; li laqlvddb trigger=loop speed=2 &gt;}}"
+  },
+  {
+    "objectID": "animations.html#sequence",
+    "href": "animations.html#sequence",
+    "title": "Animations",
+    "section": "Sequence",
+    "text": "Sequence\nThe sequence trigger chains states, plays, and delays together into a custom scenario defined by the sequence argument. Steps are separated by commas: state:NAME selects an animation, play (or play:reverse) runs it, and delay:MS pauses. The available state names come from the icon’s own markers.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; lif gift_raw.json trigger=sequence sequence=\"state:hover-squeeze,play,delay:500,state:hover-roll,play,delay:500\" &gt;}}"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Lordicon Extension for Quarto",
+    "section": "",
+    "text": "This extension lets you embed animated Lordicon icons in your Quarto HTML documents (including Reveal.js slides). Icons can be pulled from the official CDN or loaded from local .json files, and customized on the fly without editing the source files."
+  },
+  {
+    "objectID": "index.html#showcase",
+    "href": "index.html#showcase",
+    "title": "Lordicon Extension for Quarto",
+    "section": "Showcase",
+    "text": "Showcase"
+  },
+  {
+    "objectID": "index.html#source",
+    "href": "index.html#source",
+    "title": "Lordicon Extension for Quarto",
+    "section": "Source",
+    "text": "Source\nThe {{&lt; li &gt;}} shortcode downloads an icon from the Lordicon CDN and renders it by its code — the eight-character identifier in https://cdn.lordicon.com/CODE.json. Lordicon used to hand these out under Export → Embed HTML; the redesigned export UI no longer offers that, so existing codes still resolve but new icons are easier to use via {{&lt; lif &gt;}}.\nThe {{&lt; lif &gt;}} shortcode renders an icon from a local .json file instead. Download one by opening an icon on lordicon.com, clicking Edit and download, then in the right-hand panel opening the format menu and clicking the options icon next to Lottie.\nThat options icon offers two Lottie flavors, and which one you want depends on where you plan to customize the icon:\n\nMinified (the default) bakes the editor’s colors and stroke into the shapes and keeps only the animation you picked. Much smaller file, and the right choice when the icon already looks the way you want.\nRaw keeps every animation along with the control layer that colors, stroke, and state write into. Choose this to customize per use from the shortcode.\n\n\n\n\n\n\n\nNote\n\n\n\nThe two approaches don’t combine: colors, stroke, and state have no effect on a minified file, since those values were baked in at export. Either re-export as Raw or set them in the editor and leave the arguments off. The extension prints a warning when it sees that combination.\n\n\n\n\n\n\n\n\n\nShortcode\nRendered\n\n\n\n\n{{&lt; li ibydboev &gt;}}\n\n\n\n{{&lt; lif gift_raw.json &gt;}}"
+  },
+  {
+    "objectID": "index.html#colors",
+    "href": "index.html#colors",
+    "title": "Lordicon Extension for Quarto",
+    "section": "Colors",
+    "text": "Colors\ncolors recolors an icon. Outline icons usually have just a primary and secondary color, while flat and lineal icons can have many more. Give each color in rank:color form (ranks are primary, secondary, tertiary, …) and separate multiple colors with commas. Colors accept HTML color names or hex codes.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li rehjpyyh &gt;}}\n\n\n\n{{&lt; li rehjpyyh colors=primary:gold &gt;}}\n\n\n\n{{&lt; li rehjpyyh colors=secondary:gold &gt;}}\n\n\n\n{{&lt; li rehjpyyh colors=primary:gray,secondary:orange &gt;}}\n\n\n\n{{&lt; li rehjpyyh colors=primary:#4030e8,secondary:#ee66aa &gt;}}"
+  },
+  {
+    "objectID": "index.html#stroke",
+    "href": "index.html#stroke",
+    "title": "Lordicon Extension for Quarto",
+    "section": "Stroke",
+    "text": "Stroke\nstroke sets how thick the lines of a (supported) icon are: light, regular, or bold.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li rehjpyyh stroke=light &gt;}}\n\n\n\n{{&lt; li rehjpyyh stroke=regular &gt;}}\n\n\n\n{{&lt; li rehjpyyh stroke=bold &gt;}}"
+  },
+  {
+    "objectID": "index.html#accessibility",
+    "href": "index.html#accessibility",
+    "title": "Lordicon Extension for Quarto",
+    "section": "Accessibility",
+    "text": "Accessibility\nIcons are decorative by default and hidden from assistive technology (aria-hidden=\"true\"). When an icon carries meaning, pass a label and it is exposed to screen readers with role=\"img\" and that name.\nARIA attributes you pass yourself take precedence. Passing aria-hidden, aria-label, aria-labelledby, or role stops the icon from being marked aria-hidden=\"true\". With label, your own role or aria-label replaces the one label would add. When you set aria-label directly, also pass role=\"img\" so screen readers announce the icon.\n\n\n\n\n\n\n\nShortcode\nIcon\n\n\n\n\n{{&lt; li ibydboev &gt;}} (decorative)\n\n\n\n{{&lt; li ibydboev label=\"Money bag\" &gt;}}\n\n\n\n{{&lt; li ibydboev role=\"img\" aria-label=\"Money bag\" &gt;}}"
+  },
+  {
+    "objectID": "index.html#advanced",
+    "href": "index.html#advanced",
+    "title": "Lordicon Extension for Quarto",
+    "section": "Advanced",
+    "text": "Advanced\n\nCSS Styling — resize, position, and style icons\nAnimations — control triggers, states, speed, and sequences\nTargets — trigger an icon’s animation from another element"
   }
 ]
