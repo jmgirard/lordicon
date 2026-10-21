@@ -1,6 +1,6 @@
 # M002: Start CHANGELOG.md for past releases
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -22,7 +22,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 ## Acceptance criteria
 
 - [x] AC1: At M002's review head, `CHANGELOG.md` at the repo root has one `## <version>` section for each tag that `git tag -l 'v*'` lists, newest first, and no other `## ` section. The version is the tag name without its `v`.
-- [ ] AC2: Each section lists the user-visible changes in its range, `git log <previous v* tag>..<tag>`, or says "No user-visible changes." The first tag's range is all history up to it. Each entry names a change that a commit in its range makes.
+- [ ] AC2: Each section names each change in its version's diff that affects the installed extension. The diff is `git diff <previous v* tag> <tag> -- _extensions/lordicon/ src/ package.json package-lock.json ':(exclude)_extensions/lordicon/assets/js/bundle.js'`, and the first tag diffs against the empty tree. The changes that count are to the shortcodes, their arguments, and their output in each format, render warnings, the required Quarto version, the CSS that the extension adds, and the bundled `lord-icon-element`, `@lordicon/element`, or `lottie-web` version, added, removed, or changed. A section with no such change names another change or says "No changes to the installed extension." Each entry names a change that a commit in `git log <previous v* tag>..<tag>` makes, or for the first tag, a commit up to that tag.
 - [x] AC3: README links to `CHANGELOG.md`.
 
 ## Coverage
@@ -37,7 +37,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - [x] T2: Write `CHANGELOG.md` with plain `## <version>` headings and no Unreleased heading. Add the README link. Update the PROFILE `## changelog` slot and the DESIGN Conventions bullet.
 - [x] T3: Compare the file's `## ` headings with the `git tag -l 'v*'` list by a one-line script, and record the result in the work log.
 - [x] T4: Review return 1: add the missing 0.3.0, 0.5.1, and 0.7.1 README entries, narrow the 0.6.0 forwarding wording, and drop the 0.3.0 sentence that names no change.
-- [ ] T5: Review pass 2: add the README and demo entries found (0.0.2, 0.2.0, 0.5.0, 0.5.1, 0.7.1, 0.7.2), name the 0.0.1 player versions, change the opening line to "lists the changes", and amend AC2.
+- [x] T5: Review pass 2: add the README and demo entries found (0.0.2, 0.2.0, 0.5.0, 0.5.1, 0.7.1, 0.7.2), name the 0.0.1 player versions, change the opening line to "lists the changes", and amend AC2.
 
 ## Work log
 
@@ -59,6 +59,10 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - 2026-10-20: T5 added (minor amendment). The seven README and demo entries from pass 2 are in CHANGELOG.md, each checked with `git show` or `git diff` at its tag. The 0.0.1 section names `lord-icon-element` 3.4.2 and `lottie-web` 5.9.6 from `package-lock.json`, and the opening line says "lists the changes".
 - 2026-10-20: re-audit: AC2 (full) — first reader on the drafted amendment: 2 blocking findings. The diff paths read as excluding `src/` and `package-lock.json`, and the range definition was dropped. Also a new shortcode fit no category, the fallback could hide README changes, and the wording addressed the verifier. All five were fixed in the second draft.
 - 2026-10-20: re-audit: AC2 (full) — second reader: pass on reachability, bounded promise, instrument, and proportionality, and confirmed as a narrowing. It asked for three wording fixes: a working pathspec exclude, "added, removed, or changed" for player versions, and "their output in each format". It also asked for a note that D-002's "each user-visible change" goes beyond AC2, because README entries are best effort. This is the second re-audit line for AC2, so the further wording change goes to the user.
+- 2026-10-20: user chose "Narrow it" at the AC2 stop; the second reader's three fixes are applied.
+- 2026-10-20: amendment return: AC2 — "Each section names each change in its version's diff that affects the installed extension."
+- 2026-10-20: note: D-002 and the PROFILE gate ask for an entry for each user-visible change. AC2 now promises completeness only for the installed extension, and README and demo entries are best effort. This is a deliberate difference, not drift.
+- 2026-10-20: T5 done. Verify: 19 headings match the tags, `cairn_validate.py` passed.
 - 2026-10-20: claim audit: not re-run for T4. Each added claim was read against its commit in this session, and review return 1's reviewers read the same ranges.
 
 ## Decisions
