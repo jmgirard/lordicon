@@ -1,7 +1,7 @@
 # Roadmap
 
 _The only authority on milestone status. Grouped by status, not ID._
-_Last hygiene check: 2026-10-20 (cairn-init scaffold)_
+_Last hygiene check: 2026-10-20 (design interview added four candidates)_
 
 ## Milestones
 
@@ -22,3 +22,7 @@ _Last hygiene check: 2026-10-20 (cairn-init scaffold)_
      ending with `(#N)` for a row written for GitHub issue N, such as
      `Fix SE of skewness calculation (#100)`; `/cairn-triage` offers a new title for one
      with fewer than 5 words or more than 40 characters; tracking-rules "Candidate short title" has the whole rule -->
+- [high] Let user ARIA attributes beat defaults: with no `label`, `lordicon.lua` adds `aria-hidden="true"` even when the user passes `aria-label`, `aria-hidden`, or `role`; skip the default then (IP1, GP5) — added 2026-10-20 — DESIGN Known issues
+- Start a CHANGELOG.md for releases: create the file with past versions from the `v*` tags and commit subjects (D-002) — added 2026-10-20 — PROFILE changelog slot
+- Add a render check with fixtures: a fixture `.qmd` and a script that renders it and checks the `<lord-icon>` output, so verify is not only by eye — added 2026-10-20 — DESIGN Known issues
+- Close out the element API todo (#4): `loading` already passes through; an `icon` argument needs a GP3 case or a no — added 2026-10-20 — https://github.com/jmgirard/lordicon/issues/4

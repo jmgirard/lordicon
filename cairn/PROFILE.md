@@ -19,11 +19,10 @@ present and no language, plugin, or `Dockerfile` marker is. With a
 `Dockerfile`, the disambiguation gate asks.
 
 ## verify
-Run by `/milestone-implement` (per task) and `/hotfix` (gate-lite). Declare the
-repo's own check here. It is usually a render of the repo's example or test
-document, such as `quarto render example.qmd`. Add any test command the repo
-has for its Lua or JavaScript. If the repo has none, state "no automated
-verify" and rely on the acceptance-criteria evidence.
+Run by `/milestone-implement` (per task) and `/hotfix` (gate-lite). This repo
+has no automated tests. Run `quarto render` at the repo root, which renders the
+demo site into `docs/`. Then open each changed demo page in a browser and make
+sure that its icons load and animate. After a player change, run `npm run build` first.
 
 ## consistency-gate
 Toolchain checks `/milestone-review` runs *in addition to* the universal
@@ -46,7 +45,8 @@ tracking-rules. An extension is checked by rendering, not by calling functions:
   raises the version wherever the repo ties the asset path to it.
 
 ## release-walk
-The release procedure `/cairn-release` follows. The version marker is
+The release procedure `/cairn-release` follows. Here the version rises in each
+shipping merge (D-001), so the tag-only arm is the usual one. The version marker is
 `version:` in `_extensions/<name>/_extension.yml` (or `.yaml`). A repo that
 keeps the same version in more files names each file here. One example is an
 `add_html_dependency{ version = ... }` call in the extension's Lua filter.
@@ -113,7 +113,5 @@ universal openers (distribution ambition and numeric-work oracles):
   - Lands in: CLAUDE.md conventions and the `release-walk` marker list.
 
 ## changelog
-The repo's changelog file, read by `/hotfix`, the release-walk, and the
-consistency-gate. Declare it here, for example `CHANGELOG.md`. If the repo
-keeps no changelog, write "none": `/hotfix` then skips the changelog entry,
-and the release-walk writes its release notes from git history.
+`CHANGELOG.md` (D-002). The file does not exist yet; a ROADMAP candidate
+creates it. Until it exists, read this slot as "none".
