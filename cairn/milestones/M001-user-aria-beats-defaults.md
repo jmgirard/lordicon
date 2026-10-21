@@ -68,6 +68,7 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 - 2026-10-20: T4 named `python3 _tests/check_aria.py` in the PROFILE `verify` slot and raised `version:` to 0.7.2. The check reported 0 failures, and `quarto render` left `docs/` unchanged. DESIGN.md Conventions and Known issues were updated to match the code (corrected M001).
 - 2026-10-20: claim audit: 13 claims read, 1 corrected — README.md, index.qmd (the four attributes count only with a non-empty value). The reader re-read the corrected wording and found it TRUE. `docs/` was re-rendered.
 - 2026-10-20: implement complete: all four tasks done, the check reports 0 failures, and `quarto render` passes. Status set to review.
+- 2026-10-20: step-7 approval: m001-user-aria-beats-defaults approved for merge
 
 ## Decisions
 
