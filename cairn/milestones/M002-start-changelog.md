@@ -1,6 +1,6 @@
 # M002: Start CHANGELOG.md for past releases
 
-- **Status:** review
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -54,6 +54,7 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - 2026-10-20: claim audit: 57 claims read, 5 corrected — CHANGELOG.md (0.1.0 Babel claim dropped and the RStudio note moved there from 0.2.0, 0.3.1 player versions split with 0.3.0, 0.5.0 screenshot is static, 0.3.0 cause tied to the #2 issue title). Five omissions added after a check against the tags: 0.3.0 player versions, 0.5.0 default size removed, 0.5.2 version-number fix, 0.6.0 Quarto 1.3.0 minimum, 0.5.4 README export steps.
 - 2026-10-20: review return 1: AC2 fails as written. 0.3.0 omits the README RStudio version note (4ea39f2). 0.7.1 omits the README CDN-code text (825985a) and the `loading` values (4cf5d0a). 0.5.1 omits the CSS Styling page and the removed README sizing text. Also fix the too-broad 0.6.0 "every pair" wording and drop the 0.3.0 no-change sentence. The 0.7.2 rewording is already on disk.
 - 2026-10-20: T4 added for review return 1 (minor amendment) and done. Added the 0.3.0 RStudio note, the 0.5.1 CSS Styling page, and the 0.7.1 CDN-code and `loading` entries, each checked with `git show` at its commit or tag. The 0.6.0 wording now excludes `label` and empty values, and the 0.3.0 size sentence is gone. Verify: 19 headings match the tags, `check_aria.py` 0 failures, render ok.
+- 2026-10-20: amendment routed: AC2 — pass 2 found README how-to changes still missing after return 1. "Lists the user-visible changes" has no procedure that decides which README edits count, so each pass finds more. AC2 needs a promise that `git diff` over named files settles.
 - 2026-10-20: claim audit: not re-run for T4. Each added claim was read against its commit in this session, and review return 1's reviewers read the same ranges.
 
 ## Decisions
@@ -82,3 +83,18 @@ The repo has a CHANGELOG.md that lists each tagged version with its user-visible
 - blame-history #1: the branch does not raise the version — reject, planned change: M002 changes nothing `quarto add` installs (D-001; plan Out)
 - blame-history #2: the ROADMAP row moves to review — reject, false as a defect: a normal status step
 - ripple #1: the "Start a CHANGELOG.md for releases" candidate row still reads open — reject, planned change: post-merge hygiene graduates a `started M002` row
+- pass 2 (after return 1): main still at c61003d; AC1 diff empty (19 sections); AC3 `README.md:28`; `cairn_validate.py` all checks passed.
+- spawned: diff-bug, blame-history, prior-review, ripple (the last three as one Haiku reader on the T4 diff)
+- AC2: not ticked. Every entry is true and in range, but the diff-bug ledger finds README how-to changes still missing. The repair would widen a list that recall fixes, so this routes as an amendment of AC2 (widening test), not a defect return.
+- diff-bug #1: 0.7.2 omits the README advice to pass `role="img"` with `aria-label` or `aria-labelledby` — fix now (with the amendment)
+- diff-bug #2: 0.0.2 omits the README CSS sizing and `class` styling text — fix now (with the amendment)
+- diff-bug #3: 0.7.1 omits that the demo home page moved from `example.html` to the site root (`docs/example.html` is at v0.7.0 and not at v0.7.1) — fix now (with the amendment)
+- diff-bug #4: 0.7.1 "lordicon.com no longer gives out new ones" overstates the README — fix now, reworded to the export UI no longer offering codes
+- diff-bug #5: 0.5.0 "new usage instructions" is vague; the change is the lordicon.com lookup and download steps — fix now (with the amendment)
+- diff-bug #6: 0.2.0 omits the README download steps and the reworded code lookup — fix now (with the amendment)
+- diff-bug #7: 0.5.1 says the README adds examples, but it only links to the new pages — fix now (with the amendment)
+- diff-bug #8: 0.5.3's Babel plugin swap has no entry — reject, planned change: build-tool-only rule
+- diff-bug #9: 0.4.0 renames the HTML dependency folder — reject, false as a defect: internal, and the reviewer agrees that no entry is correct
+- ripple #1 (pass 2): same as diff-bug #4 — fix now, same edit
+- blame-history #1 (pass 2): the 0.3.0 edit dropped the true 128-pixel context sentence — reject, planned change: return 1 removed it because it names no change, and 0.5.0 records the size removal
+- prior-review #1 (pass 2): the 0.7.2 entry matches M001's fixed ARIA wording — noted, no action

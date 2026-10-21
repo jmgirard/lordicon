@@ -10,7 +10,7 @@ This file lists the user-visible changes in each version of the extension, newes
 
 - If a Minified Lottie export gets `colors`, `stroke`, or `state`, `lif` warns at render time. These arguments have no effect on that export. The warning names the two fixes.
 - The README explains the Raw and Minified Lottie exports and the new download path on lordicon.com.
-- The README says what a CDN code is and that lordicon.com no longer gives out new ones. It recommends `lif` with a downloaded `.json` file for new icons.
+- The README says what a CDN code is and that the export UI on lordicon.com no longer offers codes. It recommends `lif` with a downloaded `.json` file for new icons.
 - The README lists the `delay` value of `loading`, used with `loading-delay=MS`.
 - The demo site is now a themed Quarto website with Speed, Sequence, and accessibility examples.
 
