@@ -14,3 +14,9 @@ choices with rationale — never deferrals ("not now" is a ROADMAP fact).
 **Context:** Users of `quarto add` see no commit log, and release notes so far came only from commit subjects.
 **Decision:** The repo keeps `CHANGELOG.md`, with an entry for each user-visible change; the PROFILE `changelog` slot names it.
 **Consequences:** The review consistency gate checks for an entry in each milestone; the file is created by a candidate milestone, and until it exists the slot reads as none.
+
+### D-003 (2026-10-20): Reserve `src` and skip invalid attribute names (narrows IP1 and IP5)
+
+**Context:** A user `src` key gives a second `src` attribute, and Quarto's HTML post-processing drops it. A key that holds whitespace, a control character, `"`, `'`, `>`, `/`, or `=` gives broken markup or stray attributes. IP1 says every user attribute reaches `<lord-icon>` unchanged. IP5 asks for one warning release before the passthrough meaning breaks.
+**Decision:** The user chose both changes at the M003 plan gate. A `src` key in any letter case is reserved like `label`: the first argument's source stays, and the render warns. A key that HTML does not allow as an attribute name is left out of the element, and the render warns. This starts in 0.7.3 with no warning release first, because such a key never gave one valid attribute. M003 changes the IP1 text to name both exceptions.
+**Consequences:** Letting a user `src` win was rejected, because the first argument would then be ignored. A warning release before the skip was rejected, because it keeps broken markup one release longer and protects no working output.
