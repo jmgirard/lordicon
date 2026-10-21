@@ -1,0 +1,31 @@
+---
+title: "ARIA fixture"
+---
+
+Test document for `check_aria.py`. Each icon's `id` names its case.
+
+## User ARIA attributes with no label
+
+{{< li wlpxtupd id=hidden-li aria-hidden=false >}}
+{{< li wlpxtupd id=arialabel-li aria-label="Bell" >}}
+{{< li wlpxtupd id=labelledby-li aria-labelledby=caption >}}
+{{< li wlpxtupd id=role-li role=presentation >}}
+{{< lif gift_raw.json id=arialabel-lif aria-label="Gift" >}}
+{{< li wlpxtupd id=arialabel-escaped aria-label='Tom & "Jerry"' >}}
+
+## Default stays
+
+{{< li wlpxtupd id=bare >}}
+{{< li wlpxtupd id=empty-arialabel aria-label="" >}}
+{{< li wlpxtupd id=empty-label label="" >}}
+{{< li wlpxtupd id=describedby class=big aria-describedby=caption >}}
+
+## Label
+
+{{< li wlpxtupd id=label label="Bell" >}}
+{{< li wlpxtupd id=label-role label="Bell" role=presentation >}}
+{{< li wlpxtupd id=label-arialabel label="Bell" aria-label="Other" >}}
+{{< li wlpxtupd id=label-both label="Bell" role=presentation aria-label="Other" >}}
+{{< li wlpxtupd id=label-escaped label='Tom & "Jerry"' >}}
+
+[Caption]{#caption}

@@ -44,7 +44,9 @@ Convenience shorthands do not qualify.
 
 - Every shortcode `key=value` except `label` goes to the `<lord-icon>` element
   as an attribute. Attributes are escaped and sorted for stable output.
-- `label` gives `role="img"` and `aria-label`; no label gives `aria-hidden="true"`.
+- `label` gives `role="img"` and `aria-label`, each only when the user did not
+  pass it. No label gives `aria-hidden="true"`, unless the user passes
+  `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` (corrected M001).
 - The player reaches readers as a self-hosted bundle. webpack builds
   `@lordicon/element` into the committed `assets/js/bundle.js`, and the
   extension never loads a script from a third-party host. A `lif` icon needs no
@@ -110,15 +112,16 @@ are never reused or renumbered; retiring one takes a D-entry.
   `npm run build` rebuilds it (`webpack.config.js`).
 - Demo site: `_quarto.yml`, `index.qmd`, `css_styling.qmd`, `animations.qmd`,
   `target.qmd`, `custom.scss`, rendered to the committed `docs/` directory.
+  The `render: ["*.qmd"]` list in `_quarto.yml` limits the site to root `.qmd`
+  pages, so a new page in another format must be added to that list.
+- `_tests/`: `check_aria.py` checks the ARIA attributes of `aria.qmd` icons in
+  the rendered page and in the raw filter output from `raw_output.lua`.
 
 ## Known issues
 
-- With no `label`, the extension adds `aria-hidden="true"` even when the user
-  passes `aria-label`, `aria-hidden`, or `role` directly. This breaks IP1
-  (ROADMAP candidate).
-
-- The repo has no automated checks. Nothing renders a fixture or tests the Lua,
-  so a change is checked by eye in a browser (as in 09a2e5f).
+- The only automated check is `_tests/check_aria.py` (M001), which covers the
+  ARIA attributes. Other shortcode behavior is checked by eye in a browser
+  (as in 09a2e5f).
 - lordicon.com no longer gives out CDN codes in its export UI, so `li` works for
   codes users already have but new codes are hard to find (README).
 - RStudio Viewer shows icons only from version 2022.12.0+353 (README).

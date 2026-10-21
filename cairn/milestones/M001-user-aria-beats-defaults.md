@@ -1,13 +1,13 @@
 # M001: Let user ARIA attributes beat defaults
 
-- **Status:** planned
+- **Status:** review
 - **Priority:** high
 - **Depends on:** —
 - **Driving RR:** —
 - **Principles touched:** IP1, IP2, GP4, GP5
 - **Resolves:** —
 - **Surface tier:** user-facing — it changes the HTML that every `li` and `lif` shortcode gives
-- **Branch/PR:** —
+- **Branch/PR:** m001-user-aria-beats-defaults
 
 ## Goal
 
@@ -21,12 +21,12 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 
 ## Acceptance criteria
 
-- [ ] AC1: A `li` or `lif` shortcode with no non-empty `label` can pass a non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`. Its `<lord-icon>` then has that attribute with the escaped value and no other `aria-hidden` attribute.
-- [ ] AC2: A shortcode with no non-empty `label`, and with none of those four attributes at a non-empty value, still gets `aria-hidden="true"`.
-- [ ] AC3: A shortcode with a non-empty `label` gets `role="img"` and an `aria-label` that holds the escaped label. If the user passes a non-empty `role` or `aria-label`, the element keeps the user's value and the extension adds no second attribute with that name.
-- [ ] AC4: The README "Accessibility" section and the `index.qmd` "Accessibility" section say that a user `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` replaces the `aria-hidden` default. They also say that with `label`, a user `role` or `aria-label` takes the place of the one that `label` adds.
-- [ ] AC5: `docs/index.html` holds the new Accessibility text and a demo row whose `<lord-icon>` has a user `role="img"` and `aria-label`.
-- [ ] AC6: `version:` in `_extensions/lordicon/_extension.yml` is one patch above the version on `main` at merge (`0.7.2` at planning, D-001).
+- [x] AC1: A `li` or `lif` shortcode with no non-empty `label` can pass a non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`. Its `<lord-icon>` then has that attribute with the escaped value and no other `aria-hidden` attribute.
+- [x] AC2: A shortcode with no non-empty `label`, and with none of those four attributes at a non-empty value, still gets `aria-hidden="true"`.
+- [x] AC3: A shortcode with a non-empty `label` gets `role="img"` and an `aria-label` that holds the escaped label. If the user passes a non-empty `role` or `aria-label`, the element keeps the user's value and the extension adds no second attribute with that name.
+- [x] AC4: The README "Accessibility" section and the `index.qmd` "Accessibility" section say that a user `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` replaces the `aria-hidden` default. They also say that with `label`, a user `role` or `aria-label` takes the place of the one that `label` adds.
+- [x] AC5: `docs/index.html` holds the new Accessibility text and a demo row whose `<lord-icon>` has a user `role="img"` and `aria-label`.
+- [x] AC6: `version:` in `_extensions/lordicon/_extension.yml` is one patch above the version on `main` at merge (`0.7.2` at planning, D-001).
 
 ## Coverage
 
@@ -39,10 +39,10 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 
 ## Tasks
 
-- [ ] T1: Add a test `.qmd` and a check script that renders it and reads the attributes of each `<lord-icon>`. Keep the test document out of the demo site, and make sure that `docs/` gets no page for it. Cases: each of the four attributes through `li`, and one through `lif`. A value with `&` and `"`. `aria-label=""` alone and `label=""` alone, which expect the default. A bare icon. An icon with only `class` and `aria-describedby`. `label` alone, `label` with `role`, `label` with `aria-label`, `label` with both, and a label with `&` and `"`. Run the script on the unchanged filter and log which cases fail.
-- [ ] T2: Change `build_element` (`lordicon.lua:86-93`) so that the `aria-hidden` default yields to the four attributes, and `label` adds only the `role` and `aria-label` that the user did not pass. Run the check script until every case passes.
-- [ ] T3: Update the README and `index.qmd` Accessibility text. Add a demo row with `role="img"` and `aria-label`, and advise `role="img"` with a user `aria-label`. Run `quarto render` and look at the page in a browser.
-- [ ] T4: Name the check script in the `verify` slot of `cairn/PROFILE.md`. Raise `version:` one patch, then run the check script and `quarto render` again.
+- [x] T1: Add a test `.qmd` and a check script that renders it and reads the attributes of each `<lord-icon>`. Keep the test document out of the demo site, and make sure that `docs/` gets no page for it. Cases: each of the four attributes through `li`, and one through `lif`. A value with `&` and `"`. `aria-label=""` alone and `label=""` alone, which expect the default. A bare icon. An icon with only `class` and `aria-describedby`. `label` alone, `label` with `role`, `label` with `aria-label`, `label` with both, and a label with `&` and `"`. Run the script on the unchanged filter and log which cases fail.
+- [x] T2: Change `build_element` (`lordicon.lua:86-93`) so that the `aria-hidden` default yields to the four attributes, and `label` adds only the `role` and `aria-label` that the user did not pass. Run the check script until every case passes.
+- [x] T3: Update the README and `index.qmd` Accessibility text. Add a demo row with `role="img"` and `aria-label`, and advise `role="img"` with a user `aria-label`. Run `quarto render` and look at the page in a browser.
+- [x] T4: Name the check script in the `verify` slot of `cairn/PROFILE.md`. Raise `version:` one patch, then run the check script and `quarto render` again.
 
 ## Work log
 
@@ -57,7 +57,51 @@ The extension's ARIA defaults give way to ARIA attributes that the user passes.
 - 2026-10-20: plan gate chose a silent user win over a warning because the icon does not fail (GP2); falsified by user reports that `label` had no visible effect.
 - 2026-10-20: plan gate chose a test document and check script over checking by eye because the repo has no regression guard; falsified by the script being unable to run where `quarto render` runs.
 - 2026-10-20: `cairn_validate` failed "principles slot valid" because DESIGN.md wrote principles as `- IP1 (Name):` and the check reads `- IP1:`. Moved the colon on all 11 principle lines, with no change to their text.
+- 2026-10-20: implement started on branch m001-user-aria-beats-defaults. Untracked `.DS_Store` left unstaged.
+- 2026-10-20: T1 chose `_tests/aria.qmd` (Quarto skips `_` paths in a project render) and `_tests/check_aria.py` (Python standard library only, no new dependency). The script renders the fixture in a temporary directory with a copy of `_extensions/` and `gift_raw.json`, and identifies each case by its `id`.
+- 2026-10-20: T1 run on the unchanged filter: 5 of 15 cases fail (arialabel-li, labelledby-li, role-li, arialabel-lif, arialabel-escaped), each with `aria-hidden` 'true' where none is expected.
+- 2026-10-20: T1 finding: Quarto 1.10.19's HTML post-processing keeps only the first of two same-name attributes, so the old filter's duplicates never reach the page and hidden-li and the label-clash cases pass on the unchanged filter. T2 plants a defect to show those cases can fail.
+- 2026-10-20: minor amendment: `quarto inspect` listed the `cairn/*.md` files as site inputs, so a root render would publish them to `docs/`. Added `render: ["*.qmd"]` to `_quarto.yml`; `quarto inspect` now lists only the four root pages.
+- 2026-10-20: T2 added `ARIA_OVERRIDES` and a `passed` set in `build_element`. The check script reports 15 icons, 15 cases, 0 failures.
+- 2026-10-20: T2 planted defect (extension ARIA attributes inserted before the user's): the check reported 10 failures, among them hidden-li, label-role, label-arialabel, and label-both, so those cases can fail. Plant removed, and the check is back to 0 failures.
+- 2026-10-20: T3 updated the README and `index.qmd` Accessibility text and added the `role="img" aria-label="Money bag"` demo row. `quarto render` passed. The other pages' diffs in `docs/` come from Quarto 1.10.18 → 1.10.19 (generator tag, syntax CSS hash). On a local server, all three Accessibility icons were defined and ready, and each had an SVG.
+- 2026-10-20: T4 named `python3 _tests/check_aria.py` in the PROFILE `verify` slot and raised `version:` to 0.7.2. The check reported 0 failures, and `quarto render` left `docs/` unchanged. DESIGN.md Conventions and Known issues were updated to match the code (corrected M001).
+- 2026-10-20: claim audit: 13 claims read, 1 corrected — README.md, index.qmd (the four attributes count only with a non-empty value). The reader re-read the corrected wording and found it TRUE. `docs/` was re-rendered.
+- 2026-10-20: implement complete: all four tasks done, the check reports 0 failures, and `quarto render` passes. Status set to review.
+- 2026-10-20: step-7 approval: m001-user-aria-beats-defaults approved for merge
 
 ## Decisions
 
 ## Review
+
+Review pass 1, 2026-10-20, branch head 774fd4b, synced with origin/main d201f39.
+
+- AC1 evidence: `python3 _tests/check_aria.py` exit 0, "15 icons read, 15 cases, 0 failures". The cases hidden-li (`aria-hidden` 'false'), arialabel-li, labelledby-li, role-li, arialabel-lif, and arialabel-escaped (value `Tom & "Jerry"` read back unchanged) have the user attribute and no `aria-hidden` 'true'. The script fails on any attribute name that appears twice on one element.
+- AC2 evidence: same run. The cases bare, empty-arialabel, empty-label, and describedby (`class` + `aria-describedby`) have `aria-hidden` 'true'.
+- AC3 evidence: same run. The case label has `role` 'img' and `aria-label` 'Bell'. label-role keeps 'presentation', label-arialabel keeps 'Other', and label-both keeps both user values. label-escaped has `aria-label` `Tom & "Jerry"`. No attribute name appears twice. The T2 planted defect made these cases fail (work log).
+- AC4 evidence: the README Accessibility section (lines 12 to 15 of the section) and `index.qmd:59` name the four attributes as replacing the `aria-hidden` default when non-empty. Both also say that with `label`, a user `role` or `aria-label` "replaces the one `label` would add".
+- AC5 evidence: `docs/index.html` holds "Passing a non-empty" once and the element `<lord-icon src="https://cdn.lordicon.com/ibydboev.json" aria-label="Money bag" role="img">`, which has no `aria-hidden`.
+- AC6 evidence: `git show origin/main:_extensions/lordicon/_extension.yml` reads `version: 0.7.1`, and the branch reads `version: 0.7.2`.
+- Gate: `cairn_validate` passed all checks. `cairn_impact --changed` listed 5 IP1 references. IP1's text is unchanged on the branch (the plan commit only moved its colon), and the references agree with it. `quarto render` exit 0 left `docs/` unchanged. `version:` is the only marker that release-walk names. Changelog slot reads as none (`CHANGELOG.md` absent).
+- spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: the check script passes with the `passed` guards removed, because Quarto drops the second same-name attribute — fix now, fixed 8fe774b: added `_tests/raw_output.lua` and a filter stage in `check_aria.py`; a guard-removal mutant then failed hidden-li, label-role, label-arialabel, label-both with "attribute twice".
+- diff-bug #2: labelledby-li, arialabel-escaped, describedby did not assert `role`/`aria-label` — fix now, fixed 8fe774b: assertions added.
+- diff-bug #3: a failed render printed no Quarto output — fix now, fixed 8fe774b: the script prints the command's stdout and stderr and exits 1.
+- diff-bug #4: docs advise `role="img"` only with `aria-label`, not with `aria-labelledby` — fix now, fixed 8fe774b: README and `index.qmd` name both.
+- diff-bug #5: "the icon is not marked `aria-hidden="true"`" is false when the user passes `aria-hidden="true"` — fix now, fixed 8fe774b: reworded to "the extension does not add".
+- diff-bug #6: `label` plus `aria-labelledby` lets `aria-labelledby` set the name — reject (planned change): the user's attribute winning is the milestone's rule (IP1), and the name order is ARIA's.
+- diff-bug #7: a whitespace-only value counts as passed — reject (planned change): it matches the "non-empty" criterion wording, and IP1 passes values through unchanged.
+- diff-bug #8: attribute names are written unescaped (pre-existing line) — follow-up: candidate row "Guard attribute names against bad markup".
+- blame-history #1 / ripple #1: GP5 text says an icon without `label` is `aria-hidden` — follow-up: candidate row "Reword GP5 for user ARIA precedence", because a principle changes only by the user's decision.
+- blame-history #2: `role="img"` alone gives an unhidden icon with no name and no warning — follow-up: candidate row "Warn when a role icon has no name".
+- blame-history #3: mixed-case names are not matched — follow-up: already held by candidate row "Stop duplicate src and ARIA attributes".
+- blame-history #4: `label` text is dropped silently when the user passes `aria-label` — reject (planned change): the question set chose a silent user win.
+- blame-history #5: the `render` list would leave out a future root `.md` page — fix now, fixed 8fe774b: DESIGN.md Architecture names the list and what it excludes.
+- prior-review: no prior-review evidence (no archived reviews, no PR comments).
+- ripple #2, #3: ROADMAP rows for the ARIA bug and the render check still read open — reject (planned change): post-merge hygiene graduates and narrows them.
+- ripple #4, #5, #6: README and `index.qmd` say `label` gives `role="img"` and no label gives `aria-hidden` — reject (false): the paragraph after each states the exception for user attributes.
+- ripple #7: PROFILE greenfield-openers line names the verify fixture — reject (false): that slot is template text for new repos, not this repo's verify.
+- ripple #8: test-doctrine says "by rendering" — reject (false): the reviewer reports no contradiction.
+- ripple #9: DESIGN Architecture omits `_tests/` and the render list — fix now, fixed 8fe774b: both added.
+- ripple #10: ROADMAP mixed-case row is still accurate — noted.
+- After the fixes (8fe774b): `python3 _tests/check_aria.py` reports "page: 15 icons read, 15 cases", "filter: 15 icons read, 15 cases", "0 failures", exit 0. `quarto render` exit 0, and `cairn_validate` passes. AC1 to AC5 evidence holds on this head: the README and `index.qmd` text still names the four attributes and the `label` rule.

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jmgirard.github.io/lordicon/index.html</loc>
-    <lastmod>2026-08-06T20:53:54.350Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jmgirard.github.io/lordicon/animations.html</loc>
-    <lastmod>2026-08-06T20:53:58.530Z</lastmod>
-  </url>
-  <url>
     <loc>https://jmgirard.github.io/lordicon/target.html</loc>
-    <lastmod>2026-07-10T07:44:18.307Z</lastmod>
+    <lastmod>2026-08-13T02:41:12.270Z</lastmod>
   </url>
   <url>
     <loc>https://jmgirard.github.io/lordicon/css_styling.html</loc>
-    <lastmod>2026-07-10T07:44:04.516Z</lastmod>
+    <lastmod>2026-08-13T02:41:12.264Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jmgirard.github.io/lordicon/animations.html</loc>
+    <lastmod>2026-08-13T02:41:12.264Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jmgirard.github.io/lordicon/index.html</loc>
+    <lastmod>2026-10-21T03:49:14.402Z</lastmod>
   </url>
 </urlset>

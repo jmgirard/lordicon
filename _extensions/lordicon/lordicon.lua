@@ -20,6 +20,15 @@ local RESERVED = {
   label = true,
 }
 
+-- ARIA attributes that, when passed by the user, replace the aria-hidden
+-- default given to an icon without a label.
+local ARIA_OVERRIDES = {
+  ["aria-hidden"] = true,
+  ["aria-label"] = true,
+  ["aria-labelledby"] = true,
+  role = true,
+}
+
 -- Attributes that only work when the icon's Lottie JSON still carries the
 -- "control" null layer (holding the primary/secondary/stroke effects) and its
 -- full set of animation layers. lordicon.com's export defaults to "Minified",
@@ -77,20 +86,36 @@ local function build_element(src, kwargs)
   end
   table.sort(keys)
 
+  local passed = {}
   for _, key in ipairs(keys) do
     local val = value_of(kwargs[key])
     if val ~= "" then
       attrs[#attrs + 1] = string.format('%s="%s"', key, attr_escape(val))
+      passed[key] = true
     end
   end
 
   -- Accessibility: announce the icon when a label is given, otherwise mark it
-  -- decorative so assistive technology skips it.
+  -- decorative so assistive technology skips it. ARIA attributes the user
+  -- passed always win over these defaults.
   local label = value_of(kwargs["label"])
   if label ~= "" then
-    attrs[#attrs + 1] = string.format('role="img" aria-label="%s"', attr_escape(label))
+    if not passed["role"] then
+      attrs[#attrs + 1] = 'role="img"'
+    end
+    if not passed["aria-label"] then
+      attrs[#attrs + 1] = string.format('aria-label="%s"', attr_escape(label))
+    end
   else
-    attrs[#attrs + 1] = 'aria-hidden="true"'
+    local overridden = false
+    for key in pairs(ARIA_OVERRIDES) do
+      if passed[key] then
+        overridden = true
+      end
+    end
+    if not overridden then
+      attrs[#attrs + 1] = 'aria-hidden="true"'
+    end
   end
 
   return pandoc.RawInline("html", "<lord-icon " .. table.concat(attrs, " ") .. "></lord-icon>")

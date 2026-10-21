@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-20 (design interview added four candidates)_
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M001 | Let user ARIA attributes beat defaults | planned | — | high | milestones/M001-user-aria-beats-defaults.md |
+| M001 | Let user ARIA attributes beat defaults | review | — | high | milestones/M001-user-aria-beats-defaults.md |
 
 ## Candidates
 <!-- unnumbered ideas; one line each, ordered high → normal → low → parked:
@@ -27,4 +27,7 @@ _Last hygiene check: 2026-10-20 (design interview added four candidates)_
 - Start a CHANGELOG.md for releases: create the file with past versions from the `v*` tags and commit subjects (D-002) — added 2026-10-20 — PROFILE changelog slot
 - Add a render check with fixtures: a fixture `.qmd` and a script that renders it and checks the `<lord-icon>` output, so verify is not only by eye — added 2026-10-20 — DESIGN Known issues — started M001
 - Stop duplicate src and ARIA attributes: a user `src` key gives a second `src` beside the extension's own (IP1), and a mixed-case `Role` or `ARIA-LABEL` is not matched against the ARIA defaults — added 2026-10-20 — M001 criteria audit
+- Reword GP5 for user ARIA precedence: GP5 says an icon without `label` is `aria-hidden`, but since M001 a user `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` turns the default off (IP1); a principle change takes the user's decision and a D-entry — added 2026-10-20 — M001 review
+- Warn when a role icon has no name: `role="img"` with no `label`, `aria-label`, or `aria-labelledby` (or a blank `aria-label`) now gives an unhidden icon with no accessible name; decide whether this earns a GP2 warning — added 2026-10-20 — M001 review
+- Guard attribute names against bad markup: `build_element` writes each shortcode key raw as an attribute name (`lordicon.lua`), so a key holding `"` or `>` breaks the element (IP2) — added 2026-10-20 — M001 review
 - Close out the element API todo (#4): `loading` already passes through; an `icon` argument needs a GP3 case or a no — added 2026-10-20 — https://github.com/jmgirard/lordicon/issues/4
