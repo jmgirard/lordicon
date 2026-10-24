@@ -1,7 +1,7 @@
 # Roadmap
 
 _The only authority on milestone status. Grouped by status, not ID._
-_Last hygiene check: 2026-10-20 (M002 done: changelog row graduated)_
+_Last hygiene check: 2026-10-24 (audit clean; M003 in progress, no new issues or PRs)_
 
 ## Milestones
 
