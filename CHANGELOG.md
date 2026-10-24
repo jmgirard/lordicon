@@ -2,6 +2,10 @@
 
 This file lists the changes in each version of the extension, newest first.
 
+## 0.7.5
+
+- An icon that gets `role="img"` or `role="image"` but no name now gives a render warning. A screen reader announces such an icon as an image without saying what it shows. A name comes from `label`, `aria-label`, `aria-labelledby`, or `title`. If the icon also gets `aria-hidden="true"`, `hidden`, or `inert`, the render does not warn. The extension changes no attribute.
+
 ## 0.7.4
 
 - If one call passes on two or more keys that differ only in letter case, such as `role` and `Role`, the render now warns. The page keeps only one of their values. The extension still passes every such key on and skips none.

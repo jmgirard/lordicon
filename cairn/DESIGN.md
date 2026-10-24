@@ -54,6 +54,10 @@ Convenience shorthands do not qualify.
   pass it. No label gives `aria-hidden="true"`, unless the user passes
   `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` (corrected M001).
   These four names match in any letter case (corrected M003).
+- An icon whose kept `role` starts with the token `img` or `image`, with no
+  `aria-label`, `aria-labelledby`, `title`, `hidden`, or `inert` and no
+  `aria-hidden` of `true`, gets one render warning per call that it has no
+  name (M005).
 - Forwarded keys in one call that are equal after `pandoc.text.lower`, and a
   forwarded key such as `Label` that lowercases to `label`, still reach the
   element, and the render gives one warning per kind for each call (M004).
@@ -120,8 +124,11 @@ are never reused or renumbered; retiring one takes a D-entry.
 - GP4: (The demo site ships with the feature) Each user-facing feature gets an
   example on the demo site, and `docs/` is re-rendered in the same change. A
   hotfix with no new surface needs only the re-render.
-- GP5: (Decorative by default) An icon without `label` is `aria-hidden`; a
-  labeled icon gets `role="img"` and `aria-label`.
+- GP5: (Decorative by default) An icon without `label` is `aria-hidden`,
+  unless the user passes a non-empty `aria-hidden`, `aria-label`,
+  `aria-labelledby`, or `role` in any letter case. A labeled icon gets
+  `role="img"` and `aria-label`, and each yields to the user's own (IP1)
+  (corrected M005, D-004).
 
 ## Architecture
 
@@ -135,15 +142,16 @@ are never reused or renumbered; retiring one takes a D-entry.
   The `render: ["*.qmd"]` list in `_quarto.yml` limits the site to root `.qmd`
   pages, so a new page in another format must be added to that list.
 - `_tests/`: `check_aria.py` checks the attributes of `aria.qmd` icons (ARIA,
-  `src`, skipped and kept keys, key spelling, letter-case clashes) in the rendered page and in the
+  `src`, skipped and kept keys, key spelling, letter-case clashes, image
+  roles with no name) in the rendered page and in the
   raw filter output from `raw_output.lua`, and the lordicon warnings in the
   render's log.
 
 ## Known issues
 
-- The only automated check is `_tests/check_aria.py` (M001, extended M003
-  and M004), which covers ARIA attributes, `src`, skipped and kept keys,
-  letter-case warnings, and the Minified warning. Other shortcode behavior,
+- The only automated check is `_tests/check_aria.py` (M001, extended M003,
+  M004, and M005), which covers ARIA attributes, `src`, skipped and kept keys,
+  letter-case warnings, the nameless-role warning, and the Minified warning. Other shortcode behavior,
   such as attribute sorting and non-HTML output, is checked by eye (corrected
   M004).
 - lordicon.com no longer gives out CDN codes in its export UI, so `li` works for
