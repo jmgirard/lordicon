@@ -47,7 +47,7 @@ non-HTML output checks → candidate row "Add a render check with fixtures".
 ## Acceptance criteria
 <!-- owner: plan · create/amend-via-gate; review reads, never reinterprets. -->
 
-- [ ] AC1: Each of these calls in `_tests/aria.qmd` gets exactly one
+- [x] AC1: Each of these calls in `_tests/aria.qmd` gets exactly one
       nameless-role warning, besides any warning it already gets, and that
       warning names the call, says the icon has an image role but no name, and
       says how to fix it: (a) `role=img` alone; (b) `ROLE=IMG`; (c)
@@ -57,28 +57,28 @@ non-HTML output checks → candidate row "Add a render check with fixtures".
       `img`: `clash-role`, `clash-two`, and `clash-empty`. Shown by
       `python3 _tests/check_aria.py` exiting 0, which matches each expected
       warning to exactly one line of the render log.
-- [ ] AC2: No call in `_tests/aria.qmd` other than the AC1 calls gets the
+- [x] AC2: No call in `_tests/aria.qmd` other than the AC1 calls gets the
       nameless-role warning. The fixture holds `role=img` calls with
       `aria-label`, `ARIA-LABELLEDBY`, `title`, `Title`, `label`, `hidden`,
       `aria-hidden=true`, and `Aria-Hidden=TRUE`, plus
       `role="presentation img"` and `role=img Role=presentation`, where the
       page keeps `presentation`. Shown by `python3 _tests/check_aria.py`
       exiting 0; its log check counts every lordicon warning in the render.
-- [ ] AC3: The warning code adds no attribute and changes none: it only reads
+- [x] AC3: The warning code adds no attribute and changes none: it only reads
       the call's keys and calls `quarto.log.warning`, and every case that
       `_tests/check_aria.py` holds on the default branch passes its page and
       filter checks with the expected values the default branch gives it.
-- [ ] AC4: GP5 in `cairn/DESIGN.md` states that a non-empty user
+- [x] AC4: GP5 in `cairn/DESIGN.md` states that a non-empty user
       `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` in any letter
       case turns the `aria-hidden` default off, and that each attribute
       `label` adds yields to the user's own, marked with D-004, which
       `cairn/DECISIONS.md` holds. The DESIGN Conventions section names the
       new warning.
-- [ ] AC5: The README Accessibility section and the Accessibility section of
+- [x] AC5: The README Accessibility section and the Accessibility section of
       `index.qmd` say when the render gives this warning; `CHANGELOG.md` has a
       `## 0.7.5` section with an entry for it; `_extension.yml` reads
       `version: 0.7.5`; `docs/` is re-rendered from the changed pages.
-- [ ] AC6: The `verify` slot of `cairn/PROFILE.md` is clean on the review
+- [x] AC6: The `verify` slot of `cairn/PROFILE.md` is clean on the review
       head.
 
 ## Coverage
@@ -143,3 +143,14 @@ non-HTML output checks → candidate row "Add a render check with fixtures".
 
 ## Review
 <!-- owner: review · exclusive -->
+
+Evidence, 2026-10-24, on `1f4facb` (branch level with main at 576fa52):
+
+- AC1: `python3 _tests/check_aria.py` exit 0 (62 of 62 cases on page and filter, 32 of 32 warnings, 0 failures); its log check matches each expected warning to exactly one log line. A separate render of the fixture gives the nameless-role warning once each for `nrimg` (`role="img"`), `nrupper` (`IMG`), `nrimage` (`image`), `nrfirst` (`img presentation`), `nrshown`, `nrhidclash`, `clashrole`, `clashtwo`, `clashempty`; each text holds the call, "but no name", and the fix `Add a label, such as label="Bell".`
+- AC2: the same render's log holds the nameless-role warning for those 9 calls and no other; `check_aria.py` exit 0 with its total-count check (32 read, 32 expected). `_tests/aria.qmd` holds all 10 AC2 calls (`named-arialabel`, `-labelledby` with `ARIA-LABELLEDBY`, `-title`, `-title-upper`, `-label`, `-hidden-attr`, `-aria-hidden`, `-aria-hidden-upper` with `Aria-Hidden=TRUE`, `-first-presentation`, `-role-clash`); the page keeps `role="presentation"` for `named-role-clash` (`PAGE_ONLY` check passes).
+- AC3: `warn_nameless_role` reads `keys` and `kwargs` and calls only `quarto.log.warning` (no `attrs` use, no write to `kwargs`). `git diff main -- _tests/check_aria.py` removes one line, the `for name, want in CASES[case].items()` loop head now reading the merged `expected`; no `CASES` entry of a main case is removed or changed, and all 62 cases pass on page and filter.
+- AC4: `cairn/DESIGN.md:127` GP5 names a non-empty user `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` in any letter case and says each `label` attribute yields to the user's own, marked `(corrected M005, D-004)`; `cairn/DECISIONS.md:24` holds D-004; Conventions line ending `name (M005).` names the warning.
+- AC5: README.md:125 and index.qmd:61 describe when the render warns; `CHANGELOG.md` has `## 0.7.5` with the entry; `_extension.yml` reads `version: 0.7.5`; `quarto render` on the review head leaves `docs/` unchanged and `docs/index.html:290` holds the paragraph.
+- AC6: verify slot on `1f4facb`: `check_aria.py` exit 0; `quarto render` exit 0 with no lordicon warning; browser at http://localhost:8765/: `lord-icon` defined, 17 of 17 icons hold an SVG.
+- Gate: `cairn_validate.py` all checks passed; `cairn_impact.py --changed` lists GP5 and IP1 references, all history records or this milestone's, except ROADMAP row "Reword GP5 for user ARIA precedence", which hygiene graduates; one version marker (`_extension.yml` 0.7.5); verify render green; CHANGELOG 0.7.5 entry present.
+- spawned: diff-bug, blame-history, prior-review, ripple
