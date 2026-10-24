@@ -20,3 +20,9 @@ choices with rationale — never deferrals ("not now" is a ROADMAP fact).
 **Context:** A user `src` key gives a second `src` attribute, and Quarto's HTML post-processing drops it. A key that holds whitespace, a control character, `"`, `'`, `>`, `/`, or `=` gives broken markup or stray attributes. IP1 says every user attribute reaches `<lord-icon>` unchanged. IP5 asks for one warning release before the passthrough meaning breaks.
 **Decision:** The user chose both changes at the M003 plan gate. A `src` key in any letter case is reserved like `label`: the first argument's source stays, and the render warns. A key that HTML does not allow as an attribute name is left out of the element, and the render warns. This starts in 0.7.3 with no warning release first, because such a key never gave one valid attribute. M003 changes the IP1 text to name both exceptions.
 **Consequences:** Letting a user `src` win was rejected, because the first argument would then be ignored. A warning release before the skip was rejected, because it keeps broken markup one release longer and protects no working output.
+
+### D-004 (2026-10-24): Reword GP5 to state user ARIA precedence
+
+**Context:** GP5 says an icon without `label` is `aria-hidden` and a labeled icon gets `role="img"` and `aria-label`. Since M001 (0.7.2), a user `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` in any letter case turns the `aria-hidden` default off, and a user `role` or `aria-label` replaces the one that `label` adds (IP1). The GP5 text no longer matches the behavior.
+**Decision:** The user chose at the M005 plan gate to reword GP5 so that it names these exceptions. M005 changes the GP5 text. The behavior does not change.
+**Consequences:** Keeping GP5 as written was rejected, because it states a default that IP1 already overrides. An icon that a user `role="img"` leaves with no name gets a render warning from M005 (GP2), not a changed default.

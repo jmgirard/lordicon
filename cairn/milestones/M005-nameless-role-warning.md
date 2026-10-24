@@ -1,0 +1,137 @@
+<!-- Section ownership + write-modes: see tracking-rules.md "Milestone-file
+     section ownership". A phase skill never rewrites another phase's section.
+     Per-section owners are tagged below. The one size check that can fail is
+     cairn_validate's <150 over the plan-owned body. -->
+# M005: Warn when a role icon has no name
+
+- **Status:** planned   <!-- owner: transitioning skill · mirror-update; cairn/ROADMAP.md is the authority -->
+- **Priority:** normal   <!-- owner: plan · create/amend-via-gate; high | normal | low -->
+- **Depends on:** —   <!-- owner: plan · create/amend-via-gate; M<xx>, M<yy> or — -->
+- **Driving RR:** —   <!-- owner: plan · create/amend-via-gate; RR<NN> whose Binding criteria bind this milestone's ACs (binding-criteria check), or — -->
+- **Principles touched:** GP5, GP2, IP1, IP3   <!-- owner: plan · create/amend-via-gate; comma-separated IPn/GPn ids this milestone touches, or — -->
+- **Resolves:** —   <!-- owner: plan · create/amend-via-gate; comma-separated GitHub issues the scope absorbs, each `#N closes` (the PR closes it at merge) or `#N partial` (the remainder gets a candidate row), or — ; skill conduct only — no validate check parses it -->
+- **Surface tier:** user-facing — a render warning that Quarto authors see   <!-- owner: plan · create/amend-via-gate; user-facing | internal — <one-clause reason>; skill conduct only — no validate check parses it -->
+- **Branch/PR:** —   <!-- owner: implement (branch) / review (PR URL) · create; a companion checkout the milestone also works in is one further entry per checkout, `companion: <abs-path> <branch>` (implement), its PR URL appended by review — /milestone-review merges companions first, in listed order -->
+
+## Goal
+<!-- owner: plan · create; a wrong goal returns to plan, never edited in place -->
+
+An icon that the page gives `role="img"` with no accessible name gives a render warning, where before screen readers announced an unnamed image with no visible error.
+
+## Scope
+<!-- owner: plan · create/amend-via-gate -->
+
+**In:** One warning per shortcode call from `build_element` in
+`_extensions/lordicon/lordicon.lua`. It fires when the attributes the page
+keeps give the icon a `role` whose first token (split at ASCII whitespace) is
+`img` or `image` in any ASCII letter case, and none of these: an
+`aria-hidden` whose value is `true` in any ASCII letter case; an
+`aria-labelledby`, `aria-label`, or `title`; a `hidden` or `inert`. Key names
+match in any ASCII letter case. For keys that differ only in letter case, the
+check reads the value the page keeps: the first such key in the filter's byte
+order. A quoted value that is empty, holds only spaces, or starts with a space
+never reaches the filter (probe 2026-10-24), so a name key that is present
+counts as a name. The warning names the call and says how to fix it. No
+attribute changes (IP1). Fixture calls and expectations in `_tests/aria.qmd`
+and `_tests/check_aria.py`. GP5 in `cairn/DESIGN.md` reworded to state user
+ARIA precedence (D-004), plus DESIGN Conventions and Known issues text for the
+warning. README and demo home page Accessibility text, `CHANGELOG.md` 0.7.5,
+`version: 0.7.5`, and the re-rendered `docs/`.
+
+**Out:** A check that an `aria-labelledby` id exists on the page (the filter
+sees one call, not the page) → not planned. Warnings for other roles that need
+a name, such as `button` → not planned. Values that start with a space →
+candidate row "Keep values that start with a space". Attribute sorting and
+non-HTML output checks → candidate row "Add a render check with fixtures".
+
+## Acceptance criteria
+<!-- owner: plan · create/amend-via-gate; review reads, never reinterprets. -->
+
+- [ ] AC1: Each of these calls in `_tests/aria.qmd` gets exactly one
+      nameless-role warning, besides any warning it already gets, and that
+      warning names the call, says the icon has an image role but no name, and
+      says how to fix it: (a) `role=img` alone; (b) `ROLE=IMG`; (c)
+      `role=image`; (d) `role="img presentation"`; (e) `role=img
+      aria-hidden=false`; (f) `role=img aria-hidden=true ARIA-HIDDEN=false`,
+      where the page keeps `false`; (g) the existing calls whose kept role is
+      `img`: `clash-role`, `clash-two`, and `clash-empty`. Shown by
+      `python3 _tests/check_aria.py` exiting 0, which matches each expected
+      warning to exactly one line of the render log.
+- [ ] AC2: No call in `_tests/aria.qmd` other than the AC1 calls gets the
+      nameless-role warning. The fixture holds `role=img` calls with
+      `aria-label`, `ARIA-LABELLEDBY`, `title`, `Title`, `label`, `hidden`,
+      `aria-hidden=true`, and `Aria-Hidden=TRUE`, plus
+      `role="presentation img"` and `role=img Role=presentation`, where the
+      page keeps `presentation`. Shown by `python3 _tests/check_aria.py`
+      exiting 0; its log check counts every lordicon warning in the render.
+- [ ] AC3: The warning code adds no attribute and changes none: it only reads
+      the call's keys and calls `quarto.log.warning`, and every case that
+      `_tests/check_aria.py` holds on the default branch passes its page and
+      filter checks with the expected values the default branch gives it.
+- [ ] AC4: GP5 in `cairn/DESIGN.md` states that a non-empty user
+      `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` in any letter
+      case turns the `aria-hidden` default off, and that each attribute
+      `label` adds yields to the user's own, marked with D-004, which
+      `cairn/DECISIONS.md` holds. The DESIGN Conventions section names the
+      new warning.
+- [ ] AC5: The README Accessibility section and the Accessibility section of
+      `index.qmd` say when the render gives this warning; `CHANGELOG.md` has a
+      `## 0.7.5` section with an entry for it; `_extension.yml` reads
+      `version: 0.7.5`; `docs/` is re-rendered from the changed pages.
+- [ ] AC6: The `verify` slot of `cairn/PROFILE.md` is clean on the review
+      head.
+
+## Coverage
+<!-- owner: plan · create/amend-via-gate -->
+
+- AC1 → T1, T2
+- AC2 → T1, T2
+- AC3 → T1, T2
+- AC4 → T3
+- AC5 → T3
+- AC6 → T2, T3
+
+## Tasks
+<!-- owner: plan (create) / implement (check-off, minor edits); substantive change is amend-via-gate. -->
+
+- [ ] T1: Add a "Role img with no name" section to `_tests/aria.qmd` with the
+      AC1 (a)-(f) calls and the AC2 calls, each with its own icon code, since
+      a warning names only `{{< li CODE >}}`. In `_tests/check_aria.py`, add
+      their `CASES` entries and the AC1 warnings to `WARNED`, (g) included.
+      Give the new clash calls their letter-case warnings and `TWICE` counts.
+      `dict(attrs)` keeps the last duplicate while the page keeps the first,
+      so assert a kept clash value with a page-only expectation. Run the
+      check and see it fail on the missing warnings only.
+- [ ] T2: Add `warn_nameless_role(call, ...)` to `lordicon.lua` and call it
+      from `build_element` (`lordicon.lua:240`) after the attributes are
+      known, reading user keys by `ascii_lower`. Spell ASCII whitespace as
+      `[\t\n\f\r ]`, not `%s`. Update the header comment
+      (`lordicon.lua:1-16`). Run the `verify` slot.
+- [ ] T3: Reword GP5 (D-004, written by the plan) and add the warning to
+      Conventions and Known issues in `cairn/DESIGN.md`. Update README and
+      `index.qmd` Accessibility text, add `CHANGELOG.md` 0.7.5, raise
+      `_extension.yml` to 0.7.5, run `quarto render`, check the changed demo
+      page in a browser, and commit `docs/` with its sitemap.
+
+## Work log
+<!-- owner: any skill · append-only; one line per entry; absolute dates. -->
+
+- 2026-10-24: created by /milestone-plan.
+- 2026-10-24: tier check: not run — work named at the question set.
+- 2026-10-24: idea vet: no concern; an element with an image role needs an accessible name, which `aria-labelledby`, `aria-label`, or `title` gives, a nameless image fails with no visible error (GP2), and a warning changes no attribute (IP1).
+- 2026-10-24: question set: which candidate to plan — "Warn when a role icon has no name"; also reword GP5 in this milestone — yes.
+- 2026-10-24: collision check: absorbed candidate rows "Warn when a role icon has no name" and "Reword GP5 for user ARIA precedence" (both from the M001 review); M001 (archived) shipped the ARIA precedence this warning builds on; no D-entry overlap.
+- 2026-10-24: inbox sweep: 0 open issues, 0 open PRs.
+- 2026-10-24: lessons used: 2026-10-20 (M001) Quarto keeps the first of two ASCII-equal attribute names; 2026-10-24 (M003) Lua `%s` follows the locale; 2026-10-20 (M002) `quarto render` rewrites `docs/sitemap.xml`.
+- 2026-10-24: plan gate chose a warning over adding `aria-hidden` or dropping the role because IP1 forbids rewriting user attributes; falsified by a user decision that changes IP1.
+- 2026-10-24: plan chose to count `title` as a name because the accessible-name computation falls back to it; falsified by a major screen reader that announces a `role="img"` element with only a `title` as unnamed.
+- 2026-10-24: plan chose to read only the first role token over any token, a narrower warning; falsified by a browser that maps `role="x img"` to an image role and a user report of such a nameless icon.
+- 2026-10-24: release-shaped tripwire: not hit; the 0.7.5 version rise at merge follows D-001 and is no release window.
+- 2026-10-24: plan probe: a render keeps the first of `role`/`Role` in byte order; a quoted value that is all spaces or starts with a space reaches the filter as no key (`label=" Bell "` stays `aria-hidden`), so the blank-name cases left the plan and the candidate row "Keep values that start with a space" holds the rest.
+- 2026-10-24: criteria audit (full mode, fresh Opus reader): 12 findings. Fixed: unreachable blank-value cases (1, 2) dropped; AC1 "exactly one" scoped to this warning (3); fix advice added (4); `WARNED` wording replaced by the log match (5); fixture traps moved into T1 (6); (f) reworded as the kept-role calls (7); letter-case, aria-hidden clash, and first-token probes added (8); AC3 narrowed to what the code does plus the fixture (9); GP5 "non-empty" added and D-004 written at plan (10). No finding on AC5 and proportionality; AC6's browser check stands as the profile's verify slot (12). Accepted its point that `hidden` and `inert` also remove an icon: the warning skips them.
+
+## Decisions
+<!-- owner: implement / review · append-only; milestone-local -->
+
+## Review
+<!-- owner: review · exclusive -->
