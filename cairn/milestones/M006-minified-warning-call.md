@@ -65,6 +65,7 @@ The Minified-export warning of `lif` names the shortcode call, such as `{{< lif 
 - 2026-10-24: T3 done: version 0.7.6 and CHANGELOG 0.7.6; `quarto render` exits 0, no lordicon warning, and changes only one `lastmod` line in `docs/sitemap.xml`, reverted. The changelog leaves out "still warns once per file", since no test checks that rule.
 - 2026-10-24: claim audit: 7 claims read, 0 corrected — `CHANGELOG.md`, `_extensions/lordicon/lordicon.lua`, `_tests/check_aria.py`.
 - 2026-10-24: implement complete; status review.
+- 2026-10-24: step-7 approval: m006-minified-warning-call approved for merge
 
 ## Decisions
 <!-- owner: implement / review · append-only; milestone-local. -->
