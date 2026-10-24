@@ -47,7 +47,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - [x] T6: Raise `version:` to 0.7.3 (D-001) and add the `## 0.7.3` section to `CHANGELOG.md`. `BUNDLE_VERSION` stays, because the player does not change.
 - [x] T7: (review return 1) Run `quarto render` at the repo root on the final head and commit the re-rendered `docs/`, the `sitemap.xml` date included.
 - [x] T8: (review return 2) Skip a key holding a C1 control (U+0080 to U+009F) with the invalid-name warning. Add a fixture case that fails first.
-- [ ] T9: (review pass 2 fix-now) Add a kept case for valid non-letter keys; remove `bad-tab`; fix the DESIGN wording (Contract boundary, per-kind warnings, IP1 non-empty, IP5 and stable surface per D-003, Architecture, Known issues), PROFILE `verify`, README "forward any", `index.qmd` letter case, and the "Add a render check" row. Re-render `docs/` and look at the home page in a browser.
+- [x] T9: (review pass 2 fix-now) Add a kept case for valid non-letter keys; remove `bad-tab`; fix the DESIGN wording (Contract boundary, per-kind warnings, IP1 non-empty, IP5 and stable surface per D-003, Architecture, Known issues), PROFILE `verify`, README "forward any", `index.qmd` letter case, and the "Add a render check" row. Re-render `docs/` and look at the home page in a browser.
 
 ## Work log
 
@@ -87,6 +87,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-24: resumed for review return 2; added T8 (the return) and T9 (the pass-2 fix-now findings), mapped AC5 to T8 and T9 and AC3 to T9 (minor amendment).
 - 2026-10-24: found at T8: Lua `%s` and `%c` follow the C locale, and under a UTF-8 locale they match bytes 128 to 160 and 173, so a valid key such as `data-straße` (ß is bytes 195 159) was skipped with a warning, while under the C locale a C1 control was forwarded. The pattern now spells out its byte ranges (`[\0-\32\127"'>/=]` plus `\194[\128-\159]` for C1), so it does not depend on the locale.
 - 2026-10-24: T8 done: new cases `bad-c1` (U+0085) and `kept-names` (`@click`, `data.k`, `data-straße`, `data-datà`; `x:y` left out because Quarto's HTML post-processing drops it from the page while the raw output keeps it). `bad-tab` removed (diff-bug #3). The raw filter output now runs under `LC_ALL=C` while the page renders under UTF-8, and output is split on `\n` alone, since `splitlines()` breaks at U+0085. `check_aria.py`: 33 cases, 11 warnings, 0 failures. The old pattern fails 4 checks (ß and à skipped on the page, C1 forwarded in the raw output, an extra warning), and `[^%w%-]` fails `kept-names`.
+- 2026-10-24: T9 done: DESIGN Contract boundary, per-kind warnings, IP1 (non-empty values), IP5 and the stable-surface convention (D-003 narrowing), Architecture, and Known issues; PROFILE `verify`; README "forward your pairs" with a pointer to the exceptions; `index.qmd` letter-case sentence; the "Add a render check" row narrowed; new rows "Match Minified-check keys in any case" and "Decide on keys that hold a less-than". `check_aria.py` 0 failures; `quarto render` changed `docs/index.html`, `search.json`, `sitemap.xml`. Served `docs/` locally: 17 icons drew their SVG, no console errors, and the new sentence shows.
 
 ## Decisions
 

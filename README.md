@@ -61,9 +61,10 @@ The format menu's options icon offers two Lottie flavors, and the choice depends
 
 ## Customizing
 
-Both shortcodes forward any `key=value` pairs directly to the underlying
-[`<lord-icon>` element](https://lordicon.com/docs/web), so you can use the full
-element API without the extension needing to know each option:
+Both shortcodes forward your `key=value` pairs directly to the underlying
+[`<lord-icon>` element](https://lordicon.com/docs/web). You can use the full
+element API without the extension needing to know each option. The few keys
+that the extension does not pass on are listed below the table.
 
 | Argument   | Description                                                                 |
 |------------|-----------------------------------------------------------------------------|
