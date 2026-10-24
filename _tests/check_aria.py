@@ -98,8 +98,9 @@ EXACT = {"src-li", "src-lif", "src-upper", *BAD}
 # lordicon warning may appear in the render's log.
 WARNED = {"src-li": "src", "src-lif": "src", "src-upper": "SRC", **BAD}
 
-# A key with one of these characters is not a valid HTML attribute name.
-INVALID_NAME = re.compile(r"[\s\x00-\x1f\x7f\"'>/=]")
+# The characters that the filter's INVALID_NAME pattern (Lua `%s%c"'>/=`)
+# skips a key for.
+INVALID_NAME = re.compile(r"[ \x00-\x1f\x7f\"'>/=]")
 
 # One shortcode argument: a key=value pair or a positional word. A key or a
 # value may be quoted, and a quoted key may hold `=`.
@@ -192,9 +193,12 @@ def check_warnings(calls, log):
         if case not in WARNED:
             continue
         name = f"{{{{< {call['shortcode']} {call['arg']} >}}}}"
-        # Quarto's log shows a tab in a key as a space.
-        key = re.sub(r"\s", " ", WARNED[case])
-        found = [line for line in lines if name in line and f'"{key}"' in line]
+        # Pandoc expands a tab in the fixture to spaces before the filter sees
+        # the key, so whitespace runs are compared as one space.
+        key = re.sub(r"\s+", " ", WARNED[case])
+        found = [
+            line for line in lines if name in line and f'"{key}"' in re.sub(r"\s+", " ", line)
+        ]
         if len(found) != 1:
             failures.append(f"log {case}: {len(found)} warnings name {name} and {WARNED[case]!r}")
     if len(lines) != len(WARNED):

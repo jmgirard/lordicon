@@ -24,8 +24,8 @@ local RESERVED = {
 }
 
 -- A key holding whitespace, a control character, or one of these symbols is
--- not a valid HTML attribute name: written out, it breaks the element or
--- splits into stray attributes.
+-- not a valid HTML attribute name: written out, it can end the tag early,
+-- split into stray attributes, or give an attribute with an invalid name.
 local INVALID_NAME = "[%s%c\"'>/=]"
 
 -- ARIA attributes that, when passed by the user in any letter case, replace
@@ -106,7 +106,8 @@ local function build_element(src, kwargs, call)
 
   -- Forward every non-reserved kwarg with a value as an attribute, sorted for
   -- stable output. A src key would give a second src, and an invalid name
-  -- would break the element, so both are skipped with a warning.
+  -- would give a broken or stray attribute, so both are skipped with a
+  -- warning.
   local keys, src_keys, invalid_keys = {}, {}, {}
   for key, v in pairs(kwargs) do
     if not RESERVED[key] and value_of(v) ~= "" then

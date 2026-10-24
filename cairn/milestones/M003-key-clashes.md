@@ -1,6 +1,6 @@
 # M003: Stop key clashes and bad attribute names
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** M002
 - **Driving RR:** —
@@ -71,6 +71,9 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-24: T5 done: the README Customizing section lists the three skipped key kinds and says the four ARIA names count in any case. `quarto render` succeeded and changed no page in `docs/`, only the `sitemap.xml` date, which was reverted (LESSONS M002), so `docs/` as committed is the re-render. No demo page changed, so the browser look had no page to open. The simple-english hook flags older README text outside this milestone's scope; the added lines carry no hits.
 - 2026-10-24: added a sub-task: fixture cases `bad-tab` and `bad-control`, so the changelog's whitespace and control-character claims have a test. Each fails on the pre-T4 filter. Quarto's log shows a tab as a space, so the warning check matches keys with whitespace as spaces. The control byte went in with `perl`, because the Edit tool drops it.
 - 2026-10-24: T6 done: `version:` is 0.7.3, and `CHANGELOG.md` has a `## 0.7.3` section for the `src`, mixed-case ARIA, and invalid-name changes. `BUNDLE_VERSION` stays 2.3.1. `check_aria.py`: 32 of 32 cases, 11 of 11 warnings.
+- 2026-10-24: claim audit: 37 claims read, 4 corrected — lordicon.lua (two comments on what an invalid name did), CHANGELOG.md (the "Before" sentence), check_aria.py (`INVALID_NAME` now ASCII-only to match Lua `%s%c`; the tab comment now says Pandoc expands the tab, and the warning check compares whitespace runs). The reader's re-read found all four hold.
+- 2026-10-24: noted for review: Lua `%c` covers ASCII controls only, so a key with a C1 control (U+0080 to U+009F) is still forwarded; the README and changelog say "a control character".
+- 2026-10-24: implement complete: `check_aria.py` 0 failures and `quarto render` succeeded (no page changed; `sitemap.xml` date reverted). Status set to review.
 
 ## Decisions
 
