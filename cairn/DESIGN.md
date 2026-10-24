@@ -42,11 +42,15 @@ Convenience shorthands do not qualify.
 
 ## Conventions
 
-- Every shortcode `key=value` except `label` goes to the `<lord-icon>` element
-  as an attribute. Attributes are escaped and sorted for stable output.
+- Every shortcode `key=value` goes to the `<lord-icon>` element as an
+  attribute, except three kinds of key: `label`; `src` in any letter case; and
+  a key that holds whitespace, a control character, `"`, `'`, `>`, `/`, or `=`.
+  The render warns once per call about the last two kinds (D-003, corrected
+  M003). Attributes are escaped and sorted for stable output.
 - `label` gives `role="img"` and `aria-label`, each only when the user did not
   pass it. No label gives `aria-hidden="true"`, unless the user passes
   `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` (corrected M001).
+  These four names match in any letter case (corrected M003).
 - The player reaches readers as a self-hosted bundle. webpack builds
   `@lordicon/element` into the committed `assets/js/bundle.js`, and the
   extension never loads a script from a third-party host. A `lif` icon needs no
@@ -70,7 +74,9 @@ are never reused or renumbered; retiring one takes a D-entry.
 - IP1: (Passthrough) Every user attribute reaches `<lord-icon>` unchanged.
   The extension may warn about a value but never drops or rewrites one. A
   default the extension adds (such as `aria-hidden`) yields to a user-supplied
-  attribute. Reserved keys (`label`) are the documented exception.
+  attribute. The documented exceptions are the reserved keys (`label`, and
+  `src` in any letter case) and keys that HTML does not allow as attribute
+  names. The render warns about each skipped key except `label` (D-003).
 - IP2: (Escaping) Every user value in emitted HTML is escaped: attribute
   values, the label, and the `li` code inside `src`.
 - IP3: (A shortcode never fails a render) Non-HTML formats get no output, and

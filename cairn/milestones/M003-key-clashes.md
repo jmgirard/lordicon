@@ -39,7 +39,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 
 ## Tasks
 
-- [ ] T1: Change the DESIGN.md IP1 text and the forwarding Conventions bullet to name the `src` and invalid-name exceptions (D-003).
+- [x] T1: Change the DESIGN.md IP1 text and the forwarding Conventions bullet to name the `src` and invalid-name exceptions (D-003).
 - [ ] T2: Extend the harness. `check_aria.py` keeps the fixture render's stderr and checks the warning lines. `fixture_calls()` keeps a quoted key that holds `=` whole. A raw-string check confirms that the filter output keeps each key's spelling.
 - [ ] T3: Add the AC1 to AC3 cases to `_tests/aria.qmd` and their expected values to `CASES`. Run the check and see each new case fail on the current filter.
 - [ ] T4: Change `build_element`: reserve `src` by `key:lower()` with a per-call warning, compare ARIA override names by `key:lower()`, and skip invalid names with a per-call warning. The check passes.
@@ -61,6 +61,8 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-20: plan gate chose comparing `key:lower()` over writing lowercase names because IP1 forbids rewriting a user attribute; falsified by an output format where attribute-name case changes meaning.
 - 2026-10-20: decided: new cases go into `_tests/aria.qmd` and `check_aria.py`, because the PROFILE `verify` slot already names them. A wider check stays with its candidate row.
 - 2026-10-20: implement started on branch m003-key-clashes, cut from main at 0c6e04b. The untracked `.DS_Store` stays unstaged.
+- 2026-10-24: resumed; merged main (a72e0d7, hygiene stamp only) into the branch, and `check_aria.py` passed 15 of 15 cases.
+- 2026-10-24: T1 done: IP1 names `src` and invalid names as exceptions with a warning; the forwarding bullet lists the three skipped key kinds, and the ARIA bullet says the four names match in any case.
 
 ## Decisions
 
