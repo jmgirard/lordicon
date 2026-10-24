@@ -363,7 +363,7 @@ end
 
 -- Warn once per file when control-dependent attributes are used with an icon
 -- that was exported in Lordicon's "Minified" format. The warning names the
--- first such call, such as {{< lif FILE >}}.
+-- call as {{< lif FILE >}}, which is the same for every call on that file.
 local warned_minified = {}
 
 local function check_minified(file, kwargs, call)
