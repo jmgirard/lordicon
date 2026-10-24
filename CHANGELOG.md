@@ -2,6 +2,10 @@
 
 This file lists the changes in each version of the extension, newest first.
 
+## 0.7.6
+
+- The Minified-export warning of `lif` now names the shortcode call, such as `{{< lif icon.json >}}`, as the other render warnings do. Before, it named only the file.
+
 ## 0.7.5
 
 - An icon that gets `role="img"` or `role="image"` but no name now gives a render warning. A screen reader announces such an icon as an image without saying what it shows. A name comes from `label`, `aria-label`, `aria-labelledby`, or `title`. If the icon also gets `aria-hidden="true"`, `hidden`, or `inert`, the render does not warn. The extension changes no attribute.
