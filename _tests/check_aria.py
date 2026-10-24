@@ -139,9 +139,7 @@ CASES["label-two"] = DECORATIVE
 CASES["minified-lif"] = DECORATIVE
 CASES["raw-lif"] = DECORATIVE
 
-# An image role with no name and not hidden gets a warning; a name or a
-# hidden icon gets none.
-SHOWN = {"aria-hidden": None, "aria-label": None}
+SHOWN ={"aria-hidden": None, "aria-label": None}
 CASES.update({
     "nameless-img": {**SHOWN, "role": "img"},
     "nameless-upper": {**SHOWN, "role": "IMG"},

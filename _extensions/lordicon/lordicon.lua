@@ -239,7 +239,7 @@ local function warn_nameless_role(call, keys, kwargs, label)
     return
   end
   local hidden = kept["aria-hidden"]
-  if hidden and ascii_lower(hidden:match("^[\t\n\f\r ]*(.-)[\t\n\f\r ]*$")) == "true" then
+  if hidden and ascii_lower(hidden) == "true" then
     return
   end
   for name in pairs(NAMES_OR_HIDES) do

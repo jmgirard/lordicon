@@ -51,8 +51,8 @@ Convenience shorthands do not qualify.
   warning per kind for the last two kinds (D-003, corrected M003). Attributes
   are escaped and sorted for stable output.
 - `label` gives `role="img"` and `aria-label`, each only when the user did not
-  pass it. No label gives `aria-hidden="true"`, unless the user passes
-  `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` (corrected M001).
+  pass it. No label gives `aria-hidden="true"`, unless the user passes a
+  non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` (corrected M001).
   These four names match in any letter case (corrected M003).
 - An icon whose kept `role` starts with the token `img` or `image`, with no
   `aria-label`, `aria-labelledby`, `title`, `hidden`, or `inert` and no
