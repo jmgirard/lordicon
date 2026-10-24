@@ -90,6 +90,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-24: T9 done: DESIGN Contract boundary, per-kind warnings, IP1 (non-empty values), IP5 and the stable-surface convention (D-003 narrowing), Architecture, and Known issues; PROFILE `verify`; README "forward your pairs" with a pointer to the exceptions; `index.qmd` letter-case sentence; the "Add a render check" row narrowed; new rows "Match Minified-check keys in any case" and "Decide on keys that hold a less-than". `check_aria.py` 0 failures; `quarto render` changed `docs/index.html`, `search.json`, `sitemap.xml`. Served `docs/` locally: 17 icons drew their SVG, no console errors, and the new sentence shows.
 - 2026-10-24: claim audit: 16 claims read, 4 corrected — lordicon.lua and check_aria.py (`%s`/`%c` follow the current locale, not "the C locale"), check_aria.py (the page render now sets `LC_ALL=C.UTF-8` itself, so both locales are covered whatever the caller's locale), README (an empty-value key is not passed on either). `check_aria.py` 0 failures under the caller's locale and under `LC_ALL=C`; the old `%s%c` pattern still fails 4 checks under `LC_ALL=C`.
 - 2026-10-24: the reader's re-read found all four corrected claims hold. Implement complete for return 2: T8 and T9 done, `check_aria.py` 0 failures, `quarto render` clean. Status set to review.
+- 2026-10-24: step-7 approval: m003-key-clashes approved for merge (the chip's counts read 11 follow-up and 19 rejected; the Review section's 9 and 21 are correct).
 
 ## Decisions
 
