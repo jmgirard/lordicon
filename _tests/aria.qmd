@@ -43,6 +43,10 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< lif gift_raw.json id=src-lif src=other.json >}}
 {{< li wlpxtupd id=src-upper SRC=https://cdn.lordicon.com/rehjpyyh.json >}}
 
+## Valid names with symbols or letters outside ASCII
+
+{{< li wlpxtupd id=kept-names @click=2 data.k=3 data-straße=4 data-datà=5 >}}
+
 ## Invalid attribute names
 
 {{< li wlpxtupd id=bad-space class=big "a b"=1 >}}
@@ -51,7 +55,7 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li wlpxtupd id=bad-gt class=big a>b=1 >}}
 {{< li wlpxtupd id=bad-slash class=big "a/b"=1 >}}
 {{< li wlpxtupd id=bad-equals class=big "a=b"=1 >}}
-{{< li wlpxtupd id=bad-tab class=big "c	d"=1 >}}
+{{< li wlpxtupd id=bad-c1 class=big "ab"=1 >}}
 {{< li wlpxtupd id=bad-control class=big "ab"=1 >}}
 
 [Caption]{#caption}

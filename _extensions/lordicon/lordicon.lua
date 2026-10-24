@@ -26,7 +26,12 @@ local RESERVED = {
 -- A key holding whitespace, a control character, or one of these symbols is
 -- not a valid HTML attribute name: written out, it can end the tag early,
 -- split into stray attributes, or give an attribute with an invalid name.
-local INVALID_NAME = "[%s%c\"'>/=]"
+-- The byte ranges are spelled out because %s and %c follow the C locale, and
+-- under a UTF-8 locale they also match bytes inside letters such as "ß".
+-- INVALID_NAME covers space and the ASCII controls; C1_CONTROL covers
+-- U+0080 to U+009F, which UTF-8 writes as the byte 194 and a second byte.
+local INVALID_NAME = "[\0-\32\127\"'>/=]"
+local C1_CONTROL = "\194[\128-\159]"
 
 -- ARIA attributes that, when passed by the user in any letter case, replace
 -- the aria-hidden default given to an icon without a label.
@@ -113,7 +118,7 @@ local function build_element(src, kwargs, call)
     if not RESERVED[key] and value_of(v) ~= "" then
       if key:lower() == "src" then
         src_keys[#src_keys + 1] = key
-      elseif key:find(INVALID_NAME) then
+      elseif key:find(INVALID_NAME) or key:find(C1_CONTROL) then
         invalid_keys[#invalid_keys + 1] = key
       else
         keys[#keys + 1] = key

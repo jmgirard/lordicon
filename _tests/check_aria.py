@@ -16,6 +16,7 @@ not touched. Exits 1 when a case fails. Usage: python3 _tests/check_aria.py
 """
 
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -84,23 +85,35 @@ BAD = {
     "bad-gt": "a>b",
     "bad-slash": "a/b",
     "bad-equals": "a=b",
-    "bad-tab": "c\td",
+    "bad-c1": "a\x85b",
     "bad-control": "a\x01b",
 }
 for case in BAD:
     CASES[case] = {"src": ICON, "class": "big", **DECORATIVE}
 
+# Keys that are valid attribute names, though they hold symbols or letters
+# outside ASCII, pass through unchanged.
+CASES["kept-names"] = {
+    "src": ICON,
+    "@click": "2",
+    "data.k": "3",
+    "data-straße": "4",
+    "data-datà": "5",
+    **DECORATIVE,
+}
+
 # Cases whose <lord-icon> holds no attribute beyond `id` and the ones CASES
 # gives a value.
-EXACT = {"src-li", "src-lif", "src-upper", *BAD}
+EXACT = {"src-li", "src-lif", "src-upper", "kept-names", *BAD}
 
 # The key that the one lordicon warning of each case must name. No other
 # lordicon warning may appear in the render's log.
 WARNED = {"src-li": "src", "src-lif": "src", "src-upper": "SRC", **BAD}
 
-# The characters that the filter's INVALID_NAME pattern (Lua `%s%c"'>/=`)
-# skips a key for.
-INVALID_NAME = re.compile(r"[ \x00-\x1f\x7f\"'>/=]")
+# The characters that the filter skips a key for: its INVALID_NAME pattern
+# (space, the ASCII controls, `"'>/=`) and its C1_CONTROL pattern
+# (U+0080 to U+009F).
+INVALID_NAME = re.compile(r"[\x00-\x20\x7f-\x9f\"'>/=]")
 
 # One shortcode argument: a key=value pair or a positional word. A key or a
 # value may be quoted, and a quoted key may hold `=`.
@@ -121,9 +134,9 @@ class IconParser(HTMLParser):
             self.icons.append(attrs)
 
 
-def run(cmd, cwd):
+def run(cmd, cwd, env=None):
     """Run a command, printing its output and exiting 1 when it fails."""
-    done = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    done = subprocess.run(cmd, cwd=cwd, env=env, capture_output=True, text=True)
     if done.returncode != 0:
         print(f"FAIL `{' '.join(cmd)}` exited {done.returncode}")
         print(done.stdout + done.stderr)
@@ -170,13 +183,17 @@ def filter_output(calls):
         cases = Path(tmp) / "cases.json"
         cases.write_text(json.dumps(calls))
         cmd = ["quarto", "pandoc", "lua", "_tests/raw_output.lua", str(cases)]
-        return run(cmd, ROOT).stdout
+        # Lua's character classes follow the C locale. The page renders under
+        # the UTF-8 locale that Python gives its child processes, so this
+        # output runs under the C locale, and the check covers both.
+        return run(cmd, ROOT, {**os.environ, "LC_ALL": "C"}).stdout
 
 
 def check_spelling(calls, raw):
     """Each forwarded key appears in the raw output as the user wrote it."""
     failures = []
-    for call, line in zip(calls, raw.splitlines(), strict=True):
+    # Split on "\n" alone: splitlines() also breaks at U+0085, a C1 control.
+    for call, line in zip(calls, raw.rstrip("\n").split("\n"), strict=True):
         for key, value in call["kwargs"].items():
             skipped = key == "label" or key.lower() == "src" or INVALID_NAME.search(key)
             if value and not skipped and f' {key}="' not in line:
@@ -186,19 +203,14 @@ def check_spelling(calls, raw):
 
 def check_warnings(calls, log):
     """Each WARNED case gives one lordicon warning naming its call and key."""
-    lines = [line for line in log.splitlines() if "lordicon:" in line]
+    lines = [line for line in log.split("\n") if "lordicon:" in line]
     failures = []
     for call in calls:
         case = call["kwargs"].get("id")
         if case not in WARNED:
             continue
         name = f"{{{{< {call['shortcode']} {call['arg']} >}}}}"
-        # Pandoc expands a tab in the fixture to spaces before the filter sees
-        # the key, so whitespace runs are compared as one space.
-        key = re.sub(r"\s+", " ", WARNED[case])
-        found = [
-            line for line in lines if name in line and f'"{key}"' in re.sub(r"\s+", " ", line)
-        ]
+        found = [line for line in lines if name in line and f'"{WARNED[case]}"' in line]
         if len(found) != 1:
             failures.append(f"log {case}: {len(found)} warnings name {name} and {WARNED[case]!r}")
     if len(lines) != len(WARNED):
