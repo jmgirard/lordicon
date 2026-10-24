@@ -24,8 +24,9 @@ feature gets an example there, and `docs/` is re-rendered in the same change.
 
 ### Contract boundary
 
-The extension is a passthrough with guardrails. It forwards every shortcode
-`key=value` to the `<lord-icon>` element and does not validate attribute values.
+The extension is a passthrough with guardrails. It forwards each shortcode
+`key=value` to the `<lord-icon>` element, except the keys that Conventions
+lists, and does not validate attribute values (corrected M003).
 The element's documentation (lordicon.com/docs/web) owns their meaning.
 
 The extension adds its own behavior in two cases only. A guardrail is added
@@ -42,11 +43,16 @@ Convenience shorthands do not qualify.
 
 ## Conventions
 
-- Every shortcode `key=value` except `label` goes to the `<lord-icon>` element
-  as an attribute. Attributes are escaped and sorted for stable output.
+- Every shortcode `key=value` with a non-empty value goes to the `<lord-icon>`
+  element as an attribute, except three kinds of key: `label`; `src` in any
+  letter case; and a key that is empty or holds whitespace, a control
+  character, `"`, `'`, `>`, `/`, or `=`. For each call, the render gives one
+  warning per kind for the last two kinds (D-003, corrected M003). Attributes
+  are escaped and sorted for stable output.
 - `label` gives `role="img"` and `aria-label`, each only when the user did not
   pass it. No label gives `aria-hidden="true"`, unless the user passes
   `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` (corrected M001).
+  These four names match in any letter case (corrected M003).
 - The player reaches readers as a self-hosted bundle. webpack builds
   `@lordicon/element` into the committed `assets/js/bundle.js`, and the
   extension never loads a script from a third-party host. A `lif` icon needs no
@@ -54,7 +60,9 @@ Convenience shorthands do not qualify.
 - `BUNDLE_VERSION` in `lordicon.lua` matches the `@lordicon/element` version in
   `package.json`. It is the cache-busting version of `assets/js/bundle.js`.
 - The shortcode names, `label`, and the passthrough meaning are a stable surface.
-  A breaking change ships only after one release that warns about it.
+  A breaking change ships only after one release that warns about it. D-003
+  narrows this: the `src` and invalid-name skips shipped in 0.7.3 with no
+  warning release first (corrected M003).
 - The extension version is `version:` in `_extensions/lordicon/_extension.yml`.
 - The extension version rises in each merge that ships a user-visible change
   (D-001). The changelog is `CHANGELOG.md` (D-002), with one `## <version>`
@@ -70,7 +78,10 @@ are never reused or renumbered; retiring one takes a D-entry.
 - IP1: (Passthrough) Every user attribute reaches `<lord-icon>` unchanged.
   The extension may warn about a value but never drops or rewrites one. A
   default the extension adds (such as `aria-hidden`) yields to a user-supplied
-  attribute. Reserved keys (`label`) are the documented exception.
+  attribute. The documented exceptions are the reserved keys (`label`, and
+  `src` in any letter case) and keys that HTML does not allow as attribute
+  names. The render warns about each such skipped key with a non-empty value,
+  except `label` (D-003).
 - IP2: (Escaping) Every user value in emitted HTML is escaped: attribute
   values, the label, and the `li` code inside `src`.
 - IP3: (A shortcode never fails a render) Non-HTML formats get no output, and
@@ -82,7 +93,9 @@ are never reused or renumbered; retiring one takes a D-entry.
 - IP5: (Stable surface) `li`, `lif`, `label`, and the passthrough meaning do
   not break without one release that warns first. This covers removal of `li`
   too: no silent break, not "forever". An upstream change to an attribute's
-  meaning is Lordicon's break, not the extension's.
+  meaning is Lordicon's break, not the extension's. D-003 narrows this rule:
+  skipping `src` and invalid attribute names started in 0.7.3 with no warning
+  release first, because such keys never gave one valid attribute.
 - IP6: (Free-license icons only) Every icon in the repo (demo pages, `docs/`,
   README examples, sample `.json` files) is one that Lordicon's free license
   lets anyone redistribute.
@@ -115,14 +128,17 @@ are never reused or renumbered; retiring one takes a D-entry.
   `target.qmd`, `custom.scss`, rendered to the committed `docs/` directory.
   The `render: ["*.qmd"]` list in `_quarto.yml` limits the site to root `.qmd`
   pages, so a new page in another format must be added to that list.
-- `_tests/`: `check_aria.py` checks the ARIA attributes of `aria.qmd` icons in
-  the rendered page and in the raw filter output from `raw_output.lua`.
+- `_tests/`: `check_aria.py` checks the attributes of `aria.qmd` icons (ARIA,
+  `src`, skipped and kept keys, key spelling) in the rendered page and in the
+  raw filter output from `raw_output.lua`, and the lordicon warnings in the
+  render's log.
 
 ## Known issues
 
-- The only automated check is `_tests/check_aria.py` (M001), which covers the
-  ARIA attributes. Other shortcode behavior is checked by eye in a browser
-  (as in 09a2e5f).
+- The only automated check is `_tests/check_aria.py` (M001, extended M003),
+  which covers ARIA attributes, `src`, and skipped and kept keys. Other
+  shortcode behavior, such as the Minified warning, is checked by eye in a
+  browser (as in 09a2e5f) (corrected M003).
 - lordicon.com no longer gives out CDN codes in its export UI, so `li` works for
   codes users already have but new codes are hard to find (README).
 - RStudio Viewer shows icons only from version 2022.12.0+353 (README).

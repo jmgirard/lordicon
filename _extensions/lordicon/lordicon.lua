@@ -9,6 +9,9 @@
   <lord-icon> element, so the shortcode automatically tracks the element API
   (colors, stroke, trigger, target, state, delay, speed, loading, class, id,
   style, …). See https://lordicon.com/docs/web for the full attribute list.
+  The exceptions are `label`, `src` in any letter case (the first argument
+  sets the source), and keys that are not valid attribute names; the last two
+  are skipped with a render warning.
 ]]
 
 -- Cache-busting identifier for the bundled player. Keep in sync with the
@@ -20,8 +23,19 @@ local RESERVED = {
   label = true,
 }
 
--- ARIA attributes that, when passed by the user, replace the aria-hidden
--- default given to an icon without a label.
+-- A key holding whitespace, a control character, or one of these symbols is
+-- not a valid HTML attribute name: written out, it can end the tag early,
+-- split into stray attributes, or give an attribute with an invalid name.
+-- The byte ranges are spelled out because %s and %c follow the current
+-- locale, and under a UTF-8 locale they also match bytes inside letters such
+-- as "ß".
+-- INVALID_NAME covers space and the ASCII controls; C1_CONTROL covers
+-- U+0080 to U+009F, which UTF-8 writes as the byte 194 and a second byte.
+local INVALID_NAME = "[\0-\32\127\"'>/=]"
+local C1_CONTROL = "\194[\128-\159]"
+
+-- ARIA attributes that, when passed by the user in any letter case, replace
+-- the aria-hidden default given to an icon without a label.
 local ARIA_OVERRIDES = {
   ["aria-hidden"] = true,
   ["aria-label"] = true,
@@ -67,8 +81,40 @@ local function value_of(v)
   return pandoc.utils.stringify(v)
 end
 
+-- Lowercase the ASCII letters only. string.lower follows the locale, and in
+-- some locales it does not map "I" to "i".
+local function ascii_lower(s)
+  return (s:gsub("[A-Z]", function(c)
+    return string.char(c:byte() + 32)
+  end))
+end
+
+-- A key that HTML does not allow as an attribute name.
+local function invalid_name(key)
+  return key == "" or key:find(INVALID_NAME) or key:find(C1_CONTROL)
+end
+
+-- Warn that a call skipped some of its keys, naming each one in quotes.
+local function warn_skipped(call, keys, reason)
+  table.sort(keys)
+  local quoted = {}
+  for i, key in ipairs(keys) do
+    quoted[i] = '"' .. key .. '"'
+  end
+  quarto.log.warning(
+    string.format(
+      "lordicon: %s skips the %s %s, because %s",
+      call,
+      #keys == 1 and "key" or "keys",
+      table.concat(quoted, ", "),
+      reason
+    )
+  )
+end
+
 -- Build the <lord-icon> element for the given source URL and shortcode kwargs.
-local function build_element(src, kwargs)
+-- `call` names the shortcode call, such as {{< li CODE >}}, in warnings.
+local function build_element(src, kwargs, call)
   -- Icons only render in HTML output that ships JavaScript; skip elsewhere.
   if not quarto.doc.isFormat("html:js") then
     return pandoc.Null()
@@ -77,22 +123,39 @@ local function build_element(src, kwargs)
 
   local attrs = { string.format('src="%s"', attr_escape(src)) }
 
-  -- Forward every non-reserved kwarg as an attribute, sorted for stable output.
-  local keys = {}
-  for key in pairs(kwargs) do
-    if not RESERVED[key] then
-      keys[#keys + 1] = key
+  -- Forward every non-reserved kwarg with a value as an attribute, sorted for
+  -- stable output. A src key would give a second src, and an invalid name
+  -- would give a broken or stray attribute, so both are skipped with a
+  -- warning.
+  local keys, src_keys, invalid_keys = {}, {}, {}
+  for key, v in pairs(kwargs) do
+    if not RESERVED[key] and value_of(v) ~= "" then
+      if ascii_lower(key) == "src" then
+        src_keys[#src_keys + 1] = key
+      elseif invalid_name(key) then
+        invalid_keys[#invalid_keys + 1] = key
+      else
+        keys[#keys + 1] = key
+      end
     end
   end
   table.sort(keys)
 
+  if #src_keys > 0 then
+    warn_skipped(call, src_keys, "the first argument sets the icon. To show "
+      .. "another icon, change the first argument instead.")
+  end
+  if #invalid_keys > 0 then
+    warn_skipped(call, invalid_keys, "an attribute name cannot be empty or "
+      .. "hold spaces, control characters, quotes, >, /, or =. Rename the key "
+      .. "or remove it.")
+  end
+
+  -- Attribute names ignore letter case, so `passed` records each in lowercase.
   local passed = {}
   for _, key in ipairs(keys) do
-    local val = value_of(kwargs[key])
-    if val ~= "" then
-      attrs[#attrs + 1] = string.format('%s="%s"', key, attr_escape(val))
-      passed[key] = true
-    end
+    attrs[#attrs + 1] = string.format('%s="%s"', key, attr_escape(value_of(kwargs[key])))
+    passed[ascii_lower(key)] = true
   end
 
   -- Accessibility: announce the icon when a label is given, otherwise mark it
@@ -124,7 +187,11 @@ end
 -- {{< li CODE ... >}} — icon from the Lordicon CDN.
 local function li(args, kwargs)
   local code = pandoc.utils.stringify(args[1])
-  return build_element("https://cdn.lordicon.com/" .. code .. ".json", kwargs)
+  return build_element(
+    "https://cdn.lordicon.com/" .. code .. ".json",
+    kwargs,
+    "{{< li " .. code .. " >}}"
+  )
 end
 
 -- Open a shortcode file path, trying it as given and then relative to the
@@ -192,7 +259,7 @@ local function lif(args, kwargs)
   if quarto.doc.isFormat("html:js") then
     check_minified(file, kwargs)
   end
-  return build_element(file, kwargs)
+  return build_element(file, kwargs, "{{< lif " .. file .. " >}}")
 end
 
 return {

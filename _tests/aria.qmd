@@ -28,4 +28,35 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li wlpxtupd id=label-both label="Bell" role=presentation aria-label="Other" >}}
 {{< li wlpxtupd id=label-escaped label='Tom & "Jerry"' >}}
 
+## ARIA names in any letter case
+
+{{< li wlpxtupd id=hidden-mixed Aria-Hidden=false >}}
+{{< li wlpxtupd id=arialabel-upper ARIA-LABEL="Bell" >}}
+{{< li wlpxtupd id=labelledby-mixed Aria-LabelledBy=caption >}}
+{{< li wlpxtupd id=role-upper ROLE=presentation >}}
+{{< li wlpxtupd id=label-role-mixed label="Bell" Role=presentation >}}
+{{< li wlpxtupd id=label-arialabel-mixed label="Bell" Aria-Label="Other" >}}
+
+## Reserved src
+
+{{< li wlpxtupd id=src-li src=https://cdn.lordicon.com/rehjpyyh.json >}}
+{{< lif gift_raw.json id=src-lif src=other.json >}}
+{{< li wlpxtupd id=src-upper SRC=https://cdn.lordicon.com/rehjpyyh.json >}}
+
+## Valid names with symbols or letters outside ASCII
+
+{{< li wlpxtupd id=kept-names @click=2 data.k=3 data-straße=4 data-datà=5 >}}
+
+## Invalid attribute names
+
+{{< li wlpxtupd id=bad-empty class=big ""=1 >}}
+{{< li wlpxtupd id=bad-space class=big "a b"=1 >}}
+{{< li wlpxtupd id=bad-dquote class=big 'a"b'=1 >}}
+{{< li wlpxtupd id=bad-squote class=big "a'b"=1 >}}
+{{< li wlpxtupd id=bad-gt class=big a>b=1 >}}
+{{< li wlpxtupd id=bad-slash class=big "a/b"=1 >}}
+{{< li wlpxtupd id=bad-equals class=big "a=b"=1 >}}
+{{< li wlpxtupd id=bad-c1 class=big "ab"=1 >}}
+{{< li wlpxtupd id=bad-control class=big "ab"=1 >}}
+
 [Caption]{#caption}

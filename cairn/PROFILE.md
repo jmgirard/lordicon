@@ -21,7 +21,7 @@ present and no language, plugin, or `Dockerfile` marker is. With a
 ## verify
 Run by `/milestone-implement` (per task) and `/hotfix` (gate-lite). Run
 `python3 _tests/check_aria.py`, which renders `_tests/aria.qmd` and checks the
-ARIA attributes of each icon. It must exit 0. Then run `quarto render` at the
+attributes of each icon and the render's lordicon warnings. It must exit 0. Then run `quarto render` at the
 repo root, which renders the demo site into `docs/`. Then open each changed demo page in a browser and make
 sure that its icons load and animate. After a player change, run `npm run build` first.
 
