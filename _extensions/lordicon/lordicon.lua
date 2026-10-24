@@ -11,7 +11,8 @@
   style, …). See https://lordicon.com/docs/web for the full attribute list.
   The exceptions are `label`, `src` in any letter case (the first argument
   sets the source), and keys that are not valid attribute names; the last two
-  are skipped with a render warning.
+  are skipped with a render warning. Keys that differ only in letter case, and
+  `label` in another letter case, are forwarded with a render warning.
 ]]
 
 -- Cache-busting identifier for the bundled player. Keep in sync with the
@@ -112,6 +113,92 @@ local function warn_skipped(call, keys, reason)
   )
 end
 
+-- Quote each key and join them as a list: "a" and "b", or "a", "b", and "c".
+local function quote_list(keys)
+  local quoted = {}
+  for i, key in ipairs(keys) do
+    quoted[i] = '"' .. key .. '"'
+  end
+  if #quoted == 2 then
+    return quoted[1] .. " and " .. quoted[2]
+  end
+  quoted[#quoted] = "and " .. quoted[#quoted]
+  return table.concat(quoted, ", ")
+end
+
+-- Warn about forwarded keys that differ only in letter case, such as `role`
+-- and `Role`. Quarto's HTML post-processing keeps only one value of each such
+-- group, for letters outside ASCII too. `keys` is sorted. Keys that lowercase to `label`
+-- get the label warning instead.
+local function warn_case_clashes(call, keys)
+  local groups, order = {}, {}
+  for _, key in ipairs(keys) do
+    local lowered = pandoc.text.lower(key)
+    if lowered ~= "label" then
+      if not groups[lowered] then
+        groups[lowered] = {}
+        order[#order + 1] = lowered
+      end
+      table.insert(groups[lowered], key)
+    end
+  end
+
+  local clashes = {}
+  for _, lowered in ipairs(order) do
+    if #groups[lowered] > 1 then
+      clashes[#clashes + 1] = quote_list(groups[lowered])
+    end
+  end
+  if #clashes == 0 then
+    return
+  end
+
+  local advice
+  if #clashes == 1 then
+    advice = "only one of their values. Keep one of these keys and remove the others."
+  else
+    advice = "only one value from each group. Keep one key from each group and "
+      .. "remove the others."
+  end
+  quarto.log.warning(
+    string.format(
+      "lordicon: %s has keys that differ only in letter case: %s. The page "
+        .. "keeps %s",
+      call,
+      table.concat(clashes, "; "),
+      advice
+    )
+  )
+end
+
+-- Warn about forwarded keys such as `Label` that lowercase to `label`. Only a
+-- lowercase `label` gives the ARIA attributes, so these keys label nothing.
+local function warn_label_case(call, keys)
+  local found = {}
+  for _, key in ipairs(keys) do
+    if pandoc.text.lower(key) == "label" then
+      found[#found + 1] = key
+    end
+  end
+  if #found == 0 then
+    return
+  end
+  local named
+  if #found == 1 then
+    named = 'the key "' .. found[1] .. '"'
+  else
+    named = "the keys " .. quote_list(found)
+  end
+  quarto.log.warning(
+    string.format(
+      "lordicon: %s has %s, but only a lowercase label key labels the icon. "
+        .. "Use one lowercase label key.",
+      call,
+      named
+    )
+  )
+end
+
 -- Build the <lord-icon> element for the given source URL and shortcode kwargs.
 -- `call` names the shortcode call, such as {{< li CODE >}}, in warnings.
 local function build_element(src, kwargs, call)
@@ -150,6 +237,8 @@ local function build_element(src, kwargs, call)
       .. "hold spaces, control characters, quotes, >, /, or =. Rename the key "
       .. "or remove it.")
   end
+  warn_case_clashes(call, keys)
+  warn_label_case(call, keys)
 
   -- Attribute names ignore letter case, so `passed` records each in lowercase.
   local passed = {}
@@ -219,9 +308,11 @@ local function check_minified(file, kwargs)
     return
   end
 
+  -- Attribute names ignore letter case, so `Colors` works like `colors`. Match
+  -- the keys in any letter case and name each one as the user wrote it.
   local used = {}
-  for key in pairs(CONTROL_DEPENDENT) do
-    if value_of(kwargs[key]) ~= "" then
+  for key, v in pairs(kwargs) do
+    if CONTROL_DEPENDENT[ascii_lower(key)] and value_of(v) ~= "" then
       used[#used + 1] = key
     end
   end

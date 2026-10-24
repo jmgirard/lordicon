@@ -2,6 +2,12 @@
 
 This file lists the changes in each version of the extension, newest first.
 
+## 0.7.4
+
+- If one call passes on two or more keys that differ only in letter case, such as `role` and `Role`, the render now warns. The page keeps only one of their values. The extension still passes every such key on and skips none.
+- A key such as `Label` or `LABEL` now gives a render warning. Only a lowercase `label` gives the ARIA attributes, so such a key labels nothing. The key still reaches the element.
+- The Minified-export warning of `lif` now also fires for `colors`, `stroke`, or `state` in another letter case, such as `Colors`. Before, such a key gave no warning.
+
 ## 0.7.3
 
 - A `src` key in any letter case, such as `SRC`, no longer gives the icon a second `src` attribute. The first argument still sets the icon, and the render warns that it skips the key.

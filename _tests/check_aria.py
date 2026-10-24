@@ -4,8 +4,8 @@ the expected values below, in two places:
 
 - page: the HTML page Quarto renders from the fixture.
 - filter: the raw HTML each shortcode returns, from raw_output.lua. Quarto's
-  HTML post-processing keeps only the first of two same-name attributes, so
-  only this output shows an attribute the filter wrote twice. The parser
+  HTML post-processing keeps only one of two same-name attributes, so only
+  this output shows an attribute the filter wrote twice. The parser
   lowercases attribute names, so the check also reads this output as text to
   confirm that each forwarded key keeps the spelling the user wrote.
 
@@ -107,9 +107,61 @@ CASES["kept-names"] = {
 # CASES gives a value. The `label` case shows that `label` is not passed on.
 EXACT = {"src-li", "src-lif", "src-upper", "kept-names", "label", *BAD}
 
-# The key that the one lordicon warning of each case must name. No other
-# lordicon warning may appear in the render's log.
-WARNED = {"src-li": "src", "src-lif": "src", "src-upper": "SRC", **BAD}
+# Keys that differ only in letter case give one attribute name more than once
+# in the filter output, which the parser lowercases. The page keeps one.
+CLASH = {
+    "clash-role": {"aria-hidden": None, "aria-label": None},
+    "clash-class": DECORATIVE,
+    "clash-arialabel": {"aria-hidden": None, "role": None},
+    "clash-two": {"aria-hidden": None, "aria-label": None},
+    "clash-accent": DECORATIVE,
+}
+CASES.update(CLASH)
+CASES["clash-empty"] = {"aria-hidden": None, "role": "img", "aria-label": None}
+
+# How many times each case's clashing names appear in the filter output.
+TWICE = {
+    "clash-role": {"role": 2},
+    "clash-class": {"class": 3},
+    "clash-arialabel": {"aria-label": 2},
+    "clash-two": {"role": 2, "data-x": 2},
+    "clash-accent": {"data-é": 2},
+    "label-two": {"label": 2},
+}
+
+# Only a lowercase `label` labels the icon. A key such as `Label` passes on.
+CASES["label-upper"] = {**DECORATIVE, "label": "Bell"}
+CASES["label-mixed"] = {"aria-hidden": None, "role": "img", "aria-label": "Bell", "label": "Ring"}
+CASES["label-two"] = DECORATIVE
+
+# minified.json has no control layer, as in a Minified export; gift_raw.json
+# has one.
+CASES["minified-lif"] = DECORATIVE
+CASES["raw-lif"] = DECORATIVE
+
+# The lordicon warnings of each case. Each warning is a list of texts that one
+# line of the render's log must hold, where CALL stands for the case's call,
+# such as {{< li CODE >}}. No other lordicon warning may appear in the log.
+CALL = object()
+SKIPS = {"src-li": "src", "src-lif": "src", "src-upper": "SRC", **BAD}
+WARNED = {case: [[CALL, "skips the", f'"{key}"']] for case, key in SKIPS.items()}
+CASE_CLASH = "differ only in letter case"
+ONE = "The page keeps only one of their values."
+EACH = "The page keeps only one value from each group."
+WARNED.update({
+    "clash-role": [[CALL, CASE_CLASH, '"Role" and "role".', ONE]],
+    "clash-class": [[CALL, CASE_CLASH, '"CLASS", "Class", and "class".', ONE]],
+    "clash-arialabel": [[CALL, CASE_CLASH, '"aria-Label" and "aria-label".', ONE]],
+    "clash-two": [[CALL, CASE_CLASH, '"DATA-X" and "data-x"; "ROLE" and "role".', EACH]],
+    "clash-accent": [[CALL, CASE_CLASH, '"data-É" and "data-é".', ONE]],
+})
+LABEL_CASE = "only a lowercase label key labels the icon. Use one lowercase label key."
+WARNED.update({
+    "label-upper": [[CALL, LABEL_CASE, 'the key "Label",']],
+    "label-mixed": [[CALL, LABEL_CASE, 'the key "laBel",']],
+    "label-two": [[CALL, LABEL_CASE, 'the keys "LABEL" and "Label",']],
+    "minified-lif": [["minified.json looks like a Minified", "so Colors, STROKE, sTaTe will"]],
+})
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern
 # (space, the ASCII controls, `"'>/=`) and its C1_CONTROL pattern
@@ -152,6 +204,7 @@ def render_page():
         shutil.copytree(ROOT / "_extensions", workdir / "_extensions")
         shutil.copy(FIXTURE, workdir)
         shutil.copy(ROOT / "gift_raw.json", workdir)
+        shutil.copy(ROOT / "_tests" / "minified.json", workdir)
         cmd = ["quarto", "render", "aria.qmd", "--to", "html"]
         done = run(cmd, workdir, {**os.environ, "LC_ALL": "C.UTF-8"})
         return (workdir / "aria.html").read_text(encoding="utf-8"), done.stderr
@@ -207,20 +260,22 @@ def check_spelling(calls, raw):
 
 
 def check_warnings(calls, log):
-    """Each WARNED case gives one lordicon warning naming its call and key."""
+    """Each warning in WARNED matches exactly one lordicon line of the log."""
     lines = [line for line in log.split("\n") if "lordicon:" in line]
     failures = []
+    expected = 0
     for call in calls:
         case = call["kwargs"].get("id")
-        if case not in WARNED:
-            continue
         name = f"{{{{< {call['shortcode']} {call['arg']} >}}}}"
-        found = [line for line in lines if name in line and f'"{WARNED[case]}"' in line]
-        if len(found) != 1:
-            failures.append(f"log {case}: {len(found)} warnings name {name} and {WARNED[case]!r}")
-    if len(lines) != len(WARNED):
-        failures.append(f"log: {len(lines)} lordicon warnings, expected {len(WARNED)}")
-    print(f"log: {len(lines)} lordicon warnings read, {len(WARNED)} expected")
+        for warning in WARNED.get(case, []):
+            texts = [name if text is CALL else text for text in warning]
+            found = [line for line in lines if all(text in line for text in texts)]
+            if len(found) != 1:
+                failures.append(f"log {case}: {len(found)} warnings hold {texts!r}")
+            expected += 1
+    if len(lines) != expected:
+        failures.append(f"log: {len(lines)} lordicon warnings, expected {expected}")
+    print(f"log: {len(lines)} lordicon warnings read, {expected} expected")
     return failures
 
 
@@ -234,7 +289,10 @@ def check(where, html):
         names = [name for name, _ in attrs]
         values = dict(attrs)
         case = values.get("id")
-        dupes = sorted({n for n in names if names.count(n) > 1})
+        allowed = TWICE.get(case, {}) if where == "filter" else {}
+        dupes = sorted({
+            n for n in names if names.count(n) > 1 and names.count(n) != allowed.get(n)
+        })
         if dupes:
             failures.append(f"{where} {case}: attribute twice: {', '.join(dupes)}")
         if case not in CASES:
