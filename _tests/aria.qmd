@@ -59,4 +59,13 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li wlpxtupd id=bad-c1 class=big "ab"=1 >}}
 {{< li wlpxtupd id=bad-control class=big "ab"=1 >}}
 
+## Keys that differ only in letter case
+
+{{< li clashrole id=clash-role role=presentation Role=img >}}
+{{< li clashclass id=clash-class class=a Class=b CLASS=c >}}
+{{< li clasharia id=clash-arialabel aria-label="Bell" aria-Label="Ring" >}}
+{{< li clashtwo id=clash-two role=presentation ROLE=img data-x=1 DATA-X=2 >}}
+{{< li clashaccent id=clash-accent data-É=1 data-é=2 >}}
+{{< li clashempty id=clash-empty role="" Role=img >}}
+
 [Caption]{#caption}

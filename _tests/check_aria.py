@@ -107,9 +107,41 @@ CASES["kept-names"] = {
 # CASES gives a value. The `label` case shows that `label` is not passed on.
 EXACT = {"src-li", "src-lif", "src-upper", "kept-names", "label", *BAD}
 
-# The key that the one lordicon warning of each case must name. No other
-# lordicon warning may appear in the render's log.
-WARNED = {"src-li": "src", "src-lif": "src", "src-upper": "SRC", **BAD}
+# Keys that differ only in letter case give one attribute name twice in the
+# filter output, which the parser lowercases. The page keeps one of them.
+CLASH = {
+    "clash-role": {"aria-hidden": None, "aria-label": None},
+    "clash-class": DECORATIVE,
+    "clash-arialabel": {"aria-hidden": None, "role": None},
+    "clash-two": {"aria-hidden": None, "aria-label": None},
+    "clash-accent": DECORATIVE,
+}
+CASES.update(CLASH)
+CASES["clash-empty"] = {"aria-hidden": None, "role": "img", "aria-label": None}
+
+# Names that each case may hold twice in the filter output.
+TWICE = {
+    "clash-role": {"role"},
+    "clash-class": {"class"},
+    "clash-arialabel": {"aria-label"},
+    "clash-two": {"role", "data-x"},
+    "clash-accent": {"data-é"},
+}
+
+# The lordicon warnings of each case. Each warning is a list of texts that one
+# line of the render's log must hold, where CALL stands for the case's call,
+# such as {{< li CODE >}}. No other lordicon warning may appear in the log.
+CALL = object()
+SKIPS = {"src-li": "src", "src-lif": "src", "src-upper": "SRC", **BAD}
+WARNED = {case: [[CALL, "skips the", f'"{key}"']] for case, key in SKIPS.items()}
+CASE_CLASH = "differ only in letter case"
+WARNED.update({
+    "clash-role": [[CALL, CASE_CLASH, '"Role" and "role".']],
+    "clash-class": [[CALL, CASE_CLASH, '"CLASS", "Class", and "class".']],
+    "clash-arialabel": [[CALL, CASE_CLASH, '"aria-Label" and "aria-label".']],
+    "clash-two": [[CALL, CASE_CLASH, '"DATA-X" and "data-x"; "ROLE" and "role".']],
+    "clash-accent": [[CALL, CASE_CLASH, '"data-É" and "data-é".']],
+})
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern
 # (space, the ASCII controls, `"'>/=`) and its C1_CONTROL pattern
@@ -207,20 +239,22 @@ def check_spelling(calls, raw):
 
 
 def check_warnings(calls, log):
-    """Each WARNED case gives one lordicon warning naming its call and key."""
+    """Each warning in WARNED matches exactly one lordicon line of the log."""
     lines = [line for line in log.split("\n") if "lordicon:" in line]
     failures = []
+    expected = 0
     for call in calls:
         case = call["kwargs"].get("id")
-        if case not in WARNED:
-            continue
         name = f"{{{{< {call['shortcode']} {call['arg']} >}}}}"
-        found = [line for line in lines if name in line and f'"{WARNED[case]}"' in line]
-        if len(found) != 1:
-            failures.append(f"log {case}: {len(found)} warnings name {name} and {WARNED[case]!r}")
-    if len(lines) != len(WARNED):
-        failures.append(f"log: {len(lines)} lordicon warnings, expected {len(WARNED)}")
-    print(f"log: {len(lines)} lordicon warnings read, {len(WARNED)} expected")
+        for warning in WARNED.get(case, []):
+            texts = [name if text is CALL else text for text in warning]
+            found = [line for line in lines if all(text in line for text in texts)]
+            if len(found) != 1:
+                failures.append(f"log {case}: {len(found)} warnings hold {texts!r}")
+            expected += 1
+    if len(lines) != expected:
+        failures.append(f"log: {len(lines)} lordicon warnings, expected {expected}")
+    print(f"log: {len(lines)} lordicon warnings read, {expected} expected")
     return failures
 
 
@@ -234,7 +268,10 @@ def check(where, html):
         names = [name for name, _ in attrs]
         values = dict(attrs)
         case = values.get("id")
-        dupes = sorted({n for n in names if names.count(n) > 1})
+        dupes = {n for n in names if names.count(n) > 1}
+        if where == "filter":
+            dupes -= TWICE.get(case, set())
+        dupes = sorted(dupes)
         if dupes:
             failures.append(f"{where} {case}: attribute twice: {', '.join(dupes)}")
         if case not in CASES:

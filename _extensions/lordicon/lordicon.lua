@@ -112,6 +112,64 @@ local function warn_skipped(call, keys, reason)
   )
 end
 
+-- Quote each key and join them as a list: "a" and "b", or "a", "b", and "c".
+local function quote_list(keys)
+  local quoted = {}
+  for i, key in ipairs(keys) do
+    quoted[i] = '"' .. key .. '"'
+  end
+  if #quoted == 2 then
+    return quoted[1] .. " and " .. quoted[2]
+  end
+  quoted[#quoted] = "and " .. quoted[#quoted]
+  return table.concat(quoted, ", ")
+end
+
+-- Warn about forwarded keys that differ only in letter case, such as `role`
+-- and `Role`. Attribute names ignore letter case, so the page keeps only one
+-- value of each such group. `keys` is sorted. Keys that lowercase to `label`
+-- get the label warning instead.
+local function warn_case_clashes(call, keys)
+  local groups, order = {}, {}
+  for _, key in ipairs(keys) do
+    local lowered = pandoc.text.lower(key)
+    if lowered ~= "label" then
+      if not groups[lowered] then
+        groups[lowered] = {}
+        order[#order + 1] = lowered
+      end
+      table.insert(groups[lowered], key)
+    end
+  end
+
+  local clashes = {}
+  for _, lowered in ipairs(order) do
+    if #groups[lowered] > 1 then
+      clashes[#clashes + 1] = quote_list(groups[lowered])
+    end
+  end
+  if #clashes == 0 then
+    return
+  end
+
+  local advice
+  if #clashes == 1 then
+    advice = "only one of their values. Keep one of these keys and remove the others."
+  else
+    advice = "only one value from each group. Keep one key from each group and "
+      .. "remove the others."
+  end
+  quarto.log.warning(
+    string.format(
+      "lordicon: %s has keys that differ only in letter case: %s. Attribute "
+        .. "names ignore letter case, so the page keeps %s",
+      call,
+      table.concat(clashes, "; "),
+      advice
+    )
+  )
+end
+
 -- Build the <lord-icon> element for the given source URL and shortcode kwargs.
 -- `call` names the shortcode call, such as {{< li CODE >}}, in warnings.
 local function build_element(src, kwargs, call)
@@ -150,6 +208,7 @@ local function build_element(src, kwargs, call)
       .. "hold spaces, control characters, quotes, >, /, or =. Rename the key "
       .. "or remove it.")
   end
+  warn_case_clashes(call, keys)
 
   -- Attribute names ignore letter case, so `passed` records each in lowercase.
   local passed = {}

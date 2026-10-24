@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-24 (triage: dropped "Close out the element API todo
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M004 | Warn about keys in another letter case | planned | — | normal | milestones/M004-letter-case-warnings.md |
+| M004 | Warn about keys in another letter case | in-progress | — | normal | milestones/M004-letter-case-warnings.md |
 | M003 | Stop key clashes and bad attribute names | done | M002 | normal | milestones/archive/M003-key-clashes.md |
 | M002 | Start CHANGELOG.md for past releases | done | — | normal | milestones/archive/M002-start-changelog.md |
 | M001 | Let user ARIA attributes beat defaults | done | — | high | milestones/archive/M001-user-aria-beats-defaults.md |

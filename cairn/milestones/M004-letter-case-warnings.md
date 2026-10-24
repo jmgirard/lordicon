@@ -2,14 +2,14 @@
      section ownership". A phase skill never rewrites another phase's section. -->
 # M004: Warn about keys in another letter case
 
-- **Status:** planned
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
 - **Principles touched:** IP1, IP3, GP2
 - **Resolves:** —
 - **Surface tier:** user-facing — the warnings appear in users' renders
-- **Branch/PR:** —
+- **Branch/PR:** m004-letter-case-warnings
 
 ## Goal
 
@@ -44,8 +44,8 @@ A shortcode key whose effect depends on its letter case gives a render warning, 
 
 ## Tasks
 
-- [ ] T1: Extend `_tests/check_aria.py` for the new cases before the code changes. Let a case expect more than one warning and match each warning by its own text, the Minified line included. Allow the expected duplicate names of AC1 cases in the raw-output duplicate check, and keep that check, the spelling check, and the exact warning count for every earlier case. Add the AC1 fixture calls to `_tests/aria.qmd` and see them fail on the current filter.
-- [ ] T2: In `build_element` (`lordicon.lua:117`), group the forwarded keys by `pandoc.text.lower` and give one case-clash warning per call for the groups with two or more keys, in the style of `warn_skipped`. Keys that lower to `label` are left out of the groups.
+- [x] T1: Extend `_tests/check_aria.py` for the new cases before the code changes. Let a case expect more than one warning and match each warning by its own text, the Minified line included. Allow the expected duplicate names of AC1 cases in the raw-output duplicate check, and keep that check, the spelling check, and the exact warning count for every earlier case. Add the AC1 fixture calls to `_tests/aria.qmd` and see them fail on the current filter.
+- [x] T2: In `build_element` (`lordicon.lua:117`), group the forwarded keys by `pandoc.text.lower` and give one case-clash warning per call for the groups with two or more keys, in the style of `warn_skipped`. Keys that lower to `label` are left out of the groups.
 - [ ] T3: Add the AC2 fixture calls and expectations, then the `label` warning in `build_element`, with advice to use one lowercase `label`.
 - [ ] T4: Add `_tests/minified.json`, a minimal Lottie file with no control layer and no icon art (IP6), and copy it in `render_page`. Add the AC3 calls. In `check_minified` (`lordicon.lua:217`), match `CONTROL_DEPENDENT` with `ascii_lower` over the call's keys and name each key as written.
 - [ ] T5: Update README.md (the passthrough and Minified sections), CHANGELOG.md `## 0.7.4`, `version:` in `_extension.yml`, the header comment of `lordicon.lua`, and DESIGN Conventions and Known issues (the Minified warning now has a check).
@@ -63,6 +63,9 @@ A shortcode key whose effect depends on its letter case gives a render warning, 
 - 2026-10-24: plan chose `pandoc.text.lower` over ASCII-only folding for clashes because the page also drops non-ASCII clashes (observed); falsified by a supported Quarto whose Pandoc has no `pandoc.text`.
 - 2026-10-24: plan chose a synthetic fixture with no icon art over a real Minified export because the filter reads only the control layer and IP6 then holds; falsified by a Minified check that reads more of the file.
 - 2026-10-24: no demo-site change planned: GP4 asks for an example per feature, and a render-log warning has no page to show.
+- 2026-10-24: implement started on branch m004-letter-case-warnings; `.DS_Store` untracked at the root, left unstaged.
+- 2026-10-24: T1 done: `WARNED` now lists several warnings per case, each a set of texts one log line must hold; `TWICE` allows the clash names twice in the filter output only. New clash calls use their own icon codes so each call name is unique. The 5 clash warnings failed on the old filter (12 of 17 warnings read).
+- 2026-10-24: T2 done: `warn_case_clashes` groups the sorted forwarded keys by `pandoc.text.lower`, groups in order of their first key, joined by "; ". check_aria 0 failures (17 warnings), root render exit 0, sitemap reverted.
 
 ## Decisions
 
