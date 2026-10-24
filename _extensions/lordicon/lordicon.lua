@@ -362,10 +362,11 @@ local function open_icon_file(file)
 end
 
 -- Warn once per file when control-dependent attributes are used with an icon
--- that was exported in Lordicon's "Minified" format.
+-- that was exported in Lordicon's "Minified" format. The warning names the
+-- first such call, such as {{< lif FILE >}}.
 local warned_minified = {}
 
-local function check_minified(file, kwargs)
+local function check_minified(file, kwargs, call)
   if warned_minified[file] then
     return
   end
@@ -396,11 +397,11 @@ local function check_minified(file, kwargs)
   warned_minified[file] = true
   quarto.log.warning(
     string.format(
-      "lordicon: %s looks like a Minified Lottie export, so %s will have no "
-        .. "effect. Either re-export it as Raw (lordicon.com > Edit and "
-        .. "download > format menu > the options icon next to Lottie), or set "
-        .. "these in the editor before exporting and drop the argument.",
-      file,
+      "lordicon: %s uses a file that looks like a Minified Lottie export, so "
+        .. "%s will have no effect. Either re-export it as Raw (lordicon.com > "
+        .. "Edit and download > format menu > the options icon next to Lottie), "
+        .. "or set these in the editor before exporting and drop the argument.",
+      call,
       table.concat(used, ", ")
     )
   )
@@ -409,10 +410,11 @@ end
 -- {{< lif FILE ... >}} — icon from a local Lottie .json file.
 local function lif(args, kwargs)
   local file = pandoc.utils.stringify(args[1])
+  local call = "{{< lif " .. file .. " >}}"
   if quarto.doc.isFormat("html:js") then
-    check_minified(file, kwargs)
+    check_minified(file, kwargs, call)
   end
-  return build_element(file, kwargs, "{{< lif " .. file .. " >}}")
+  return build_element(file, kwargs, call)
 end
 
 return {

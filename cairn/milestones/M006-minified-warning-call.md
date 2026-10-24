@@ -43,7 +43,7 @@ The Minified-export warning of `lif` names the shortcode call, such as `{{< lif 
 <!-- owner: plan (create) / implement (check-off, minor edits); substantive change is amend-via-gate. -->
 
 - [x] T1: In `_tests/check_aria.py` (`WARNED`, line 196), change the `minified-lif` expectation to `[CALL, "looks like a Minified Lottie export", "so Colors, STROKE, sTaTe will"]`. Run `python3 _tests/check_aria.py` against the current filter and make sure that it fails on the `minified-lif` case for the missing call text.
-- [ ] T2: In `lif` (`lordicon.lua:410`), build the call string once and pass it to both `check_minified` and `build_element`. In `check_minified` (`lordicon.lua:368`), name the call as the subject of the warning, for example `lordicon: {{< lif FILE >}} uses a file that looks like a Minified Lottie export, so … will have no effect.`, and keep the rest of the text. Update the comment above `warned_minified`. Run `python3 _tests/check_aria.py`, which must exit 0.
+- [x] T2: In `lif` (`lordicon.lua:410`), build the call string once and pass it to both `check_minified` and `build_element`. In `check_minified` (`lordicon.lua:368`), name the call as the subject of the warning, for example `lordicon: {{< lif FILE >}} uses a file that looks like a Minified Lottie export, so … will have no effect.`, and keep the rest of the text. Update the comment above `warned_minified`. Run `python3 _tests/check_aria.py`, which must exit 0.
 - [ ] T3: Raise `version:` in `_extensions/lordicon/_extension.yml` to 0.7.6 and add a `## 0.7.6` section at the top of `CHANGELOG.md`. Run `quarto render` at the repo root, make sure that `git status -- docs` lists only `docs/sitemap.xml` with only `lastmod` lines changed, then run `git checkout -- docs/sitemap.xml`.
 
 ## Work log
@@ -61,6 +61,7 @@ The Minified-export warning of `lif` names the shortcode call, such as `{{< lif 
 - 2026-10-24: test scope: only the `minified-lif` expectation changes; the `raw-lif` call and the total warning count in `check_warnings` keep the silent case covered.
 - 2026-10-24: started on branch m006-minified-warning-call; `.DS_Store` (untracked, unrelated) left unstaged.
 - 2026-10-24: T1 done: `minified-lif` expectation uses CALL; on the old filter `check_aria.py` fails only with "log minified-lif: 0 warnings hold ['{{< lif minified.json >}}', …]".
+- 2026-10-24: T2 done: `lif` builds the call once and passes it to `check_minified`; the render logs "lordicon: {{< lif minified.json >}} uses a file that looks like a Minified Lottie export, so Colors, STROKE, sTaTe will have no effect. …"; `check_aria.py` exits 0 (62 cases, 32 warnings).
 
 ## Decisions
 <!-- owner: implement / review · append-only; milestone-local. -->
