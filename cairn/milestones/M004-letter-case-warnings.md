@@ -71,6 +71,7 @@ A shortcode key whose effect depends on its letter case gives a render warning, 
 - 2026-10-24: T5 done: README (a letter-case paragraph after the skipped-keys list, and the Minified note), CHANGELOG `## 0.7.4`, `_extension.yml` 0.7.4, the `lordicon.lua` header comment, DESIGN Conventions, Architecture, and Known issues. The simple-english lint hook flags 23 hits in README text this change did not write; left as is, out of scope. Root render changed only `docs/sitemap.xml`, reverted.
 - 2026-10-24: T6 done: verify slot clean on the T5 head (check_aria 0 failures, 21 warnings; root render exit 0; no demo page changed, so no browser step).
 - 2026-10-24: claim audit: 36 claims read, 2 corrected — README.md, CHANGELOG.md ("has two keys" narrowed to "passes on two keys"; "The keys still reach the element" reworded to "passes every such key on and skips none"). The reader also noted that the `raw_output.lua` header and the M001 lesson say Quarto keeps the first of two same-name attributes, which a non-ASCII clash contradicts (it keeps the last); not in this diff, left for review hygiene.
+- 2026-10-24: step-7 approval: m004-letter-case-warnings approved for merge
 
 ## Decisions
 
