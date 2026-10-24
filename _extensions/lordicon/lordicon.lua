@@ -230,8 +230,9 @@ local function warn_nameless_role(call, keys, kwargs, label)
   if role == nil then
     return
   end
-  -- The first token of the role decides it. ASCII whitespace is spelled out
-  -- because %s follows the locale.
+  -- The check reads only the first token of the role. A browser uses the
+  -- first role it knows, so a value such as "bogus img" is not caught.
+  -- ASCII whitespace is spelled out because %s follows the locale.
   local first = role:match("^[\t\n\f\r ]*([^\t\n\f\r ]+)")
   first = first and ascii_lower(first)
   if first ~= "img" and first ~= "image" then

@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-24 (review M004: archived; graduated 2 rows, narrow
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M005 | Warn when a role icon has no name | in-progress | — | normal | milestones/M005-nameless-role-warning.md |
+| M005 | Warn when a role icon has no name | review | — | normal | milestones/M005-nameless-role-warning.md |
 | M004 | Warn about keys in another letter case | done | — | normal | milestones/archive/M004-letter-case-warnings.md |
 | M003 | Stop key clashes and bad attribute names | done | M002 | normal | milestones/archive/M003-key-clashes.md |
 | M002 | Start CHANGELOG.md for past releases | done | — | normal | milestones/archive/M002-start-changelog.md |

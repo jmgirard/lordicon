@@ -4,7 +4,7 @@
      cairn_validate's <150 over the plan-owned body. -->
 # M005: Warn when a role icon has no name
 
-- **Status:** in-progress   <!-- owner: transitioning skill · mirror-update; cairn/ROADMAP.md is the authority -->
+- **Status:** review   <!-- owner: transitioning skill · mirror-update; cairn/ROADMAP.md is the authority -->
 - **Priority:** normal   <!-- owner: plan · create/amend-via-gate; high | normal | low -->
 - **Depends on:** —   <!-- owner: plan · create/amend-via-gate; M<xx>, M<yy> or — -->
 - **Driving RR:** —   <!-- owner: plan · create/amend-via-gate; RR<NN> whose Binding criteria bind this milestone's ACs (binding-criteria check), or — -->
@@ -135,6 +135,8 @@ non-HTML output checks → candidate row "Add a render check with fixtures".
 - 2026-10-24: T2 done: `warn_nameless_role` in `lordicon.lua`, called after `warn_label_case`; it returns early on a non-empty `label`, reads the first sorted key per `ascii_lower` name, and skips on `aria-label`, `aria-labelledby`, `title`, `hidden`, `inert` (table `NAMES_OR_HIDES`) or a trimmed `aria-hidden` of `true`. `check_aria.py`: 0 failures, 32 of 32 warnings. Planted defects turned it red: dropping `inert` (33 warnings), reading the last duplicate (clash-role, clash-two, nameless-hidden-clash lost). `quarto render` exit 0, no lordicon warning on the demo site, sitemap restored; no demo page changed, so no browser check.
 - 2026-10-24: T3 done: GP5 reworded (D-004), Conventions, Known issues, and Architecture lines in DESIGN.md; README and `index.qmd` Accessibility paragraph; CHANGELOG 0.7.5; `version: 0.7.5`. `check_aria.py` 0 failures; `quarto render` exit 0 with no lordicon warning; `docs/` committed with its sitemap. Browser at http://localhost:8765/: `lord-icon` defined, 17 of 17 icons hold an SVG, the new paragraph shows.
 - 2026-10-24: the simple-english lint hook flagged 25 older README sentences; fixed only the hits in the new paragraph (a long sentence, a trailing condition) and left the rest, which predate M005.
+- 2026-10-24: claim audit: 14 claims read, 2 corrected — `_extensions/lordicon/lordicon.lua` (first-token comment now says `role="bogus img"` is not caught), `_tests/check_aria.py` (`dict(attrs)`, not the parser, keeps the last duplicate); the reader re-read both as true. `check_aria.py` 0 failures after the edits.
+- 2026-10-24: implement complete; status set to review.
 
 ## Decisions
 <!-- owner: implement / review · append-only; milestone-local -->

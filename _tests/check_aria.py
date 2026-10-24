@@ -165,7 +165,8 @@ TWICE["nameless-hidden-clash"] = {"aria-hidden": 2}
 TWICE["named-role-clash"] = {"role": 2}
 
 # The value the page keeps of names that appear twice: the first in the
-# filter's byte order. The parser keeps the last, so only the page is checked.
+# filter's byte order. `dict(attrs)` in check() keeps the last, so only the
+# page is checked.
 PAGE_ONLY = {
     "clash-role": {"role": "img"},
     "clash-two": {"role": "img"},
