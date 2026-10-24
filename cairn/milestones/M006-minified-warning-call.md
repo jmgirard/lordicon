@@ -28,9 +28,9 @@ The Minified-export warning of `lif` names the shortcode call, such as `{{< lif 
 ## Acceptance criteria
 <!-- owner: plan · create/amend-via-gate; review reads, never reinterprets. -->
 
-- [ ] AC1: Rendering `_tests/aria.qmd` gives exactly one lordicon warning line for the `minified-lif` call, and that line holds `{{< lif minified.json >}}`, `looks like a Minified Lottie export`, and `Colors, STROKE, sTaTe`, as a `python3 _tests/check_aria.py` run shows by exiting 0.
-- [ ] AC2: `_extensions/lordicon/_extension.yml` has `version: 0.7.6`, and the first version section of `CHANGELOG.md` is `## 0.7.6`, with an entry saying that the Minified-export warning of `lif` now names the shortcode call.
-- [ ] AC3: At the head of the milestone branch, `quarto render` at the repo root exits 0, and the only change it makes under `docs/` is the `lastmod` values in `docs/sitemap.xml`.
+- [x] AC1: Rendering `_tests/aria.qmd` gives exactly one lordicon warning line for the `minified-lif` call, and that line holds `{{< lif minified.json >}}`, `looks like a Minified Lottie export`, and `Colors, STROKE, sTaTe`, as a `python3 _tests/check_aria.py` run shows by exiting 0.
+- [x] AC2: `_extensions/lordicon/_extension.yml` has `version: 0.7.6`, and the first version section of `CHANGELOG.md` is `## 0.7.6`, with an entry saying that the Minified-export warning of `lif` now names the shortcode call.
+- [x] AC3: At the head of the milestone branch, `quarto render` at the repo root exits 0, and the only change it makes under `docs/` is the `lastmod` values in `docs/sitemap.xml`.
 
 ## Coverage
 <!-- owner: plan · create/amend-via-gate -->
@@ -71,3 +71,11 @@ The Minified-export warning of `lif` names the shortcode call, such as `{{< lif 
 
 ## Review
 <!-- owner: review · exclusive. -->
+
+Pass 1, 2026-10-24, at 610e7eb.
+
+- AC1: `python3 _tests/check_aria.py` exits 0: 62 cases, 32 of 32 lordicon warnings, 0 failures. Its `minified-lif` check needs exactly one log line holding `{{< lif minified.json >}}`, `looks like a Minified Lottie export`, and `so Colors, STROKE, sTaTe will`. A render of the fixture logs that line as "lordicon: {{< lif minified.json >}} uses a file that looks like a Minified Lottie export, so Colors, STROKE, sTaTe will have no effect. …".
+- AC2: `_extension.yml` line 3 reads `version: 0.7.6`. The first version heading of `CHANGELOG.md` is `## 0.7.6` (line 5, before `## 0.7.5` at line 9), and its entry reads "The Minified-export warning of `lif` now names the shortcode call, such as `{{< lif icon.json >}}`, …".
+- AC3: at 610e7eb, `quarto render` at the repo root exits 0. `git status -- docs` then lists only `docs/sitemap.xml`, and its diff is one `<lastmod>` line. The file was restored with `git checkout`.
+- gate: `cairn_validate.py` exit 0, all checks passed. No principle text changed, so `cairn_impact` was skipped.
+- gate (profile): `_extension.yml` is the one version marker that the release-walk names, and `cairn_versions.py` reads 0.7.6 with the tag absent. The verify render passes (AC1, AC3). `CHANGELOG.md` has the `## 0.7.6` entry.
