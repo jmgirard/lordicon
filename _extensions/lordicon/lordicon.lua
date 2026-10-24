@@ -307,9 +307,11 @@ local function check_minified(file, kwargs)
     return
   end
 
+  -- Attribute names ignore letter case, so `Colors` works like `colors`. Match
+  -- the keys in any letter case and name each one as the user wrote it.
   local used = {}
-  for key in pairs(CONTROL_DEPENDENT) do
-    if value_of(kwargs[key]) ~= "" then
+  for key, v in pairs(kwargs) do
+    if CONTROL_DEPENDENT[ascii_lower(key)] and value_of(v) ~= "" then
       used[#used + 1] = key
     end
   end

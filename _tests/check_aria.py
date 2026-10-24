@@ -134,6 +134,12 @@ CASES["label-upper"] = {**DECORATIVE, "label": "Bell"}
 CASES["label-mixed"] = {"aria-hidden": None, "role": "img", "aria-label": "Bell", "label": "Ring"}
 CASES["label-two"] = DECORATIVE
 
+# minified.json has no control layer, as in a Minified export; gift_raw.json
+# has one. The keys reach the element in either case.
+CONTROL_KEYS = {"colors": "primary:red", "stroke": "bold", "state": "hover"}
+CASES["minified-lif"] = {**DECORATIVE, **CONTROL_KEYS}
+CASES["raw-lif"] = {**DECORATIVE, **CONTROL_KEYS}
+
 # The lordicon warnings of each case. Each warning is a list of texts that one
 # line of the render's log must hold, where CALL stands for the case's call,
 # such as {{< li CODE >}}. No other lordicon warning may appear in the log.
@@ -153,6 +159,7 @@ WARNED.update({
     "label-upper": [[CALL, LABEL_CASE, 'the key "Label",']],
     "label-mixed": [[CALL, LABEL_CASE, 'the key "laBel",']],
     "label-two": [[CALL, LABEL_CASE, 'the keys "LABEL" and "Label",']],
+    "minified-lif": [["minified.json looks like a Minified", "so Colors, STROKE, sTaTe will"]],
 })
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern
@@ -196,6 +203,7 @@ def render_page():
         shutil.copytree(ROOT / "_extensions", workdir / "_extensions")
         shutil.copy(FIXTURE, workdir)
         shutil.copy(ROOT / "gift_raw.json", workdir)
+        shutil.copy(ROOT / "_tests" / "minified.json", workdir)
         cmd = ["quarto", "render", "aria.qmd", "--to", "html"]
         done = run(cmd, workdir, {**os.environ, "LC_ALL": "C.UTF-8"})
         return (workdir / "aria.html").read_text(encoding="utf-8"), done.stderr

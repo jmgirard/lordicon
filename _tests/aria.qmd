@@ -74,4 +74,9 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li labelmixed id=label-mixed label="Bell" laBel="Ring" >}}
 {{< li labeltwo id=label-two Label="Bell" LABEL="Ring" >}}
 
+## Minified-export keys in any letter case
+
+{{< lif minified.json id=minified-lif Colors=primary:red STROKE=bold sTaTe=hover >}}
+{{< lif gift_raw.json id=raw-lif Colors=primary:red STROKE=bold sTaTe=hover >}}
+
 [Caption]{#caption}

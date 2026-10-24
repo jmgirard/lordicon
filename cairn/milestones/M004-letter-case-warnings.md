@@ -47,7 +47,7 @@ A shortcode key whose effect depends on its letter case gives a render warning, 
 - [x] T1: Extend `_tests/check_aria.py` for the new cases before the code changes. Let a case expect more than one warning and match each warning by its own text, the Minified line included. Allow the expected duplicate names of AC1 cases in the raw-output duplicate check, and keep that check, the spelling check, and the exact warning count for every earlier case. Add the AC1 fixture calls to `_tests/aria.qmd` and see them fail on the current filter.
 - [x] T2: In `build_element` (`lordicon.lua:117`), group the forwarded keys by `pandoc.text.lower` and give one case-clash warning per call for the groups with two or more keys, in the style of `warn_skipped`. Keys that lower to `label` are left out of the groups.
 - [x] T3: Add the AC2 fixture calls and expectations, then the `label` warning in `build_element`, with advice to use one lowercase `label`.
-- [ ] T4: Add `_tests/minified.json`, a minimal Lottie file with no control layer and no icon art (IP6), and copy it in `render_page`. Add the AC3 calls. In `check_minified` (`lordicon.lua:217`), match `CONTROL_DEPENDENT` with `ascii_lower` over the call's keys and name each key as written.
+- [x] T4: Add `_tests/minified.json`, a minimal Lottie file with no control layer and no icon art (IP6), and copy it in `render_page`. Add the AC3 calls. In `check_minified` (`lordicon.lua:217`), match `CONTROL_DEPENDENT` with `ascii_lower` over the call's keys and name each key as written.
 - [ ] T5: Update README.md (the passthrough and Minified sections), CHANGELOG.md `## 0.7.4`, `version:` in `_extension.yml`, the header comment of `lordicon.lua`, and DESIGN Conventions and Known issues (the Minified warning now has a check).
 - [ ] T6: Run the verify slot: `python3 _tests/check_aria.py`, then `quarto render` at the repo root, then `git checkout -- docs/sitemap.xml` if no demo page changed. Open any changed demo page in a browser.
 
@@ -67,6 +67,7 @@ A shortcode key whose effect depends on its letter case gives a render warning, 
 - 2026-10-24: T1 done: `WARNED` now lists several warnings per case, each a set of texts one log line must hold; `TWICE` allows the clash names twice in the filter output only. New clash calls use their own icon codes so each call name is unique. The 5 clash warnings failed on the old filter (12 of 17 warnings read).
 - 2026-10-24: T2 done: `warn_case_clashes` groups the sorted forwarded keys by `pandoc.text.lower`, groups in order of their first key, joined by "; ". check_aria 0 failures (17 warnings), root render exit 0, sitemap reverted.
 - 2026-10-24: T3 done: `warn_label_case` warns once per call for forwarded keys that lowercase to `label`. The 3 label warnings failed first (17 of 20); then check_aria 0 failures (20 warnings), root render exit 0, sitemap reverted.
+- 2026-10-24: T4 done: `_tests/minified.json` is an empty Lottie file with no layers; `check_minified` loops over the call's keys with `ascii_lower`. The Minified case failed first (20 of 21); then check_aria 0 failures (21 warnings, none for `raw-lif`), root render exit 0, sitemap reverted.
 
 ## Decisions
 
