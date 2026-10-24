@@ -170,6 +170,34 @@ local function warn_case_clashes(call, keys)
   )
 end
 
+-- Warn about forwarded keys such as `Label` that lowercase to `label`. Only a
+-- lowercase `label` gives the ARIA attributes, so these keys label nothing.
+local function warn_label_case(call, keys)
+  local found = {}
+  for _, key in ipairs(keys) do
+    if pandoc.text.lower(key) == "label" then
+      found[#found + 1] = key
+    end
+  end
+  if #found == 0 then
+    return
+  end
+  local named
+  if #found == 1 then
+    named = 'the key "' .. found[1] .. '"'
+  else
+    named = "the keys " .. quote_list(found)
+  end
+  quarto.log.warning(
+    string.format(
+      "lordicon: %s has %s, but only a lowercase label key labels the icon. "
+        .. "Use one lowercase label key.",
+      call,
+      named
+    )
+  )
+end
+
 -- Build the <lord-icon> element for the given source URL and shortcode kwargs.
 -- `call` names the shortcode call, such as {{< li CODE >}}, in warnings.
 local function build_element(src, kwargs, call)
@@ -209,6 +237,7 @@ local function build_element(src, kwargs, call)
       .. "or remove it.")
   end
   warn_case_clashes(call, keys)
+  warn_label_case(call, keys)
 
   -- Attribute names ignore letter case, so `passed` records each in lowercase.
   local passed = {}

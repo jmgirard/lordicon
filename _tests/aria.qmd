@@ -68,4 +68,10 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li clashaccent id=clash-accent data-É=1 data-é=2 >}}
 {{< li clashempty id=clash-empty role="" Role=img >}}
 
+## Label in another letter case
+
+{{< li labelupper id=label-upper Label="Bell" >}}
+{{< li labelmixed id=label-mixed label="Bell" laBel="Ring" >}}
+{{< li labeltwo id=label-two Label="Bell" LABEL="Ring" >}}
+
 [Caption]{#caption}

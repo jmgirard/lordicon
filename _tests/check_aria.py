@@ -126,7 +126,13 @@ TWICE = {
     "clash-arialabel": {"aria-label"},
     "clash-two": {"role", "data-x"},
     "clash-accent": {"data-é"},
+    "label-two": {"label"},
 }
+
+# Only a lowercase `label` labels the icon. A key such as `Label` passes on.
+CASES["label-upper"] = {**DECORATIVE, "label": "Bell"}
+CASES["label-mixed"] = {"aria-hidden": None, "role": "img", "aria-label": "Bell", "label": "Ring"}
+CASES["label-two"] = DECORATIVE
 
 # The lordicon warnings of each case. Each warning is a list of texts that one
 # line of the render's log must hold, where CALL stands for the case's call,
@@ -141,6 +147,12 @@ WARNED.update({
     "clash-arialabel": [[CALL, CASE_CLASH, '"aria-Label" and "aria-label".']],
     "clash-two": [[CALL, CASE_CLASH, '"DATA-X" and "data-x"; "ROLE" and "role".']],
     "clash-accent": [[CALL, CASE_CLASH, '"data-É" and "data-é".']],
+})
+LABEL_CASE = "only a lowercase label key labels the icon"
+WARNED.update({
+    "label-upper": [[CALL, LABEL_CASE, 'the key "Label",']],
+    "label-mixed": [[CALL, LABEL_CASE, 'the key "laBel",']],
+    "label-two": [[CALL, LABEL_CASE, 'the keys "LABEL" and "Label",']],
 })
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern
