@@ -40,7 +40,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 ## Tasks
 
 - [x] T1: Change the DESIGN.md IP1 text and the forwarding Conventions bullet to name the `src` and invalid-name exceptions (D-003).
-- [ ] T2: Extend the harness. `check_aria.py` keeps the fixture render's stderr and checks the warning lines. `fixture_calls()` keeps a quoted key that holds `=` whole. A raw-string check confirms that the filter output keeps each key's spelling.
+- [x] T2: Extend the harness. `check_aria.py` keeps the fixture render's stderr and checks the warning lines. `fixture_calls()` keeps a quoted key that holds `=` whole. A raw-string check confirms that the filter output keeps each key's spelling.
 - [ ] T3: Add the AC1 to AC3 cases to `_tests/aria.qmd` and their expected values to `CASES`. Run the check and see each new case fail on the current filter.
 - [ ] T4: Change `build_element`: reserve `src` by `key:lower()` with a per-call warning, compare ARIA override names by `key:lower()`, and skip invalid names with a per-call warning. The check passes.
 - [ ] T5: Update the README forwarding section. Run `quarto render` and commit `docs/`. Look at the changed demo pages in a browser, as the PROFILE `verify` slot asks.
@@ -63,6 +63,8 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-20: implement started on branch m003-key-clashes, cut from main at 0c6e04b. The untracked `.DS_Store` stays unstaged.
 - 2026-10-24: resumed; merged main (a72e0d7, hygiene stamp only) into the branch, and `check_aria.py` passed 15 of 15 cases.
 - 2026-10-24: T1 done: IP1 names `src` and invalid names as exceptions with a warning; the forwarding bullet lists the three skipped key kinds, and the ARIA bullet says the four names match in any case.
+- 2026-10-24: decided: each warning names the call as `{{< li CODE >}}` or `{{< lif FILE >}}` and the key in double quotes, one warning per kind per call, so the check can match a warning to its call and users can find it.
+- 2026-10-24: T2 done: `check_aria.py` parses quoted keys (a quoted key may hold `=`), checks the render's stderr against `WARNED`, checks `EXACT` cases for extra attributes, and reads the raw output for each forwarded key's spelling. 15 of 15 cases still pass. A planted lowercase `role` made the spelling check fail.
 
 ## Decisions
 
