@@ -33,7 +33,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - AC1 → T1, T2, T3, T4
 - AC2 → T2, T3, T4
 - AC3 → T1, T2, T3, T4
-- AC4 → T3, T4, T5
+- AC4 → T3, T4, T5, T7
 - AC5 → T5
 - AC6 → T6
 
@@ -45,6 +45,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - [x] T4: Change `build_element`: reserve `src` by `key:lower()` with a per-call warning, compare ARIA override names by `key:lower()`, and skip invalid names with a per-call warning. The check passes.
 - [x] T5: Update the README forwarding section. Run `quarto render` and commit `docs/`. Look at the changed demo pages in a browser, as the PROFILE `verify` slot asks.
 - [x] T6: Raise `version:` to 0.7.3 (D-001) and add the `## 0.7.3` section to `CHANGELOG.md`. `BUNDLE_VERSION` stays, because the player does not change.
+- [x] T7: (review return 1) Run `quarto render` at the repo root on the final head and commit the re-rendered `docs/`, the `sitemap.xml` date included.
 
 ## Work log
 
@@ -76,6 +77,8 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-24: implement complete: `check_aria.py` 0 failures and `quarto render` succeeded (no page changed; `sitemap.xml` date reverted). Status set to review.
 - 2026-10-24: review return 1: AC4 — the branch has no `docs/` commit; the root `quarto render` changes only `docs/sitemap.xml`, which implement reverted. Commit the re-rendered `docs/`.
 - 2026-10-24: review noted: AC1 and AC3 carry `(RB tripwire: ip-touching)`, and implement step 3's escalation offer for them was not posed; the return poses it.
+- 2026-10-24: resumed for review return 1; added T7 for it and mapped AC4 to it (minor amendment). Status in-progress; the branch still contains origin/main.
+- 2026-10-24: T7 done: `check_aria.py` 0 failures, root `quarto render` exit 0; the re-render changes `docs/sitemap.xml` only (the `index.html` lastmod), committed here.
 
 ## Decisions
 
