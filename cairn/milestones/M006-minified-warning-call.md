@@ -79,3 +79,16 @@ Pass 1, 2026-10-24, at 610e7eb.
 - AC3: at 610e7eb, `quarto render` at the repo root exits 0. `git status -- docs` then lists only `docs/sitemap.xml`, and its diff is one `<lastmod>` line. The file was restored with `git checkout`.
 - gate: `cairn_validate.py` exit 0, all checks passed. No principle text changed, so `cairn_impact` was skipped.
 - gate (profile): `_extension.yml` is the one version marker that the release-walk names, and `cairn_versions.py` reads 0.7.6 with the tag absent. The verify render passes (AC1, AC3). `CHANGELOG.md` has the `## 0.7.6` entry.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: the comment "names the first such call" suggests later calls differ, but every call on a file builds the same call string — fix now, fixed ac03d3d (`check_aria.py` exit 0 after).
+- diff-bug #2: the test does not pin "uses a file that" — reject, planned change: T1 named the three fragments, which are what AC1 promises.
+- diff-bug #3: line 402 is 81 characters — reject, style.
+- diff-bug #4: the changelog omits once-per-file — reject, planned change: left out on purpose because no test checks that rule (work log, T3).
+- blame-history #1: the warning names one call where the old text named the file for all calls — reject, false: the call string is `{{< lif FILE >}}` for every call on that file, so the text is the same.
+- blame-history #2: a quoted name such as `"my file.json"` shows as `{{< lif my file.json >}}`, as in every other warning since M003 — follow-up, new row "Quote file names that hold spaces".
+- prior-review #1: the 0.7.6 entry lacks the once-per-file qualifier that the M002 review asked of the 0.7.1 entry — reject, false: the 0.7.6 entry makes no claim about when the warning fires, and the 0.7.1 entry still states once per file.
+- prior-review #2: a second call on the same Minified file gets no warning — reject, planned change: Scope Out keeps the once-per-file rule.
+- prior-review #3: naming the first call is untested — reject, false: no call-specific text exists to test, since every call on a file gives the same call string.
+- prior-review #4: the Minified warning lists keys without quotes, unlike the M003 warnings — reject, style (M004 rejected it the same way).
+- prior-review #5: `./minified.json` still warns again — follow-up, already in the row "Add a render check with fixtures".
+- ripple #1: the ROADMAP row "Name the call in the Minified warning" still says the warning names the file — reject, planned change: merge hygiene removes the row.
