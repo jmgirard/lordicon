@@ -12,7 +12,8 @@
   The exceptions are `label`, `src` in any letter case (the first argument
   sets the source), and keys that are not valid attribute names; the last two
   are skipped with a render warning. Keys that differ only in letter case, and
-  `label` in another letter case, are forwarded with a render warning.
+  `label` in another letter case, are forwarded with a render warning. An
+  icon with an image role but no name, and not hidden, gets a render warning.
 ]]
 
 -- Cache-busting identifier for the bundled player. Keep in sync with the
@@ -199,6 +200,66 @@ local function warn_label_case(call, keys)
   )
 end
 
+-- Attributes that give an icon an accessible name, or remove it from what
+-- assistive technology reads, so that an image role needs no warning.
+local NAMES_OR_HIDES = {
+  ["aria-label"] = true,
+  ["aria-labelledby"] = true,
+  title = true,
+  hidden = true,
+  inert = true,
+}
+
+-- Warn about an icon that the page gives an image role but no name: a screen
+-- reader then announces an image and cannot say what it shows. `keys` is
+-- sorted, and for keys that differ only in letter case the page keeps the
+-- first, so the check reads that one. A `label` always gives a name.
+local function warn_nameless_role(call, keys, kwargs, label)
+  if label ~= "" then
+    return
+  end
+  local kept = {}
+  for _, key in ipairs(keys) do
+    local name = ascii_lower(key)
+    if kept[name] == nil then
+      kept[name] = value_of(kwargs[key])
+    end
+  end
+
+  local role = kept["role"]
+  if role == nil then
+    return
+  end
+  -- The check reads only the first token of the role. A browser uses the
+  -- first role it knows, so a value such as "bogus img" is not caught.
+  -- ASCII whitespace is spelled out because %s follows the locale.
+  local first = role:match("^[\t\n\f\r ]*([^\t\n\f\r ]+)")
+  first = first and ascii_lower(first)
+  if first ~= "img" and first ~= "image" then
+    return
+  end
+  local hidden = kept["aria-hidden"]
+  if hidden and ascii_lower(hidden) == "true" then
+    return
+  end
+  for name in pairs(NAMES_OR_HIDES) do
+    if kept[name] then
+      return
+    end
+  end
+
+  quarto.log.warning(
+    string.format(
+      'lordicon: %s gives the icon role="%s" but no name, so a screen reader '
+        .. "announces an image without saying what it shows. Add a label, such "
+        .. 'as label="Bell". If the icon is only decoration, pass '
+        .. 'aria-hidden="true" instead.',
+      call,
+      role
+    )
+  )
+end
+
 -- Build the <lord-icon> element for the given source URL and shortcode kwargs.
 -- `call` names the shortcode call, such as {{< li CODE >}}, in warnings.
 local function build_element(src, kwargs, call)
@@ -239,6 +300,7 @@ local function build_element(src, kwargs, call)
   end
   warn_case_clashes(call, keys)
   warn_label_case(call, keys)
+  warn_nameless_role(call, keys, kwargs, value_of(kwargs["label"]))
 
   -- Attribute names ignore letter case, so `passed` records each in lowercase.
   local passed = {}

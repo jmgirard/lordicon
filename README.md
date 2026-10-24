@@ -122,6 +122,11 @@ readers announce the icon:
 {{< li wlpxtupd role="img" aria-label="Loading complete" >}}
 ```
 
+If an icon gets `role="img"` (or `role="image"`) but no name, the render warns.
+A screen reader then announces an image without saying what it shows.
+A name comes from `label`, `aria-label`, `aria-labelledby`, or `title`. If you
+also pass `aria-hidden="true"`, `hidden`, or `inert`, the render does not warn.
+
 ## Note
 
 In order for the icons to appear properly in your RStudio Viewer pane, you need to update to RStudio version 2022.12.0+353 or newer. You can still use older versions of RStudio, but to view your icons you will need to view the rendered HTML files in an external browser.

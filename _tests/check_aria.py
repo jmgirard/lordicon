@@ -139,6 +139,39 @@ CASES["label-two"] = DECORATIVE
 CASES["minified-lif"] = DECORATIVE
 CASES["raw-lif"] = DECORATIVE
 
+SHOWN ={"aria-hidden": None, "aria-label": None}
+CASES.update({
+    "nameless-img": {**SHOWN, "role": "img"},
+    "nameless-upper": {**SHOWN, "role": "IMG"},
+    "nameless-image": {**SHOWN, "role": "image"},
+    "nameless-first": {**SHOWN, "role": "img presentation"},
+    "nameless-shown": {"aria-hidden": "false", "role": "img", "aria-label": None},
+    "nameless-hidden-clash": {"role": "img", "aria-label": None},
+    "named-arialabel": {"aria-hidden": None, "role": "img", "aria-label": "Bell"},
+    "named-labelledby": {**SHOWN, "role": "img", "aria-labelledby": "caption"},
+    "named-title": {**SHOWN, "role": "img", "title": "Bell"},
+    "named-title-upper": {**SHOWN, "role": "img", "title": "Bell"},
+    "named-label": {"aria-hidden": None, "role": "img", "aria-label": "Bell"},
+    "named-hidden-attr": {**SHOWN, "role": "img", "hidden": "hidden"},
+    "named-inert": {**SHOWN, "role": "img", "inert": "inert"},
+    "named-aria-hidden": {"aria-hidden": "true", "role": "img", "aria-label": None},
+    "named-aria-hidden-upper": {"aria-hidden": "TRUE", "role": "img", "aria-label": None},
+    "named-first-presentation": {**SHOWN, "role": "presentation img"},
+    "named-role-clash": SHOWN,
+})
+TWICE["nameless-hidden-clash"] = {"aria-hidden": 2}
+TWICE["named-role-clash"] = {"role": 2}
+
+# The value the page keeps of names that appear twice: the first in the
+# filter's byte order. `dict(attrs)` in check() keeps the last, so only the
+# page is checked.
+PAGE_ONLY = {
+    "clash-role": {"role": "img"},
+    "clash-two": {"role": "img"},
+    "nameless-hidden-clash": {"aria-hidden": "false"},
+    "named-role-clash": {"role": "presentation"},
+}
+
 # The lordicon warnings of each case. Each warning is a list of texts that one
 # line of the render's log must hold, where CALL stands for the case's call,
 # such as {{< li CODE >}}. No other lordicon warning may appear in the log.
@@ -162,6 +195,24 @@ WARNED.update({
     "label-two": [[CALL, LABEL_CASE, 'the keys "LABEL" and "Label",']],
     "minified-lif": [["minified.json looks like a Minified", "so Colors, STROKE, sTaTe will"]],
 })
+NAMELESS = "but no name, so a screen reader announces an image"
+FIX = 'Add a label, such as label="Bell".'
+for case, role in {
+    "nameless-img": "img",
+    "nameless-upper": "IMG",
+    "nameless-image": "image",
+    "nameless-first": "img presentation",
+    "nameless-shown": "img",
+    "nameless-hidden-clash": "img",
+    "clash-role": "img",
+    "clash-two": "img",
+    "clash-empty": "img",
+}.items():
+    WARNED.setdefault(case, []).append([CALL, f'role="{role}"', NAMELESS, FIX])
+WARNED["nameless-hidden-clash"].append(
+    [CALL, CASE_CLASH, '"ARIA-HIDDEN" and "aria-hidden".', ONE]
+)
+WARNED["named-role-clash"] = [[CALL, CASE_CLASH, '"Role" and "role".', ONE]]
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern
 # (space, the ASCII controls, `"'>/=`) and its C1_CONTROL pattern
@@ -299,7 +350,10 @@ def check(where, html):
             failures.append(f"{where} {case}: <lord-icon> with no expected case")
             continue
         seen.add(case)
-        for name, want in CASES[case].items():
+        expected = CASES[case]
+        if where == "page":
+            expected = {**expected, **PAGE_ONLY.get(case, {})}
+        for name, want in expected.items():
             got = values.get(name)
             if got != want:
                 failures.append(f"{where} {case}: {name} is {got!r}, expected {want!r}")
