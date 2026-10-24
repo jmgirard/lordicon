@@ -1,7 +1,7 @@
 # Roadmap
 
 _The only authority on milestone status. Grouped by status, not ID._
-_Last hygiene check: 2026-10-24 (review M004: archived; graduated 2 rows, narrowed 1, added 3; corrected the M001 lesson; validate green)_
+_Last hygiene check: 2026-10-24 (review M005: archived; graduated 2 rows, added 1; captured 2 lessons; validate green)_
 
 ## Milestones
 
@@ -9,10 +9,9 @@ _Last hygiene check: 2026-10-24 (review M004: archived; graduated 2 rows, narrow
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M005 | Warn when a role icon has no name | review | — | normal | milestones/M005-nameless-role-warning.md |
+| M005 | Warn when a role icon has no name | done | — | normal | milestones/archive/M005-nameless-role-warning.md |
 | M004 | Warn about keys in another letter case | done | — | normal | milestones/archive/M004-letter-case-warnings.md |
 | M003 | Stop key clashes and bad attribute names | done | M002 | normal | milestones/archive/M003-key-clashes.md |
-| M002 | Start CHANGELOG.md for past releases | done | — | normal | milestones/archive/M002-start-changelog.md |
 
 ## Candidates
 <!-- unnumbered ideas; one line each, ordered high → normal → low → parked:
@@ -27,8 +26,6 @@ _Last hygiene check: 2026-10-24 (review M004: archived; graduated 2 rows, narrow
      `Fix SE of skewness calculation (#100)`; `/cairn-triage` offers a new title for one
      with fewer than 5 words or more than 40 characters; tracking-rules "Candidate short title" has the whole rule -->
 - Add a render check with fixtures: extend `_tests/` (ARIA, `src`, skipped and kept keys, letter-case warnings, and the Minified warning are covered since M004, the nameless-role warning since M005) to attribute sorting and non-HTML output; also the once-per-file Minified rule, which keys the path as written, so `./minified.json` warns again (M004 review) — added 2026-10-20, narrowed 2026-10-20 by M001, narrowed 2026-10-24 by M003, narrowed 2026-10-24 by M004 — DESIGN Known issues
-- Reword GP5 for user ARIA precedence: GP5 says an icon without `label` is `aria-hidden`, but since M001 a user `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` turns the default off (IP1); a principle change takes the user's decision and a D-entry — added 2026-10-20 — M001 review — started M005
-- Warn when a role icon has no name: `role="img"` with no `label`, `aria-label`, or `aria-labelledby` (or a blank `aria-label`) now gives an unhidden icon with no accessible name; decide whether this earns a GP2 warning — added 2026-10-20 — M001 review — started M005
 - Decide on keys that hold a less-than: `"a<b"=1` is forwarded as `a<b="1"`, which HTML parsers flag as an error but still read; D-003's skip set leaves `<` out; noncharacter keys such as U+FFFE or U+FDD0 pass through the same way — added 2026-10-24 — M003 review
 - Sort keys by byte, not by locale: `table.sort` in `build_element` and `warn_skipped` uses Lua's `<`, which follows the locale's collation, so under a non-C locale `role` can sort before `Role`, changing the attribute order and which duplicate the page keeps — added 2026-10-24 — M004 review
 - Name the call in the Minified warning: it names the file (`minified.json looks like …`), while the other warnings name the call, such as `{{< lif FILE >}}` — added 2026-10-24 — M004 review
