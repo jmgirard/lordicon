@@ -1,6 +1,6 @@
 # M003: Stop key clashes and bad attribute names
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** M002
 - **Driving RR:** —
@@ -79,6 +79,8 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-24: review noted: AC1 and AC3 carry `(RB tripwire: ip-touching)`, and implement step 3's escalation offer for them was not posed; the return poses it.
 - 2026-10-24: resumed for review return 1; added T7 for it and mapped AC4 to it (minor amendment). Status in-progress; the branch still contains origin/main.
 - 2026-10-24: T7 done: `check_aria.py` 0 failures, root `quarto render` exit 0; the re-render changes `docs/sitemap.xml` only (the `index.html` lastmod), committed here.
+- 2026-10-24: escalation offer for the AC1 and AC3 tripwire tags: the user chose to continue to review without a review brief.
+- 2026-10-24: T7 added no prose; the earlier claim audit covers every added claim. Status set to review.
 
 ## Decisions
 
