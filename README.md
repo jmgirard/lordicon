@@ -85,6 +85,7 @@ Any other attribute the element supports can be passed the same way.
 The extension does not pass on these keys:
 
 - `label`, which the extension turns into ARIA attributes (see below).
+- A key with an empty value, such as `class=""`.
 - `src`, in any letter case (such as `SRC`). The first argument already sets
   the icon's source, so the render warns and keeps that source.
 - A key that holds whitespace, a control character, `"`, `'`, `>`, `/`, or

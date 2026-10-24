@@ -26,8 +26,9 @@ local RESERVED = {
 -- A key holding whitespace, a control character, or one of these symbols is
 -- not a valid HTML attribute name: written out, it can end the tag early,
 -- split into stray attributes, or give an attribute with an invalid name.
--- The byte ranges are spelled out because %s and %c follow the C locale, and
--- under a UTF-8 locale they also match bytes inside letters such as "ß".
+-- The byte ranges are spelled out because %s and %c follow the current
+-- locale, and under a UTF-8 locale they also match bytes inside letters such
+-- as "ß".
 -- INVALID_NAME covers space and the ASCII controls; C1_CONTROL covers
 -- U+0080 to U+009F, which UTF-8 writes as the byte 194 and a second byte.
 local INVALID_NAME = "[\0-\32\127\"'>/=]"

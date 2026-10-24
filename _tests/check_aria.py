@@ -151,7 +151,8 @@ def render_page():
         shutil.copytree(ROOT / "_extensions", workdir / "_extensions")
         shutil.copy(FIXTURE, workdir)
         shutil.copy(ROOT / "gift_raw.json", workdir)
-        done = run(["quarto", "render", "aria.qmd", "--to", "html"], workdir)
+        cmd = ["quarto", "render", "aria.qmd", "--to", "html"]
+        done = run(cmd, workdir, {**os.environ, "LC_ALL": "C.UTF-8"})
         return (workdir / "aria.html").read_text(encoding="utf-8"), done.stderr
 
 
@@ -183,9 +184,9 @@ def filter_output(calls):
         cases = Path(tmp) / "cases.json"
         cases.write_text(json.dumps(calls))
         cmd = ["quarto", "pandoc", "lua", "_tests/raw_output.lua", str(cases)]
-        # Lua's character classes follow the C locale. The page renders under
-        # the UTF-8 locale that Python gives its child processes, so this
-        # output runs under the C locale, and the check covers both.
+        # Lua's character classes follow the process locale. The page renders
+        # under a UTF-8 locale and this output under the C locale, so the
+        # check covers both.
         return run(cmd, ROOT, {**os.environ, "LC_ALL": "C"}).stdout
 
 
