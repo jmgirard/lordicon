@@ -102,7 +102,7 @@ non-HTML output checks → candidate row "Add a render check with fixtures".
       `dict(attrs)` keeps the last duplicate while the page keeps the first,
       so assert a kept clash value with a page-only expectation. Run the
       check and see it fail on the missing warnings only.
-- [ ] T2: Add `warn_nameless_role(call, ...)` to `lordicon.lua` and call it
+- [x] T2: Add `warn_nameless_role(call, ...)` to `lordicon.lua` and call it
       from `build_element` (`lordicon.lua:240`) after the attributes are
       known, reading user keys by `ascii_lower`. Spell ASCII whitespace as
       `[\t\n\f\r ]`, not `%s`. Update the header comment
@@ -132,6 +132,7 @@ non-HTML output checks → candidate row "Add a render check with fixtures".
 - 2026-10-24: implement start: branch `m005-nameless-role-warning` cut from main at 576fa52; untracked `.DS_Store` left unstaged.
 - 2026-10-24: T1 done: 17 fixture calls in two sections (one icon code each), a `named-inert` case beside the AC2 list to cover the `inert` branch, `PAGE_ONLY` expectations for kept clash values; the check fails only on the 9 missing nameless-role warnings (23 of 32 warnings, all attribute checks pass).
 - 2026-10-24: warning text chosen: `gives the icon role="<kept value>" but no name, so a screen reader announces an image without saying what it shows. Add a label, such as label="Bell". If the icon is only decoration, pass aria-hidden="true" instead.`; the aria-hidden advice works even where a user `aria-hidden=false` would keep a role-less icon shown.
+- 2026-10-24: T2 done: `warn_nameless_role` in `lordicon.lua`, called after `warn_label_case`; it returns early on a non-empty `label`, reads the first sorted key per `ascii_lower` name, and skips on `aria-label`, `aria-labelledby`, `title`, `hidden`, `inert` (table `NAMES_OR_HIDES`) or a trimmed `aria-hidden` of `true`. `check_aria.py`: 0 failures, 32 of 32 warnings. Planted defects turned it red: dropping `inert` (33 warnings), reading the last duplicate (clash-role, clash-two, nameless-hidden-clash lost). `quarto render` exit 0, no lordicon warning on the demo site, sitemap restored; no demo page changed, so no browser check.
 
 ## Decisions
 <!-- owner: implement / review · append-only; milestone-local -->
