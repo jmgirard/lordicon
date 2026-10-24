@@ -193,7 +193,9 @@ WARNED.update({
     "label-upper": [[CALL, LABEL_CASE, 'the key "Label",']],
     "label-mixed": [[CALL, LABEL_CASE, 'the key "laBel",']],
     "label-two": [[CALL, LABEL_CASE, 'the keys "LABEL" and "Label",']],
-    "minified-lif": [["minified.json looks like a Minified", "so Colors, STROKE, sTaTe will"]],
+    "minified-lif": [
+        [CALL, "looks like a Minified Lottie export", "so Colors, STROKE, sTaTe will"]
+    ],
 })
 NAMELESS = "but no name, so a screen reader announces an image"
 FIX = 'Add a label, such as label="Bell".'

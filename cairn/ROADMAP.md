@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-24 (review M005: archived; graduated 2 rows, added 
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M006 | Name the call in the Minified warning | planned | — | normal | milestones/M006-minified-warning-call.md |
+| M006 | Name the call in the Minified warning | review | — | normal | milestones/M006-minified-warning-call.md |
 | M005 | Warn when a role icon has no name | done | — | normal | milestones/archive/M005-nameless-role-warning.md |
 | M004 | Warn about keys in another letter case | done | — | normal | milestones/archive/M004-letter-case-warnings.md |
 | M003 | Stop key clashes and bad attribute names | done | M002 | normal | milestones/archive/M003-key-clashes.md |
@@ -32,4 +32,5 @@ _Last hygiene check: 2026-10-24 (review M005: archived; graduated 2 rows, added 
 - Name the call in the Minified warning: it names the file (`minified.json looks like …`), while the other warnings name the call, such as `{{< lif FILE >}}` — added 2026-10-24 — M004 review — started M006
 - Catch image roles after other tokens: the nameless-role warning reads only the first role token, but browsers use the first role they know, so `role="bogus img"` gives an unnamed image with no warning; reading the first known token needs a list of ARIA roles — added 2026-10-24 — M005 review
 - Keep values that start with a space: in a render, `label=" Bell "` and `aria-label=" . "` reach the filter empty, so the icon stays `aria-hidden`; find whether Quarto's shortcode parser or `value_of` drops them, and whether the docs or a warning should say so; with `role=img label=" Bell "` the nameless-role warning tells the user to add the label they wrote (M005 review) — added 2026-10-24 — M005 plan probe
+- [low] Quote file names that hold spaces: every warning writes the call as `{{< lif FILE >}}` from `pandoc.utils.stringify(args[1])`, so `{{< lif "my file.json" >}}` shows as `{{< lif my file.json >}}`, which is not the call the user wrote — added 2026-10-24 — M006 review
 - [low] Match Quarto's case folding in warnings: the clash warning lowers with `pandoc.text.lower`, which folds Σ to σ, but Quarto's page folds it to ς, so `dataΣ dataσ` warns with no loss and `dataΣ dataς` loses a value with no warning — added 2026-10-24 — M004 review
