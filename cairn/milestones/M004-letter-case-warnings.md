@@ -2,7 +2,7 @@
      section ownership". A phase skill never rewrites another phase's section. -->
 # M004: Warn about keys in another letter case
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -49,7 +49,7 @@ A shortcode key whose effect depends on its letter case gives a render warning, 
 - [x] T3: Add the AC2 fixture calls and expectations, then the `label` warning in `build_element`, with advice to use one lowercase `label`.
 - [x] T4: Add `_tests/minified.json`, a minimal Lottie file with no control layer and no icon art (IP6), and copy it in `render_page`. Add the AC3 calls. In `check_minified` (`lordicon.lua:217`), match `CONTROL_DEPENDENT` with `ascii_lower` over the call's keys and name each key as written.
 - [x] T5: Update README.md (the passthrough and Minified sections), CHANGELOG.md `## 0.7.4`, `version:` in `_extension.yml`, the header comment of `lordicon.lua`, and DESIGN Conventions and Known issues (the Minified warning now has a check).
-- [ ] T6: Run the verify slot: `python3 _tests/check_aria.py`, then `quarto render` at the repo root, then `git checkout -- docs/sitemap.xml` if no demo page changed. Open any changed demo page in a browser.
+- [x] T6: Run the verify slot: `python3 _tests/check_aria.py`, then `quarto render` at the repo root, then `git checkout -- docs/sitemap.xml` if no demo page changed. Open any changed demo page in a browser.
 
 ## Work log
 
@@ -69,6 +69,8 @@ A shortcode key whose effect depends on its letter case gives a render warning, 
 - 2026-10-24: T3 done: `warn_label_case` warns once per call for forwarded keys that lowercase to `label`. The 3 label warnings failed first (17 of 20); then check_aria 0 failures (20 warnings), root render exit 0, sitemap reverted.
 - 2026-10-24: T4 done: `_tests/minified.json` is an empty Lottie file with no layers; `check_minified` loops over the call's keys with `ascii_lower`. The Minified case failed first (20 of 21); then check_aria 0 failures (21 warnings, none for `raw-lif`), root render exit 0, sitemap reverted.
 - 2026-10-24: T5 done: README (a letter-case paragraph after the skipped-keys list, and the Minified note), CHANGELOG `## 0.7.4`, `_extension.yml` 0.7.4, the `lordicon.lua` header comment, DESIGN Conventions, Architecture, and Known issues. The simple-english lint hook flags 23 hits in README text this change did not write; left as is, out of scope. Root render changed only `docs/sitemap.xml`, reverted.
+- 2026-10-24: T6 done: verify slot clean on the T5 head (check_aria 0 failures, 21 warnings; root render exit 0; no demo page changed, so no browser step).
+- 2026-10-24: claim audit: 36 claims read, 2 corrected — README.md, CHANGELOG.md ("has two keys" narrowed to "passes on two keys"; "The keys still reach the element" reworded to "passes every such key on and skips none"). The reader also noted that the `raw_output.lua` header and the M001 lesson say Quarto keeps the first of two same-name attributes, which a non-ASCII clash contradicts (it keeps the last); not in this diff, left for review hygiene.
 
 ## Decisions
 

@@ -4,7 +4,7 @@ This file lists the changes in each version of the extension, newest first.
 
 ## 0.7.4
 
-- If one call has two or more keys that differ only in letter case, such as `role` and `Role`, the render now warns. Attribute names ignore letter case, so the page keeps only one of their values. The keys still reach the element.
+- If one call passes on two or more keys that differ only in letter case, such as `role` and `Role`, the render now warns. Attribute names ignore letter case, so the page keeps only one of their values. The extension still passes every such key on and skips none.
 - A key such as `Label` or `LABEL` now gives a render warning. Only a lowercase `label` gives the ARIA attributes, so such a key labels nothing. The key still reaches the element.
 - The Minified-export warning of `lif` now also fires for `colors`, `stroke`, or `state` in another letter case, such as `Colors`. Before, such a key gave no warning.
 

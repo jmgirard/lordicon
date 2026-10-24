@@ -93,7 +93,7 @@ The extension does not pass on these keys:
   warns and leaves the key out.
 
 Attribute names ignore letter case, so `Class` and `class` name the same
-attribute. If one call has two keys that differ only in letter case, such as
+attribute. If one call passes on two keys that differ only in letter case, such as
 `role` and `Role`, the page keeps only one of their values, and the render
 warns. Only a lowercase `label` gives the ARIA attributes. A key such as
 `Label` passes on to the element and labels nothing, so the render warns about
