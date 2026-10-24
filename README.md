@@ -55,7 +55,7 @@ The format menu's options icon offers two Lottie flavors, and the choice depends
 - **Raw** keeps every animation plus the control layer that `colors`, `stroke`, and `state` write into. Choose this when you want to set those arguments per use — configure the icon from the shortcode rather than in the editor.
 
 > [!NOTE]
-> The two don't mix: passing `colors`, `stroke`, or `state` to a minified file has no effect, because the values it would change were already baked in. Either re-export as Raw or drop the argument and set it in the editor instead. The extension warns at render time when it spots that combination.
+> The two don't mix: passing `colors`, `stroke`, or `state` to a minified file has no effect, because the values it would change were already baked in. Either re-export as Raw or drop the argument and set it in the editor instead. The extension warns at render time when it spots that combination, in any letter case of the argument, such as `Colors`.
 
 ---
 
@@ -91,6 +91,13 @@ The extension does not pass on these keys:
 - A key that is empty or holds whitespace, a control character, `"`, `'`,
   `>`, `/`, or `=`. HTML does not allow such an attribute name, so the render
   warns and leaves the key out.
+
+Attribute names ignore letter case, so `Class` and `class` name the same
+attribute. If one call has two keys that differ only in letter case, such as
+`role` and `Role`, the page keeps only one of their values, and the render
+warns. Only a lowercase `label` gives the ARIA attributes. A key such as
+`Label` passes on to the element and labels nothing, so the render warns about
+it too.
 
 ### Accessibility
 

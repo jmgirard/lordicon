@@ -11,7 +11,8 @@
   style, …). See https://lordicon.com/docs/web for the full attribute list.
   The exceptions are `label`, `src` in any letter case (the first argument
   sets the source), and keys that are not valid attribute names; the last two
-  are skipped with a render warning.
+  are skipped with a render warning. Keys that differ only in letter case, and
+  `label` in another letter case, are forwarded with a render warning.
 ]]
 
 -- Cache-busting identifier for the bundled player. Keep in sync with the

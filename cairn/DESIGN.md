@@ -53,6 +53,11 @@ Convenience shorthands do not qualify.
   pass it. No label gives `aria-hidden="true"`, unless the user passes
   `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` (corrected M001).
   These four names match in any letter case (corrected M003).
+- Forwarded keys in one call that are equal after `pandoc.text.lower`, and a
+  forwarded key such as `Label` that lowercases to `label`, still reach the
+  element, and the render gives one warning per kind for each call (M004).
+  The Minified check matches `colors`, `stroke`, and `state` in any ASCII
+  letter case.
 - The player reaches readers as a self-hosted bundle. webpack builds
   `@lordicon/element` into the committed `assets/js/bundle.js`, and the
   extension never loads a script from a third-party host. A `lif` icon needs no
@@ -129,16 +134,17 @@ are never reused or renumbered; retiring one takes a D-entry.
   The `render: ["*.qmd"]` list in `_quarto.yml` limits the site to root `.qmd`
   pages, so a new page in another format must be added to that list.
 - `_tests/`: `check_aria.py` checks the attributes of `aria.qmd` icons (ARIA,
-  `src`, skipped and kept keys, key spelling) in the rendered page and in the
+  `src`, skipped and kept keys, key spelling, letter-case clashes) in the rendered page and in the
   raw filter output from `raw_output.lua`, and the lordicon warnings in the
   render's log.
 
 ## Known issues
 
-- The only automated check is `_tests/check_aria.py` (M001, extended M003),
-  which covers ARIA attributes, `src`, and skipped and kept keys. Other
-  shortcode behavior, such as the Minified warning, is checked by eye in a
-  browser (as in 09a2e5f) (corrected M003).
+- The only automated check is `_tests/check_aria.py` (M001, extended M003
+  and M004), which covers ARIA attributes, `src`, skipped and kept keys,
+  letter-case warnings, and the Minified warning. Other shortcode behavior,
+  such as attribute sorting and non-HTML output, is checked by eye (corrected
+  M004).
 - lordicon.com no longer gives out CDN codes in its export UI, so `li` works for
   codes users already have but new codes are hard to find (README).
 - RStudio Viewer shows icons only from version 2022.12.0+353 (README).
