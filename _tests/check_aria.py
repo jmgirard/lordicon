@@ -12,7 +12,7 @@ the expected values below, in two places:
 It also checks the lordicon warnings in the render's log against WARNED.
 
 The fixture renders in a temporary directory, so the demo site in docs/ is
-not touched. Exits 1 when a case fails. Usage: python3 _tests/check_aria.py
+not touched. Exits 1 when any check fails. Usage: python3 _tests/check_aria.py
 """
 
 import json
@@ -85,6 +85,7 @@ BAD = {
     "bad-gt": "a>b",
     "bad-slash": "a/b",
     "bad-equals": "a=b",
+    "bad-empty": "",
     "bad-c1": "a\x85b",
     "bad-control": "a\x01b",
 }
@@ -102,9 +103,9 @@ CASES["kept-names"] = {
     **DECORATIVE,
 }
 
-# Cases whose <lord-icon> holds no attribute beyond `id` and the ones CASES
-# gives a value.
-EXACT = {"src-li", "src-lif", "src-upper", "kept-names", *BAD}
+# Cases whose <lord-icon> holds no attribute beyond `id`, `src`, and the ones
+# CASES gives a value. The `label` case shows that `label` is not passed on.
+EXACT = {"src-li", "src-lif", "src-upper", "kept-names", "label", *BAD}
 
 # The key that the one lordicon warning of each case must name. No other
 # lordicon warning may appear in the render's log.
@@ -186,7 +187,8 @@ def filter_output(calls):
         cmd = ["quarto", "pandoc", "lua", "_tests/raw_output.lua", str(cases)]
         # Lua's character classes follow the process locale. The page renders
         # under a UTF-8 locale and this output under the C locale, so the
-        # check covers both.
+        # check covers both. A C library that classifies no byte from 128 up
+        # in a UTF-8 locale (glibc) makes the two runs alike.
         return run(cmd, ROOT, {**os.environ, "LC_ALL": "C"}).stdout
 
 
@@ -196,7 +198,9 @@ def check_spelling(calls, raw):
     # Split on "\n" alone: splitlines() also breaks at U+0085, a C1 control.
     for call, line in zip(calls, raw.rstrip("\n").split("\n"), strict=True):
         for key, value in call["kwargs"].items():
-            skipped = key == "label" or key.lower() == "src" or INVALID_NAME.search(key)
+            skipped = (
+                key in ("label", "") or key.lower() == "src" or INVALID_NAME.search(key)
+            )
             if value and not skipped and f' {key}="' not in line:
                 failures.append(f"filter {call['kwargs'].get('id')}: no {key}= in {line}")
     return failures
@@ -242,7 +246,7 @@ def check(where, html):
             if got != want:
                 failures.append(f"{where} {case}: {name} is {got!r}, expected {want!r}")
         if case in EXACT:
-            allowed = {"id"} | {name for name, want in CASES[case].items() if want is not None}
+            allowed = {"id", "src"} | {n for n, want in CASES[case].items() if want is not None}
             extra = sorted(set(names) - allowed)
             if extra:
                 failures.append(f"{where} {case}: unexpected attributes: {', '.join(extra)}")

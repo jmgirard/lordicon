@@ -81,6 +81,19 @@ local function value_of(v)
   return pandoc.utils.stringify(v)
 end
 
+-- Lowercase the ASCII letters only. string.lower follows the locale, and in
+-- some locales it does not map "I" to "i".
+local function ascii_lower(s)
+  return (s:gsub("[A-Z]", function(c)
+    return string.char(c:byte() + 32)
+  end))
+end
+
+-- A key that HTML does not allow as an attribute name.
+local function invalid_name(key)
+  return key == "" or key:find(INVALID_NAME) or key:find(C1_CONTROL)
+end
+
 -- Warn that a call skipped some of its keys, naming each one in quotes.
 local function warn_skipped(call, keys, reason)
   table.sort(keys)
@@ -117,9 +130,9 @@ local function build_element(src, kwargs, call)
   local keys, src_keys, invalid_keys = {}, {}, {}
   for key, v in pairs(kwargs) do
     if not RESERVED[key] and value_of(v) ~= "" then
-      if key:lower() == "src" then
+      if ascii_lower(key) == "src" then
         src_keys[#src_keys + 1] = key
-      elseif key:find(INVALID_NAME) or key:find(C1_CONTROL) then
+      elseif invalid_name(key) then
         invalid_keys[#invalid_keys + 1] = key
       else
         keys[#keys + 1] = key
@@ -133,15 +146,16 @@ local function build_element(src, kwargs, call)
       .. "another icon, change the first argument instead.")
   end
   if #invalid_keys > 0 then
-    warn_skipped(call, invalid_keys, "an attribute name cannot hold spaces, "
-      .. "control characters, quotes, >, /, or =. Rename the key or remove it.")
+    warn_skipped(call, invalid_keys, "an attribute name cannot be empty or "
+      .. "hold spaces, control characters, quotes, >, /, or =. Rename the key "
+      .. "or remove it.")
   end
 
   -- Attribute names ignore letter case, so `passed` records each in lowercase.
   local passed = {}
   for _, key in ipairs(keys) do
     attrs[#attrs + 1] = string.format('%s="%s"', key, attr_escape(value_of(kwargs[key])))
-    passed[key:lower()] = true
+    passed[ascii_lower(key)] = true
   end
 
   -- Accessibility: announce the icon when a label is given, otherwise mark it

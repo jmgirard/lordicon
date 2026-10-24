@@ -6,7 +6,7 @@ This file lists the changes in each version of the extension, newest first.
 
 - A `src` key in any letter case, such as `SRC`, no longer gives the icon a second `src` attribute. The first argument still sets the icon, and the render warns that it skips the key.
 - The ARIA names `aria-hidden`, `aria-label`, `aria-labelledby`, and `role` now take precedence over the defaults in any letter case. Before, `Role=presentation` still got `aria-hidden="true"`, and `Role` with `label` gave a second `role` attribute.
-- The extension now leaves out a key that is not a valid attribute name, and the render warns. Such a key holds whitespace, a control character, `"`, `'`, `>`, `/`, or `=`. Before, the extension wrote such a key out as it was. Depending on the character, that ended the tag early, split the key into stray attributes, or gave an attribute with an invalid name.
+- The extension now leaves out a key that is not a valid attribute name, and the render warns. Such a key is empty or holds whitespace, a control character, `"`, `'`, `>`, `/`, or `=`. Before, the extension wrote such a key out as it was. Depending on the key, that ended the tag early, split the key into stray attributes, or gave an attribute with an invalid name.
 
 ## 0.7.2
 

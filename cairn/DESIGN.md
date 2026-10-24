@@ -43,12 +43,12 @@ Convenience shorthands do not qualify.
 
 ## Conventions
 
-- Every shortcode `key=value` goes to the `<lord-icon>` element as an
-  attribute, except three kinds of key: `label`; `src` in any letter case; and
-  a key that holds whitespace, a control character, `"`, `'`, `>`, `/`, or `=`.
-  For each call, the render gives one warning per kind for the last two kinds
-  that have a non-empty value (D-003, corrected M003). Attributes are escaped
-  and sorted for stable output.
+- Every shortcode `key=value` with a non-empty value goes to the `<lord-icon>`
+  element as an attribute, except three kinds of key: `label`; `src` in any
+  letter case; and a key that is empty or holds whitespace, a control
+  character, `"`, `'`, `>`, `/`, or `=`. For each call, the render gives one
+  warning per kind for the last two kinds (D-003, corrected M003). Attributes
+  are escaped and sorted for stable output.
 - `label` gives `role="img"` and `aria-label`, each only when the user did not
   pass it. No label gives `aria-hidden="true"`, unless the user passes
   `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` (corrected M001).

@@ -88,9 +88,9 @@ The extension does not pass on these keys:
 - A key with an empty value, such as `class=""`.
 - `src`, in any letter case (such as `SRC`). The first argument already sets
   the icon's source, so the render warns and keeps that source.
-- A key that holds whitespace, a control character, `"`, `'`, `>`, `/`, or
-  `=`. HTML does not allow these characters in an attribute name, so the
-  render warns and leaves the key out.
+- A key that is empty or holds whitespace, a control character, `"`, `'`,
+  `>`, `/`, or `=`. HTML does not allow such an attribute name, so the render
+  warns and leaves the key out.
 
 ### Accessibility
 

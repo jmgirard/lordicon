@@ -49,6 +49,7 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 
 ## Invalid attribute names
 
+{{< li wlpxtupd id=bad-empty class=big ""=1 >}}
 {{< li wlpxtupd id=bad-space class=big "a b"=1 >}}
 {{< li wlpxtupd id=bad-dquote class=big 'a"b'=1 >}}
 {{< li wlpxtupd id=bad-squote class=big "a'b"=1 >}}
