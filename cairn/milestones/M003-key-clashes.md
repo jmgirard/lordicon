@@ -1,6 +1,6 @@
 # M003: Stop key clashes and bad attribute names
 
-- **Status:** review
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** M002
 - **Driving RR:** —
@@ -21,12 +21,12 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 
 ## Acceptance criteria
 
-- [ ] AC1: Fixture calls pass a `src` key to `li` and to `lif`, and an `SRC` key to `li`. Each gives a `<lord-icon>` with one `src` attribute, holding the first argument's source, in the raw filter output and the rendered page. The fixture render's log holds one warning per such call, naming its key. `python3 _tests/check_aria.py` reports each. (RB tripwire: ip-touching)
-- [ ] AC2: For each of `role`, `aria-hidden`, `aria-label`, and `aria-labelledby`, a fixture call passes the name in mixed or upper case with no `label`. Fixture calls also pass `Role` and `Aria-Label` with `label`. Each gives the ARIA attributes that the same call with all-lowercase keys gives, with names compared without regard to case. The raw filter output holds each key as the user wrote it. `python3 _tests/check_aria.py` reports each case in the raw filter output and the rendered page.
-- [ ] AC3: For each of a space, `"`, `'`, `>`, `/`, and `=`, a fixture call has a key that holds that character. Its `<lord-icon>` has no attribute from that key, and its other attributes match the same call without that key, in the raw filter output and the rendered page. The fixture render's log holds one warning per such call, naming the key. `python3 _tests/check_aria.py` reports each. (RB tripwire: ip-touching)
+- [x] AC1: Fixture calls pass a `src` key to `li` and to `lif`, and an `SRC` key to `li`. Each gives a `<lord-icon>` with one `src` attribute, holding the first argument's source, in the raw filter output and the rendered page. The fixture render's log holds one warning per such call, naming its key. `python3 _tests/check_aria.py` reports each. (RB tripwire: ip-touching)
+- [x] AC2: For each of `role`, `aria-hidden`, `aria-label`, and `aria-labelledby`, a fixture call passes the name in mixed or upper case with no `label`. Fixture calls also pass `Role` and `Aria-Label` with `label`. Each gives the ARIA attributes that the same call with all-lowercase keys gives, with names compared without regard to case. The raw filter output holds each key as the user wrote it. `python3 _tests/check_aria.py` reports each case in the raw filter output and the rendered page.
+- [x] AC3: For each of a space, `"`, `'`, `>`, `/`, and `=`, a fixture call has a key that holds that character. Its `<lord-icon>` has no attribute from that key, and its other attributes match the same call without that key, in the raw filter output and the rendered page. The fixture render's log holds one warning per such call, naming the key. `python3 _tests/check_aria.py` reports each. (RB tripwire: ip-touching)
 - [ ] AC4: The 15 fixture cases that `_tests/check_aria.py` checks at 64116ad give the same ARIA attributes, and `python3 _tests/check_aria.py` exits 0 on the review head. `quarto render` at the repo root succeeds, and this milestone commits the re-rendered `docs/`.
-- [ ] AC5: The README section on forwarded `key=value` pairs states three facts that match the filter code. A `src` key in any letter case is not forwarded, and the render warns. The four ARIA names override the defaults in any letter case. A key holding whitespace, a control character, `"`, `'`, `>`, `/`, or `=` is skipped, and the render warns.
-- [ ] AC6: `version:` in `_extensions/lordicon/_extension.yml` reads `0.7.3`. `CHANGELOG.md` has a `## 0.7.3` section that names the changes of AC1, AC2, and AC3.
+- [x] AC5: The README section on forwarded `key=value` pairs states three facts that match the filter code. A `src` key in any letter case is not forwarded, and the render warns. The four ARIA names override the defaults in any letter case. A key holding whitespace, a control character, `"`, `'`, `>`, `/`, or `=` is skipped, and the render warns.
+- [x] AC6: `version:` in `_extensions/lordicon/_extension.yml` reads `0.7.3`. `CHANGELOG.md` has a `## 0.7.3` section that names the changes of AC1, AC2, and AC3.
 
 ## Coverage
 
@@ -74,7 +74,19 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-24: claim audit: 37 claims read, 4 corrected — lordicon.lua (two comments on what an invalid name did), CHANGELOG.md (the "Before" sentence), check_aria.py (`INVALID_NAME` now ASCII-only to match Lua `%s%c`; the tab comment now says Pandoc expands the tab, and the warning check compares whitespace runs). The reader's re-read found all four hold.
 - 2026-10-24: noted for review: Lua `%c` covers ASCII controls only, so a key with a C1 control (U+0080 to U+009F) is still forwarded; the README and changelog say "a control character".
 - 2026-10-24: implement complete: `check_aria.py` 0 failures and `quarto render` succeeded (no page changed; `sitemap.xml` date reverted). Status set to review.
+- 2026-10-24: review return 1: AC4 — the branch has no `docs/` commit; the root `quarto render` changes only `docs/sitemap.xml`, which implement reverted. Commit the re-rendered `docs/`.
+- 2026-10-24: review noted: AC1 and AC3 carry `(RB tripwire: ip-touching)`, and implement step 3's escalation offer for them was not posed; the return poses it.
 
 ## Decisions
 
 ## Review
+
+Pass 1 (2026-10-24, head 83e1bae, branch contains origin/main a72e0d7).
+
+- AC1: `python3 _tests/check_aria.py` exits 0 (32 cases on page and filter, 11 of 11 warnings). `src-li`, `src-lif`, `src-upper` each have one `src`: `https://cdn.lordicon.com/wlpxtupd.json`, `gift_raw.json`, `https://cdn.lordicon.com/wlpxtupd.json`, in the raw output and the page. The log has one warning each, naming `"src"`, `"src"`, `"SRC"`.
+- AC2: the six mixed-case cases match their lowercase twins in `CASES`; the check passes them on page and filter. Raw output keeps `Aria-Hidden`, `ARIA-LABEL`, `Aria-LabelledBy`, `ROLE`, `Role`, `Aria-Label` as written.
+- AC3: the six probed characters plus tab and a control byte: each `<lord-icon>` holds only `src`, `class="big"`, `id`, `aria-hidden="true"` (the call without the key), on page and filter; one warning per call naming the key.
+- AC4: FAIL. The 15 cases at 64116ad have the same expected values in the current `CASES`, no fixture line of theirs changed, the check exits 0, and `quarto render` exits 0. But the branch has no `docs/` commit: the re-render changes `docs/sitemap.xml` only, and implement reverted it.
+- AC5: README "Customizing" lists `src` in any case (warns, keeps the source) and the invalid-character set (warns, leaves the key out); "Accessibility" says the four ARIA names count in any case. Each matches `build_element` and `INVALID_NAME` (`[%s%c"'>/=]`).
+- AC6: `_extension.yml` reads `version: 0.7.3`; `CHANGELOG.md:5` is `## 0.7.3`, with entries for the `src`, ARIA-case, and invalid-name changes.
+- Gate: `cairn_validate` all checks passed. IP1 changed: `cairn_impact IP1` lists 11 references; DECISIONS lines are history, ROADMAP line 29 graduates at hygiene, line 31 still holds. Toolchain: the one version marker reads 0.7.3, the render succeeds, the changelog has the entry.
