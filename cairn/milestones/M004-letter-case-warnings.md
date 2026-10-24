@@ -84,3 +84,27 @@ Pass 1, 2026-10-24, on head d4442f3 (branch level with origin/main).
 - AC4: `git diff main...HEAD -- _tests/aria.qmd _tests/check_aria.py` removes no fixture call and no `CASES` or `EXACT` entry. The removed lines are the old `WARNED` form and its loop, and the new `SKIPS` keeps the same key per case with "skips the" added. check_aria exit 0 as above. `quarto render` at the root exit 0, changing only `docs/sitemap.xml` (reverted). No demo page changed, so the slot's browser step had no page to open.
 - AC5: README.md has the letter-case paragraph after the skipped-keys list (clash and `Label` warnings) and the Minified note "in any letter case of the argument, such as `Colors`". CHANGELOG.md line 5 is `## 0.7.4` with three entries for AC1, AC2, and AC3. `_extension.yml` reads `version: 0.7.4`.
 - Gate: `cairn_validate.py` all checks passed; `cairn_impact.py --changed` reports no changed principles. Toolchain: the one version marker the release-walk names (`_extension.yml`) reads 0.7.4 (`cairn_versions.py --at HEAD`: 0.7.4, tag absent); the verify render succeeds (AC4); CHANGELOG has the `## 0.7.4` entry.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: `pandoc.text.lower` folds Σ to σ but Quarto's page folds it to ς, so `dataΣ dataσ` warns falsely and `dataΣ dataς` loses a value silently — reject (edge: Greek capital sigma in an attribute name is outside documented and common use, and the false warning is a warning); the silent loss predates this diff, follow-up "Match Quarto's case folding in warnings"
+- diff-bug #2: the test does not check the advice text of either warning — fix now, fixed 3af29a8
+- diff-bug #3: `Label` with `LABEL` gets no "page keeps one" message — reject (planned change: AC1 leaves keys that lower to `label` to AC2, whose advice covers it)
+- diff-bug #4: two malformed UTF-8 keys could lower to the same text — reject (edge: Pandoc reads input as UTF-8, and the effect is a warning)
+- diff-bug #5: the `check_aria.py` docstring and `raw_output.lua` header say Quarto keeps the first duplicate — fix now, fixed 3af29a8
+- diff-bug #6: the once-per-file Minified rule is untested, and the rule keys the path as written (`./minified.json` warns again) — follow-up, absorbed into "Add a render check with fixtures"
+- diff-bug #7: the Minified warning lists keys bare and the two-key advice reads oddly — reject (style)
+- diff-bug #8 (c): `clash-arialabel` repeats the `clash-role` path — reject (planned change: AC1 names it); `CONTROL_KEYS` expectations repeat unchanged passthrough — fix now, fixed 3af29a8; `clash-empty` pins the filter the new function reads — reject (false: the rule allows a test of behavior the change could break); restating comments — fix now for the Minified comment, fixed 3af29a8, the `label` comment kept (style)
+- blame-history #1: the warning gave "attribute names ignore letter case" as the cause, which HTML holds only for ASCII; Quarto is what collapses non-ASCII clashes — fix now (warning, CHANGELOG, README, code comment reworded), fixed 3af29a8
+- blame-history #2: GP4 asks for a demo example and none was added — reject (planned change: the work log records why a render-log warning has no page)
+- blame-history #3: the M001 lesson and two test headers say Quarto keeps the first duplicate — headers fixed 3af29a8; the lesson is corrected at hygiene
+- blame-history #4: `TWICE` exempted a name for the whole case — fix now (exact counts per name; a planted wrong count failed with "attribute twice: class"), fixed 3af29a8
+- blame-history #5: `table.sort` uses Lua's `<`, which follows the locale's collation, so the order of keys and the duplicate kept can differ under a non-C locale — follow-up "Sort keys by byte, not by locale" (predates this diff)
+- prior-review #1: the Minified warning names the file and not the call, unlike the M003 warnings — follow-up "Name the call in the Minified warning" (predates this diff)
+- prior-review #2: the page-side value of a clash is never checked, so "passes every such key on" is untested — reject (false: that claim is about the filter output, which the spelling check asserts; AC1 promises no kept value)
+- prior-review #3: same as blame-history #4 — fixed 3af29a8
+- ripple #1: README lists `label` as not passed on with no case qualifier — fix now (`label` in lowercase), fixed 3af29a8
+- ripple #2, #4, #5: three ROADMAP candidate rows describe work this diff did — reject (planned change: post-merge hygiene graduates or narrows them)
+- ripple #3: same as diff-bug #5 — fixed 3af29a8
+- ripple #6: DESIGN Function Families says the Minified warning fires for `colors`, `stroke`, or `state` with no letter-case rule — fix now, fixed 3af29a8
+- ripple #7: DESIGN Conventions and IP1 name `label` with no lowercase qualifier — Conventions fixed 3af29a8; IP1 reject (false: IP1 reserves the key `label`, and `Label` is another key that passes through, as IP1 asks)
+- ripple #8: `index.qmd:25` gives no letter-case rule for the Minified warning — reject (false: the sentence stays true)
+- After fixes on 3af29a8: check_aria 0 failures (45 cases, 21 warnings), root render exit 0, sitemap reverted.
