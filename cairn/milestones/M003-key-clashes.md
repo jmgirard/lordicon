@@ -42,7 +42,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - [x] T1: Change the DESIGN.md IP1 text and the forwarding Conventions bullet to name the `src` and invalid-name exceptions (D-003).
 - [x] T2: Extend the harness. `check_aria.py` keeps the fixture render's stderr and checks the warning lines. `fixture_calls()` keeps a quoted key that holds `=` whole. A raw-string check confirms that the filter output keeps each key's spelling.
 - [x] T3: Add the AC1 to AC3 cases to `_tests/aria.qmd` and their expected values to `CASES`. Run the check and see each new case fail on the current filter.
-- [ ] T4: Change `build_element`: reserve `src` by `key:lower()` with a per-call warning, compare ARIA override names by `key:lower()`, and skip invalid names with a per-call warning. The check passes.
+- [x] T4: Change `build_element`: reserve `src` by `key:lower()` with a per-call warning, compare ARIA override names by `key:lower()`, and skip invalid names with a per-call warning. The check passes.
 - [ ] T5: Update the README forwarding section. Run `quarto render` and commit `docs/`. Look at the changed demo pages in a browser, as the PROFILE `verify` slot asks.
 - [ ] T6: Raise `version:` to 0.7.3 (D-001) and add the `## 0.7.3` section to `CHANGELOG.md`. `BUNDLE_VERSION` stays, because the player does not change.
 
@@ -66,6 +66,8 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-24: decided: each warning names the call as `{{< li CODE >}}` or `{{< lif FILE >}}` and the key in double quotes, one warning per kind per call, so the check can match a warning to its call and users can find it.
 - 2026-10-24: T2 done: `check_aria.py` parses quoted keys (a quoted key may hold `=`), checks the render's stderr against `WARNED`, checks `EXACT` cases for extra attributes, and reads the raw output for each forwarded key's spelling. 15 of 15 cases still pass. A planted lowercase `role` made the spelling check fail.
 - 2026-10-24: T3 done: 15 new cases (6 mixed-case ARIA, 3 `src`, 6 invalid names). On the unchanged filter each new case fails (42 failures: kept `aria-hidden`, a second `src`/`role`/`aria-label`, stray attributes, `a>b` breaking its element, no warnings), and the 15 old cases pass. This commit leaves the check red until T4.
+- 2026-10-24: decided: a `src` or invalid key with an empty value is dropped with no warning, as empty values already were; `build_element` takes a third argument naming the call for warnings.
+- 2026-10-24: T4 done: `build_element` skips `src` (by `key:lower()`) and invalid names (`[%s%c"'>/=]`) with one warning per kind per call, and records passed names in lowercase for the ARIA checks. `check_aria.py`: 30 of 30 cases, 9 of 9 warnings, 0 failures.
 
 ## Decisions
 
