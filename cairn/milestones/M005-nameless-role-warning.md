@@ -4,14 +4,14 @@
      cairn_validate's <150 over the plan-owned body. -->
 # M005: Warn when a role icon has no name
 
-- **Status:** planned   <!-- owner: transitioning skill · mirror-update; cairn/ROADMAP.md is the authority -->
+- **Status:** in-progress   <!-- owner: transitioning skill · mirror-update; cairn/ROADMAP.md is the authority -->
 - **Priority:** normal   <!-- owner: plan · create/amend-via-gate; high | normal | low -->
 - **Depends on:** —   <!-- owner: plan · create/amend-via-gate; M<xx>, M<yy> or — -->
 - **Driving RR:** —   <!-- owner: plan · create/amend-via-gate; RR<NN> whose Binding criteria bind this milestone's ACs (binding-criteria check), or — -->
 - **Principles touched:** GP5, GP2, IP1, IP3   <!-- owner: plan · create/amend-via-gate; comma-separated IPn/GPn ids this milestone touches, or — -->
 - **Resolves:** —   <!-- owner: plan · create/amend-via-gate; comma-separated GitHub issues the scope absorbs, each `#N closes` (the PR closes it at merge) or `#N partial` (the remainder gets a candidate row), or — ; skill conduct only — no validate check parses it -->
 - **Surface tier:** user-facing — a render warning that Quarto authors see   <!-- owner: plan · create/amend-via-gate; user-facing | internal — <one-clause reason>; skill conduct only — no validate check parses it -->
-- **Branch/PR:** —   <!-- owner: implement (branch) / review (PR URL) · create; a companion checkout the milestone also works in is one further entry per checkout, `companion: <abs-path> <branch>` (implement), its PR URL appended by review — /milestone-review merges companions first, in listed order -->
+- **Branch/PR:** m005-nameless-role-warning   <!-- owner: implement (branch) / review (PR URL) · create; a companion checkout the milestone also works in is one further entry per checkout, `companion: <abs-path> <branch>` (implement), its PR URL appended by review — /milestone-review merges companions first, in listed order -->
 
 ## Goal
 <!-- owner: plan · create; a wrong goal returns to plan, never edited in place -->
@@ -94,7 +94,7 @@ non-HTML output checks → candidate row "Add a render check with fixtures".
 ## Tasks
 <!-- owner: plan (create) / implement (check-off, minor edits); substantive change is amend-via-gate. -->
 
-- [ ] T1: Add a "Role img with no name" section to `_tests/aria.qmd` with the
+- [x] T1: Add a "Role img with no name" section to `_tests/aria.qmd` with the
       AC1 (a)-(f) calls and the AC2 calls, each with its own icon code, since
       a warning names only `{{< li CODE >}}`. In `_tests/check_aria.py`, add
       their `CASES` entries and the AC1 warnings to `WARNED`, (g) included.
@@ -129,6 +129,9 @@ non-HTML output checks → candidate row "Add a render check with fixtures".
 - 2026-10-24: release-shaped tripwire: not hit; the 0.7.5 version rise at merge follows D-001 and is no release window.
 - 2026-10-24: plan probe: a render keeps the first of `role`/`Role` in byte order; a quoted value that is all spaces or starts with a space reaches the filter as no key (`label=" Bell "` stays `aria-hidden`), so the blank-name cases left the plan and the candidate row "Keep values that start with a space" holds the rest.
 - 2026-10-24: criteria audit (full mode, fresh Opus reader): 12 findings. Fixed: unreachable blank-value cases (1, 2) dropped; AC1 "exactly one" scoped to this warning (3); fix advice added (4); `WARNED` wording replaced by the log match (5); fixture traps moved into T1 (6); (f) reworded as the kept-role calls (7); letter-case, aria-hidden clash, and first-token probes added (8); AC3 narrowed to what the code does plus the fixture (9); GP5 "non-empty" added and D-004 written at plan (10). No finding on AC5 and proportionality; AC6's browser check stands as the profile's verify slot (12). Accepted its point that `hidden` and `inert` also remove an icon: the warning skips them.
+- 2026-10-24: implement start: branch `m005-nameless-role-warning` cut from main at 576fa52; untracked `.DS_Store` left unstaged.
+- 2026-10-24: T1 done: 17 fixture calls in two sections (one icon code each), a `named-inert` case beside the AC2 list to cover the `inert` branch, `PAGE_ONLY` expectations for kept clash values; the check fails only on the 9 missing nameless-role warnings (23 of 32 warnings, all attribute checks pass).
+- 2026-10-24: warning text chosen: `gives the icon role="<kept value>" but no name, so a screen reader announces an image without saying what it shows. Add a label, such as label="Bell". If the icon is only decoration, pass aria-hidden="true" instead.`; the aria-hidden advice works even where a user `aria-hidden=false` would keep a role-less icon shown.
 
 ## Decisions
 <!-- owner: implement / review · append-only; milestone-local -->

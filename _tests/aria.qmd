@@ -79,4 +79,27 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< lif minified.json id=minified-lif Colors=primary:red STROKE=bold sTaTe=hover >}}
 {{< lif gift_raw.json id=raw-lif Colors=primary:red STROKE=bold sTaTe=hover >}}
 
+## Role img with no name
+
+{{< li nrimg id=nameless-img role=img >}}
+{{< li nrupper id=nameless-upper ROLE=IMG >}}
+{{< li nrimage id=nameless-image role=image >}}
+{{< li nrfirst id=nameless-first role="img presentation" >}}
+{{< li nrshown id=nameless-shown role=img aria-hidden=false >}}
+{{< li nrhidclash id=nameless-hidden-clash role=img aria-hidden=true ARIA-HIDDEN=false >}}
+
+## Role img with a name or hidden
+
+{{< li nnlabel id=named-arialabel role=img aria-label="Bell" >}}
+{{< li nnlabelledby id=named-labelledby role=img ARIA-LABELLEDBY=caption >}}
+{{< li nntitle id=named-title role=img title="Bell" >}}
+{{< li nntitleup id=named-title-upper role=img Title="Bell" >}}
+{{< li nnlab id=named-label role=img label="Bell" >}}
+{{< li nnhidden id=named-hidden-attr role=img hidden=hidden >}}
+{{< li nninert id=named-inert role=img inert=inert >}}
+{{< li nnaria id=named-aria-hidden role=img aria-hidden=true >}}
+{{< li nnariaup id=named-aria-hidden-upper role=img Aria-Hidden=TRUE >}}
+{{< li nnpres id=named-first-presentation role="presentation img" >}}
+{{< li nnclash id=named-role-clash role=img Role=presentation >}}
+
 [Caption]{#caption}
