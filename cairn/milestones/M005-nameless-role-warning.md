@@ -137,6 +137,7 @@ non-HTML output checks → candidate row "Add a render check with fixtures".
 - 2026-10-24: the simple-english lint hook flagged 25 older README sentences; fixed only the hits in the new paragraph (a long sentence, a trailing condition) and left the rest, which predate M005.
 - 2026-10-24: claim audit: 14 claims read, 2 corrected — `_extensions/lordicon/lordicon.lua` (first-token comment now says `role="bogus img"` is not caught), `_tests/check_aria.py` (`dict(attrs)`, not the parser, keeps the last duplicate); the reader re-read both as true. `check_aria.py` 0 failures after the edits.
 - 2026-10-24: implement complete; status set to review.
+- 2026-10-24: step-7 approval: m005-nameless-role-warning approved for merge
 
 ## Decisions
 <!-- owner: implement / review · append-only; milestone-local -->
