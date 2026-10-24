@@ -170,3 +170,14 @@ Evidence, 2026-10-24, on `1f4facb` (branch level with main at 576fa52):
 - ripple #3: ROADMAP row "Add a render check with fixtures" lists what `check_aria.py` covers without the new warning — fix now.
 - ripple #4: with `role=img label=" Bell "` the label is lost and the warning tells the user to add a label — follow-up, absorbed into "Keep values that start with a space".
 - ripple #5: DESIGN Conventions line on the `aria-hidden` default omits "non-empty", which GP5 and README state — fix now.
+- blame-history #1: the check reads only the first role token, but ARIA has browsers use the first role they know, so `role="bogus img"` gives an unnamed image with no warning — follow-up, new row "Catch image roles after other tokens".
+- blame-history #2: browsers ignore `role="image"`, so the warning is false for it — reject: false; ARIA 1.3 makes `image` the primary role with `img` its synonym (Mozilla bug 1829269, fixed in Firefox 116; WebKit bug 224615 fixed).
+- blame-history #3: `table.sort` follows the locale, so the first sorted key may not be the page's — reject: false; `quarto pandoc lua` reports the collation locale `C` under `LC_ALL=en_US.UTF-8` (plan probe), and the check reads the same order the element is written in.
+- blame-history #4: `ascii_lower` misses a key such as `İnert` that Quarto folds to `inert` — reject: edge; a non-ASCII letter in an ARIA or HTML attribute name is outside documented and common use, and the effect is a spurious warning.
+- blame-history #5: the header comment omits the `aria-label`, `aria-labelledby`, and `title` exemptions — reject: false; "no name" covers them.
+- blame-history #6: the render changed `docs/sitemap.xml` — reject: planned change (the M002 lesson commits the sitemap with a re-render).
+- prior-review #1: the "byte order" claim fails under a non-C locale (M004 review) — reject: false; same probe as blame-history #3.
+- prior-review #2: grouping by `ascii_lower` reverses M004's choice of `pandoc.text.lower` — reject: edge; same input as blame-history #4, and M004's choice concerned the clash warning, not these six names.
+- prior-review #3: with `Label="Bell" role=img` the advice says to add a label the user wrote — reject: false; the label-case warning fires beside it, and both point to the lowercase `label` the icon needs.
+- prior-review #4: the header comment omits the name exemptions (M003 checked header accuracy) — reject: false; same as blame-history #5.
+- Settled: 26 findings; 4 fix now (`74defa8`), 2 follow-up, 20 rejected (6 planned change, 11 false, 3 edge). Snapshot files changed: none.
