@@ -84,7 +84,8 @@ Any other attribute the element supports can be passed the same way.
 
 The extension does not pass on these keys:
 
-- `label`, which the extension turns into ARIA attributes (see below).
+- `label` in lowercase, which the extension turns into ARIA attributes (see
+  below).
 - A key with an empty value, such as `class=""`.
 - `src`, in any letter case (such as `SRC`). The first argument already sets
   the icon's source, so the render warns and keeps that source.
@@ -92,8 +93,8 @@ The extension does not pass on these keys:
   `>`, `/`, or `=`. HTML does not allow such an attribute name, so the render
   warns and leaves the key out.
 
-Attribute names ignore letter case, so `Class` and `class` name the same
-attribute. If one call passes on two keys that differ only in letter case, such as
+On the rendered page, attribute names that differ only in letter case, such as
+`Class` and `class`, name the same attribute. If one call passes on two keys that differ only in letter case, such as
 `role` and `Role`, the page keeps only one of their values, and the render
 warns. Only a lowercase `label` gives the ARIA attributes. A key such as
 `Label` passes on to the element and labels nothing, so the render warns about

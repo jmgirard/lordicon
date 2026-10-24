@@ -39,12 +39,13 @@ Convenience shorthands do not qualify.
 
 - `{{< li CODE ... >}}`: an icon from `https://cdn.lordicon.com/CODE.json`.
 - `{{< lif FILE ... >}}`: an icon from a local Lottie file, with a render-time
-  warning when a Minified export meets `colors`, `stroke`, or `state`.
+  warning when a Minified export meets `colors`, `stroke`, or `state` in any
+  letter case (corrected M004).
 
 ## Conventions
 
 - Every shortcode `key=value` with a non-empty value goes to the `<lord-icon>`
-  element as an attribute, except three kinds of key: `label`; `src` in any
+  element as an attribute, except three kinds of key: `label` in lowercase; `src` in any
   letter case; and a key that is empty or holds whitespace, a control
   character, `"`, `'`, `>`, `/`, or `=`. For each call, the render gives one
   warning per kind for the last two kinds (D-003, corrected M003). Attributes

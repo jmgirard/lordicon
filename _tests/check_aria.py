@@ -4,8 +4,8 @@ the expected values below, in two places:
 
 - page: the HTML page Quarto renders from the fixture.
 - filter: the raw HTML each shortcode returns, from raw_output.lua. Quarto's
-  HTML post-processing keeps only the first of two same-name attributes, so
-  only this output shows an attribute the filter wrote twice. The parser
+  HTML post-processing keeps only one of two same-name attributes, so only
+  this output shows an attribute the filter wrote twice. The parser
   lowercases attribute names, so the check also reads this output as text to
   confirm that each forwarded key keeps the spelling the user wrote.
 
@@ -107,8 +107,8 @@ CASES["kept-names"] = {
 # CASES gives a value. The `label` case shows that `label` is not passed on.
 EXACT = {"src-li", "src-lif", "src-upper", "kept-names", "label", *BAD}
 
-# Keys that differ only in letter case give one attribute name twice in the
-# filter output, which the parser lowercases. The page keeps one of them.
+# Keys that differ only in letter case give one attribute name more than once
+# in the filter output, which the parser lowercases. The page keeps one.
 CLASH = {
     "clash-role": {"aria-hidden": None, "aria-label": None},
     "clash-class": DECORATIVE,
@@ -119,14 +119,14 @@ CLASH = {
 CASES.update(CLASH)
 CASES["clash-empty"] = {"aria-hidden": None, "role": "img", "aria-label": None}
 
-# Names that each case may hold twice in the filter output.
+# How many times each case's clashing names appear in the filter output.
 TWICE = {
-    "clash-role": {"role"},
-    "clash-class": {"class"},
-    "clash-arialabel": {"aria-label"},
-    "clash-two": {"role", "data-x"},
-    "clash-accent": {"data-é"},
-    "label-two": {"label"},
+    "clash-role": {"role": 2},
+    "clash-class": {"class": 3},
+    "clash-arialabel": {"aria-label": 2},
+    "clash-two": {"role": 2, "data-x": 2},
+    "clash-accent": {"data-é": 2},
+    "label-two": {"label": 2},
 }
 
 # Only a lowercase `label` labels the icon. A key such as `Label` passes on.
@@ -135,10 +135,9 @@ CASES["label-mixed"] = {"aria-hidden": None, "role": "img", "aria-label": "Bell"
 CASES["label-two"] = DECORATIVE
 
 # minified.json has no control layer, as in a Minified export; gift_raw.json
-# has one. The keys reach the element in either case.
-CONTROL_KEYS = {"colors": "primary:red", "stroke": "bold", "state": "hover"}
-CASES["minified-lif"] = {**DECORATIVE, **CONTROL_KEYS}
-CASES["raw-lif"] = {**DECORATIVE, **CONTROL_KEYS}
+# has one.
+CASES["minified-lif"] = DECORATIVE
+CASES["raw-lif"] = DECORATIVE
 
 # The lordicon warnings of each case. Each warning is a list of texts that one
 # line of the render's log must hold, where CALL stands for the case's call,
@@ -147,14 +146,16 @@ CALL = object()
 SKIPS = {"src-li": "src", "src-lif": "src", "src-upper": "SRC", **BAD}
 WARNED = {case: [[CALL, "skips the", f'"{key}"']] for case, key in SKIPS.items()}
 CASE_CLASH = "differ only in letter case"
+ONE = "The page keeps only one of their values."
+EACH = "The page keeps only one value from each group."
 WARNED.update({
-    "clash-role": [[CALL, CASE_CLASH, '"Role" and "role".']],
-    "clash-class": [[CALL, CASE_CLASH, '"CLASS", "Class", and "class".']],
-    "clash-arialabel": [[CALL, CASE_CLASH, '"aria-Label" and "aria-label".']],
-    "clash-two": [[CALL, CASE_CLASH, '"DATA-X" and "data-x"; "ROLE" and "role".']],
-    "clash-accent": [[CALL, CASE_CLASH, '"data-É" and "data-é".']],
+    "clash-role": [[CALL, CASE_CLASH, '"Role" and "role".', ONE]],
+    "clash-class": [[CALL, CASE_CLASH, '"CLASS", "Class", and "class".', ONE]],
+    "clash-arialabel": [[CALL, CASE_CLASH, '"aria-Label" and "aria-label".', ONE]],
+    "clash-two": [[CALL, CASE_CLASH, '"DATA-X" and "data-x"; "ROLE" and "role".', EACH]],
+    "clash-accent": [[CALL, CASE_CLASH, '"data-É" and "data-é".', ONE]],
 })
-LABEL_CASE = "only a lowercase label key labels the icon"
+LABEL_CASE = "only a lowercase label key labels the icon. Use one lowercase label key."
 WARNED.update({
     "label-upper": [[CALL, LABEL_CASE, 'the key "Label",']],
     "label-mixed": [[CALL, LABEL_CASE, 'the key "laBel",']],
@@ -288,10 +289,10 @@ def check(where, html):
         names = [name for name, _ in attrs]
         values = dict(attrs)
         case = values.get("id")
-        dupes = {n for n in names if names.count(n) > 1}
-        if where == "filter":
-            dupes -= TWICE.get(case, set())
-        dupes = sorted(dupes)
+        allowed = TWICE.get(case, {}) if where == "filter" else {}
+        dupes = sorted({
+            n for n in names if names.count(n) > 1 and names.count(n) != allowed.get(n)
+        })
         if dupes:
             failures.append(f"{where} {case}: attribute twice: {', '.join(dupes)}")
         if case not in CASES:

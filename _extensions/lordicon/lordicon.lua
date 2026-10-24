@@ -127,8 +127,8 @@ local function quote_list(keys)
 end
 
 -- Warn about forwarded keys that differ only in letter case, such as `role`
--- and `Role`. Attribute names ignore letter case, so the page keeps only one
--- value of each such group. `keys` is sorted. Keys that lowercase to `label`
+-- and `Role`. Quarto's HTML post-processing keeps only one value of each such
+-- group, for letters outside ASCII too. `keys` is sorted. Keys that lowercase to `label`
 -- get the label warning instead.
 local function warn_case_clashes(call, keys)
   local groups, order = {}, {}
@@ -162,8 +162,8 @@ local function warn_case_clashes(call, keys)
   end
   quarto.log.warning(
     string.format(
-      "lordicon: %s has keys that differ only in letter case: %s. Attribute "
-        .. "names ignore letter case, so the page keeps %s",
+      "lordicon: %s has keys that differ only in letter case: %s. The page "
+        .. "keeps %s",
       call,
       table.concat(clashes, "; "),
       advice

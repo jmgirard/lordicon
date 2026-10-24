@@ -1,7 +1,7 @@
 --[[
   Call the lordicon shortcodes directly, outside a Quarto render, and print
-  the raw HTML each one returns. Quarto's HTML post-processing keeps only the
-  first of two same-name attributes, so a rendered page cannot show whether
+  the raw HTML each one returns. Quarto's HTML post-processing keeps only one
+  of two same-name attributes, so a rendered page cannot show whether
   the filter itself wrote an attribute twice; this output can.
 
   Usage: quarto pandoc lua _tests/raw_output.lua CASES.json
