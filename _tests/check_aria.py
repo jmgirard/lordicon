@@ -84,6 +84,8 @@ BAD = {
     "bad-gt": "a>b",
     "bad-slash": "a/b",
     "bad-equals": "a=b",
+    "bad-tab": "c\td",
+    "bad-control": "a\x01b",
 }
 for case in BAD:
     CASES[case] = {"src": ICON, "class": "big", **DECORATIVE}
@@ -190,7 +192,9 @@ def check_warnings(calls, log):
         if case not in WARNED:
             continue
         name = f"{{{{< {call['shortcode']} {call['arg']} >}}}}"
-        found = [line for line in lines if name in line and f'"{WARNED[case]}"' in line]
+        # Quarto's log shows a tab in a key as a space.
+        key = re.sub(r"\s", " ", WARNED[case])
+        found = [line for line in lines if name in line and f'"{key}"' in line]
         if len(found) != 1:
             failures.append(f"log {case}: {len(found)} warnings name {name} and {WARNED[case]!r}")
     if len(lines) != len(WARNED):
