@@ -4,7 +4,7 @@
      cairn_validate's <150 over the plan-owned body. -->
 # M006: Name the call in the Minified warning
 
-- **Status:** in-progress   <!-- owner: transitioning skill · mirror-update; cairn/ROADMAP.md is the authority -->
+- **Status:** review   <!-- owner: transitioning skill · mirror-update; cairn/ROADMAP.md is the authority -->
 - **Priority:** normal   <!-- owner: plan · create/amend-via-gate; high | normal | low -->
 - **Depends on:** —   <!-- owner: plan · create/amend-via-gate; M<xx>, M<yy> or — -->
 - **Driving RR:** —   <!-- owner: plan · create/amend-via-gate; RR<NN> whose Binding criteria bind this milestone's ACs (binding-criteria check), or — -->
@@ -63,6 +63,8 @@ The Minified-export warning of `lif` names the shortcode call, such as `{{< lif 
 - 2026-10-24: T1 done: `minified-lif` expectation uses CALL; on the old filter `check_aria.py` fails only with "log minified-lif: 0 warnings hold ['{{< lif minified.json >}}', …]".
 - 2026-10-24: T2 done: `lif` builds the call once and passes it to `check_minified`; the render logs "lordicon: {{< lif minified.json >}} uses a file that looks like a Minified Lottie export, so Colors, STROKE, sTaTe will have no effect. …"; `check_aria.py` exits 0 (62 cases, 32 warnings).
 - 2026-10-24: T3 done: version 0.7.6 and CHANGELOG 0.7.6; `quarto render` exits 0, no lordicon warning, and changes only one `lastmod` line in `docs/sitemap.xml`, reverted. The changelog leaves out "still warns once per file", since no test checks that rule.
+- 2026-10-24: claim audit: 7 claims read, 0 corrected — `CHANGELOG.md`, `_extensions/lordicon/lordicon.lua`, `_tests/check_aria.py`.
+- 2026-10-24: implement complete; status review.
 
 ## Decisions
 <!-- owner: implement / review · append-only; milestone-local. -->

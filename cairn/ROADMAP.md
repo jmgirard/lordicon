@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-24 (review M005: archived; graduated 2 rows, added 
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M006 | Name the call in the Minified warning | in-progress | — | normal | milestones/M006-minified-warning-call.md |
+| M006 | Name the call in the Minified warning | review | — | normal | milestones/M006-minified-warning-call.md |
 | M005 | Warn when a role icon has no name | done | — | normal | milestones/archive/M005-nameless-role-warning.md |
 | M004 | Warn about keys in another letter case | done | — | normal | milestones/archive/M004-letter-case-warnings.md |
 | M003 | Stop key clashes and bad attribute names | done | M002 | normal | milestones/archive/M003-key-clashes.md |
