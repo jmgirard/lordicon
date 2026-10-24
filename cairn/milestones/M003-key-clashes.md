@@ -147,3 +147,27 @@ Pass 3 (2026-10-24, head 41f9c81, branch contains origin/main a72e0d7).
 - AC5: README "Customizing" lists `src` in any case (warns, keeps the source) and a key holding whitespace, a control character, `"`, `'`, `>`, `/`, or `=` (warns, leaves it out); "Accessibility" says the four ARIA names count in any case. `INVALID_NAME` (`[\0-\32\127"'>/=]`) and `C1_CONTROL` (`\194[\128-\159]`) cover ASCII whitespace and all C0 and C1 controls; `bad-c1` and `bad-control` pass.
 - AC6: `version: 0.7.3`; `CHANGELOG.md` `## 0.7.3` names the three changes.
 - Gate: `cairn_validate` all checks passed; `cairn_impact IP1 IP5` references reconciled (DESIGN now names the D-003 narrowing in both); the one version marker reads 0.7.3; the render succeeds; the changelog has the entry.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: an empty key, `""=1`, is written as ` ="1"`, so the page holds an attribute named `="1"`, with no warning — fix now: D-003 skips any key HTML does not allow as a name, and a name cannot be empty.
+- diff-bug #2: the README bullet saying `label` is not passed on has no test; removing `label` from `RESERVED` passes — fix now (the `label` case becomes exact).
+- diff-bug #3: no fixture has two skipped keys of one kind, or both kinds, in one call — reject, false: only warning count and text differ, and "What gets a test" excludes cosmetic output (as pass-2 diff-bug #5).
+- diff-bug #4: DEL (U+007F) and other C0 members are untested — reject, false: one `find` over one class is one code path, and `bad-control` and `bad-space` run it.
+- diff-bug #5: four mixed-case ARIA cases run one path — reject, planned change: AC2 names each case.
+- diff-bug #6: `key:lower()` follows the locale; under glibc's tr_TR.ISO-8859-9, `I` lowers to 0xFD, so `ARIA-LABEL` would not match — fix now (an ASCII-only lowercase helper).
+- diff-bug #7: the UTF-8 half of the locale check catches the old `%s%c` pattern only where the C library classifies bytes 128 and up (macOS, not glibc) — fix now (the comment says so).
+- diff-bug #8: noncharacter keys such as U+FFFE pass through with no warning — follow-up, absorbed by "Decide on keys that hold a less-than".
+- diff-bug #9: `"a<b"=1` is forwarded — follow-up, the row "Decide on keys that hold a less-than".
+- diff-bug #10: no test that an empty-value `src` or invalid key stays silent — reject, false: only warning output differs (cosmetic).
+- diff-bug #11: DESIGN's forwarding bullet leaves out empty-value keys, which README lists — fix now.
+- diff-bug #12: a test comment names `INVALID_NAME` and `C1_CONTROL` — reject, style.
+- blame-history #1: `Label` is not reserved in any case — follow-up, absorbed by "Warn on keys that differ only in case".
+- blame-history #2: `check_minified` matches by exact case — follow-up, the row "Match Minified-check keys in any case".
+- blame-history #3: IP1 now drops keys, and D-003's rationale is loose for `src` — reject, false: D-003 records the narrowing, and the warning is the change for `src`.
+- blame-history #4: `"a<b"=1` is forwarded — follow-up, the row "Decide on keys that hold a less-than".
+- prior-review #1: the ROADMAP row "Stop duplicate src and ARIA attributes" reads as open — reject, planned change: step 9 hygiene graduates it.
+- prior-review #2: `lordicon.lua:8` "forwarded verbatim" — reject, false: the same comment names the exceptions.
+- ripple #1, #2: the rows "Stop duplicate src and ARIA attributes" and "Guard attribute names against bad markup" read as open — reject, planned change: step 9 hygiene graduates them.
+- ripple #3: `lordicon.lua:8` "verbatim" — reject, false (as prior-review #2).
+- ripple #4: `check_aria.py` docstring "Exits 1 when a case fails" — fix now (any check).
+- ripple #5: the `RESERVED` comment does not cover the `src` and invalid-name skips — reject, false: it describes `label`, which is handled specially, and claims nothing about other skips.
+- ripple #6: DESIGN Contract boundary allows behavior "in two cases only" — reject, false: both skips are guardrails for silent failures (a second `src` that is ignored, a broken element).
