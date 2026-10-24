@@ -81,6 +81,15 @@ element API without the extension needing to know each option:
 
 Any other attribute the element supports can be passed the same way.
 
+The extension does not pass on these keys:
+
+- `label`, which the extension turns into ARIA attributes (see below).
+- `src`, in any letter case (such as `SRC`). The first argument already sets
+  the icon's source, so the render warns and keeps that source.
+- A key that holds whitespace, a control character, `"`, `'`, `>`, `/`, or
+  `=`. HTML does not allow these characters in an attribute name, so the
+  render warns and leaves the key out.
+
 ### Accessibility
 
 By default icons are treated as decorative and marked `aria-hidden="true"` so
@@ -94,9 +103,10 @@ will be exposed with `role="img"` and that label instead:
 ARIA attributes you pass yourself take precedence over these defaults. If you
 pass a non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role`, the
 extension does not add `aria-hidden="true"`. With `label`, your own `role` or
-`aria-label` replaces the one `label` would add. When you set `aria-label` or
-`aria-labelledby` directly, also pass `role="img"` so screen readers announce
-the icon:
+`aria-label` replaces the one that `label` adds. These four names count in any
+letter case, so `Role` or `ARIA-LABEL` works the same way. When you set
+`aria-label` or `aria-labelledby` directly, also pass `role="img"` so screen
+readers announce the icon:
 
 ```
 {{< li wlpxtupd role="img" aria-label="Loading complete" >}}
