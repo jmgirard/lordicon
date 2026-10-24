@@ -154,10 +154,10 @@ Evidence, 2026-10-24, on `1f4facb` (branch level with main at 576fa52):
 - AC6: verify slot on `1f4facb`: `check_aria.py` exit 0; `quarto render` exit 0 with no lordicon warning; browser at http://localhost:8765/: `lord-icon` defined, 17 of 17 icons hold an SVG.
 - Gate: `cairn_validate.py` all checks passed; `cairn_impact.py --changed` lists GP5 and IP1 references, all history records or this milestone's, except ROADMAP row "Reword GP5 for user ARIA precedence", which hygiene graduates; one version marker (`_extension.yml` 0.7.5); verify render green; CHANGELOG 0.7.5 entry present.
 - spawned: diff-bug, blame-history, prior-review, ripple
-- diff-bug #1: the `aria-hidden` check trims whitespace beyond the scope, so `aria-hidden="true "` (kept as written on the page) silences the warning though Chromium is believed to compare the exact value — fix now (trim dropped).
+- diff-bug #1: the `aria-hidden` check trims whitespace beyond the scope, so `aria-hidden="true "` (kept as written on the page) silences the warning though Chromium is believed to compare the exact value — fix now (trim dropped), fixed 74defa8.
 - diff-bug #2: `named-title-upper` repeats the key case-folding path that `named-labelledby` and `nameless-upper` already run — reject: planned change (AC2 names `Title`).
 - diff-bug #3: `clash-role`, `clash-two`, `nameless-hidden-clash`, and `named-role-clash` each test the first-sorted-key rule — reject: planned change (AC1 (f)-(g) and AC2 name them).
-- diff-bug #4: the comment above `SHOWN` in `check_aria.py` repeats what the case names show — fix now (comment removed).
+- diff-bug #4: the comment above `SHOWN` in `check_aria.py` repeats what the case names show — fix now (comment removed), fixed 74defa8.
 - diff-bug #5: the five `named-*` name and hide cases run one loop over `NAMES_OR_HIDES` — reject: planned change (AC2 names each; each guards its own table entry, as the planted `inert` defect showed).
 - diff-bug #6: `named-role-clash` asserts the kept `role` on the page only — reject: false; `dict(attrs)` keeps the last duplicate, so the filter side cannot show the kept value, which is what `PAGE_ONLY` is for.
 - diff-bug #7: `Label` with `role=img` fires both warnings, untested — reject: false; the probe shows the right output and the path is plain `role=img`.
@@ -167,9 +167,9 @@ Evidence, 2026-10-24, on `1f4facb` (branch level with main at 576fa52):
 - diff-bug #11: `table.sort` follows the collation locale — reject: false; the check reads the same sorted `keys` the element is written from, so it matches the page in any locale.
 - ripple #1: ROADMAP row "Warn when a role icon has no name" still open — reject: planned change (post-merge hygiene graduates it).
 - ripple #2: ROADMAP row "Reword GP5 for user ARIA precedence" still open — reject: planned change (post-merge hygiene graduates it).
-- ripple #3: ROADMAP row "Add a render check with fixtures" lists what `check_aria.py` covers without the new warning — fix now.
+- ripple #3: ROADMAP row "Add a render check with fixtures" lists what `check_aria.py` covers without the new warning — fix now, fixed 74defa8.
 - ripple #4: with `role=img label=" Bell "` the label is lost and the warning tells the user to add a label — follow-up, absorbed into "Keep values that start with a space".
-- ripple #5: DESIGN Conventions line on the `aria-hidden` default omits "non-empty", which GP5 and README state — fix now.
+- ripple #5: DESIGN Conventions line on the `aria-hidden` default omits "non-empty", which GP5 and README state — fix now, fixed 74defa8.
 - blame-history #1: the check reads only the first role token, but ARIA has browsers use the first role they know, so `role="bogus img"` gives an unnamed image with no warning — follow-up, new row "Catch image roles after other tokens".
 - blame-history #2: browsers ignore `role="image"`, so the warning is false for it — reject: false; ARIA 1.3 makes `image` the primary role with `img` its synonym (Mozilla bug 1829269, fixed in Firefox 116; WebKit bug 224615 fixed).
 - blame-history #3: `table.sort` follows the locale, so the first sorted key may not be the page's — reject: false; `quarto pandoc lua` reports the collation locale `C` under `LC_ALL=en_US.UTF-8` (plan probe), and the check reads the same order the element is written in.
@@ -181,3 +181,4 @@ Evidence, 2026-10-24, on `1f4facb` (branch level with main at 576fa52):
 - prior-review #3: with `Label="Bell" role=img` the advice says to add a label the user wrote — reject: false; the label-case warning fires beside it, and both point to the lowercase `label` the icon needs.
 - prior-review #4: the header comment omits the name exemptions (M003 checked header accuracy) — reject: false; same as blame-history #5.
 - Settled: 26 findings; 4 fix now (`74defa8`), 2 follow-up, 20 rejected (6 planned change, 11 false, 3 edge). Snapshot files changed: none.
+- Re-verify after the fixes, on `d1674fd`: `check_aria.py` 0 failures; `quarto render` exit 0 and `docs/` unchanged.
