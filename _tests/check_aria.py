@@ -58,13 +58,43 @@ CASES = {
     "label-escaped": {"aria-hidden": None, "role": "img", "aria-label": TRICKY},
 }
 
+# An ARIA name in another letter case acts as the lowercase name does.
+for case, twin in {
+    "hidden-mixed": "hidden-li",
+    "arialabel-upper": "arialabel-li",
+    "labelledby-mixed": "labelledby-li",
+    "role-upper": "role-li",
+    "label-role-mixed": "label-role",
+    "label-arialabel-mixed": "label-arialabel",
+}.items():
+    CASES[case] = CASES[twin]
+
+# A src key never replaces the first argument's source.
+ICON = "https://cdn.lordicon.com/wlpxtupd.json"
+DECORATIVE = {"aria-hidden": "true", "role": None, "aria-label": None}
+CASES["src-li"] = {"src": ICON, **DECORATIVE}
+CASES["src-lif"] = {"src": "gift_raw.json", **DECORATIVE}
+CASES["src-upper"] = {"src": ICON, **DECORATIVE}
+
+# A key that is not a valid attribute name gives no attribute.
+BAD = {
+    "bad-space": "a b",
+    "bad-dquote": 'a"b',
+    "bad-squote": "a'b",
+    "bad-gt": "a>b",
+    "bad-slash": "a/b",
+    "bad-equals": "a=b",
+}
+for case in BAD:
+    CASES[case] = {"src": ICON, "class": "big", **DECORATIVE}
+
 # Cases whose <lord-icon> holds no attribute beyond `id` and the ones CASES
 # gives a value.
-EXACT = set()
+EXACT = {"src-li", "src-lif", "src-upper", *BAD}
 
 # The key that the one lordicon warning of each case must name. No other
 # lordicon warning may appear in the render's log.
-WARNED = {}
+WARNED = {"src-li": "src", "src-lif": "src", "src-upper": "SRC", **BAD}
 
 # A key with one of these characters is not a valid HTML attribute name.
 INVALID_NAME = re.compile(r"[\s\x00-\x1f\x7f\"'>/=]")
