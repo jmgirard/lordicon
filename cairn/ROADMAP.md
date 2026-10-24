@@ -1,7 +1,7 @@
 # Roadmap
 
 _The only authority on milestone status. Grouped by status, not ID._
-_Last hygiene check: 2026-10-24 (M003 done: two rows graduated, two rows added)_
+_Last hygiene check: 2026-10-24 (triage: dropped "Close out the element API todo (#4)", refuted premise; no decision entry; validate green)_
 
 ## Milestones
 
@@ -29,6 +29,5 @@ _Last hygiene check: 2026-10-24 (M003 done: two rows graduated, two rows added)_
 - Warn on keys that differ only in case: two keys in one call that differ only in letter case, such as `role=x Role=y` or `label` and `Label`, both reach `<lord-icon>`, and HTML keeps one, because attribute names ignore case — added 2026-10-20 — M003 criteria audit
 - Reword GP5 for user ARIA precedence: GP5 says an icon without `label` is `aria-hidden`, but since M001 a user `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` turns the default off (IP1); a principle change takes the user's decision and a D-entry — added 2026-10-20 — M001 review
 - Warn when a role icon has no name: `role="img"` with no `label`, `aria-label`, or `aria-labelledby` (or a blank `aria-label`) now gives an unhidden icon with no accessible name; decide whether this earns a GP2 warning — added 2026-10-20 — M001 review
-- Close out the element API todo (#4): `loading` already passes through; an `icon` argument needs a GP3 case or a no — added 2026-10-20 — https://github.com/jmgirard/lordicon/issues/4
 - Match Minified-check keys in any case: `check_minified` (`lordicon.lua`) looks up `colors`, `stroke`, and `state` by exact case, so `Colors=` reaches the element and works, but the Minified warning does not fire (GP2); since 825985a — added 2026-10-24 — M003 review
 - Decide on keys that hold a less-than: `"a<b"=1` is forwarded as `a<b="1"`, which HTML parsers flag as an error but still read; D-003's skip set leaves `<` out; noncharacter keys such as U+FFFE or U+FDD0 pass through the same way — added 2026-10-24 — M003 review
