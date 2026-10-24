@@ -1,6 +1,6 @@
 # M003: Stop key clashes and bad attribute names
 
-- **Status:** review
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** M002
 - **Driving RR:** —
@@ -25,7 +25,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - [x] AC2: For each of `role`, `aria-hidden`, `aria-label`, and `aria-labelledby`, a fixture call passes the name in mixed or upper case with no `label`. Fixture calls also pass `Role` and `Aria-Label` with `label`. Each gives the ARIA attributes that the same call with all-lowercase keys gives, with names compared without regard to case. The raw filter output holds each key as the user wrote it. `python3 _tests/check_aria.py` reports each case in the raw filter output and the rendered page.
 - [x] AC3: For each of a space, `"`, `'`, `>`, `/`, and `=`, a fixture call has a key that holds that character. Its `<lord-icon>` has no attribute from that key, and its other attributes match the same call without that key, in the raw filter output and the rendered page. The fixture render's log holds one warning per such call, naming the key. `python3 _tests/check_aria.py` reports each. (RB tripwire: ip-touching)
 - [x] AC4: The 15 fixture cases that `_tests/check_aria.py` checks at 64116ad give the same ARIA attributes, and `python3 _tests/check_aria.py` exits 0 on the review head. `quarto render` at the repo root succeeds, and this milestone commits the re-rendered `docs/`.
-- [x] AC5: The README section on forwarded `key=value` pairs states three facts that match the filter code. A `src` key in any letter case is not forwarded, and the render warns. The four ARIA names override the defaults in any letter case. A key holding whitespace, a control character, `"`, `'`, `>`, `/`, or `=` is skipped, and the render warns.
+- [ ] AC5: The README section on forwarded `key=value` pairs states three facts that match the filter code. A `src` key in any letter case is not forwarded, and the render warns. The four ARIA names override the defaults in any letter case. A key holding whitespace, a control character, `"`, `'`, `>`, `/`, or `=` is skipped, and the render warns.
 - [x] AC6: `version:` in `_extensions/lordicon/_extension.yml` reads `0.7.3`. `CHANGELOG.md` has a `## 0.7.3` section that names the changes of AC1, AC2, and AC3.
 
 ## Coverage
@@ -81,6 +81,7 @@ A user `src` key, a mixed-case ARIA key, or a key that HTML does not allow as an
 - 2026-10-24: T7 done: `check_aria.py` 0 failures, root `quarto render` exit 0; the re-render changes `docs/sitemap.xml` only (the `index.html` lastmod), committed here.
 - 2026-10-24: escalation offer for the AC1 and AC3 tripwire tags: the user chose to continue to review without a review brief.
 - 2026-10-24: T7 added no prose; the earlier claim audit covers every added claim. Status set to review.
+- 2026-10-24: review return 2: AC5 — the README says a key with a control character is skipped, but `INVALID_NAME`'s `%c` is ASCII-only, so a C1 control (U+0080 to U+009F) is forwarded with no warning. Skip C1 controls too, with a fixture case. The pass-2 fix-now findings in the Review section ride with this return.
 
 ## Decisions
 
@@ -100,3 +101,30 @@ Pass 2 (2026-10-24, head 98f4c0e, branch contains origin/main a72e0d7). Code unc
 
 - AC4: the 15 cases at 64116ad keep their expected values (pass 1), `check_aria.py` exits 0 on 98f4c0e, root `quarto render` exits 0 and leaves the tree clean, and the branch commits the re-rendered `docs/` (f38f9b3, `docs/sitemap.xml`).
 - Gate: `cairn_validate` all checks passed on 98f4c0e; toolchain checks as in pass 1.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: README, CHANGELOG, and `INVALID_NAME` say a key with "a control character" is skipped, but `%c` is ASCII-only, so `"a\u0085b"=1` gives `a<U+0085>b="1"` with no warning — fix now; shows AC5 failing (README fact does not match the code), so floor return 2; AC5 unticked.
+- diff-bug #2: no fixture shows a valid non-letter key (`x:y`, `@click`, `data.k`) still forwarded, so an over-broad pattern (`[^%w%-]`) passes the check — fix now (add a kept case).
+- diff-bug #3: `bad-tab` adds nothing: in the raw path a tab hits `%c`, and in the render Pandoc turns it into spaces like `bad-space` — fix now (remove the case and the whitespace-run matching it needed).
+- diff-bug #4: DESIGN Conventions says the render warns "once per call about the last two kinds"; the code warns once per kind per call — fix now (wording).
+- diff-bug #5: no test for the plural "keys" wording or two kinds in one call — reject, false: only warning text differs, and "What gets a test" excludes cosmetic output.
+- diff-bug #6: the six mixed-case ARIA twins run one code path — reject, planned change: AC2 names each case.
+- diff-bug #7: `"a<b"=1` is forwarded as `a<b="1"`, an HTML parse error that browsers still read; D-003's set leaves `<` out — follow-up, new row "Decide on keys that hold a less-than".
+- diff-bug #8: the warning says names cannot hold "spaces, control characters", and the log shows a key's raw control bytes — reject, false for the wording (tab and newline are control characters) and edge for the raw bytes (a key holding control bytes is outside documented and common use; the effect is odd warning text).
+- diff-bug #9: `Label=` is forwarded and two keys differing only in case still clash — reject, planned change: Scope Out sends both to "Warn on keys that differ only in case".
+- blame-history #1: IP5 and the stable-surface convention still require a warning release first, though D-003 narrows IP5 for these skips; the branch changed IP1 only — fix now (name the D-003 exception in IP5 and the convention).
+- blame-history #2: `check_minified` looks up `colors`, `stroke`, `state` by exact case, so `Colors=` takes effect and the Minified warning stays silent — follow-up, new row "Match Minified-check keys in any case" (pre-existing, 825985a).
+- blame-history #3: only exact-case `label` is reserved, unlike `src` — follow-up, absorbed by "Warn on keys that differ only in case" (it names `label` and `Label`).
+- blame-history #4: IP1 says the render warns about each skipped key, but `src=""` or `"a b"=""` drop with no warning — fix now (IP1 wording: keys with a non-empty value).
+- prior-review #1: `index.qmd` Accessibility text lists the four ARIA names with no letter-case rule — fix now (one sentence, re-render `docs/`).
+- prior-review #2: GP5 still says an icon without `label` is `aria-hidden` — follow-up, the existing row "Reword GP5 for user ARIA precedence".
+- prior-review #3: skipping invalid keys contradicts IP1's "never drops" — reject, false: the branch's IP1 text names the exception (D-003).
+- prior-review #4: "Warn when a role icon has no name" is untouched — reject, false: nothing reintroduced; the row stays.
+- ripple #1: DESIGN Contract boundary says the extension forwards every `key=value` — fix now.
+- ripple #2: README "Both shortcodes forward any `key=value` pairs" — fix now.
+- ripple #3: `lordicon.lua:8` "forwarded verbatim" — reject, false: the same comment names the exceptions four lines down.
+- ripple #4: the stable-surface convention vs. skipping in 0.7.3 — fix now, with blame-history #1.
+- ripple #5: DESIGN Architecture and Known issues say `check_aria.py` covers ARIA only and other behavior is checked by eye — fix now.
+- ripple #6: PROFILE `verify` says `check_aria.py` "checks the ARIA attributes" — fix now.
+- ripple #7: candidate "Add a render check with fixtures" still asks for `src` for `li` and `lif` and says M001 covers ARIA only — fix now (narrow the row).
+- ripple #8: candidate rows "Stop duplicate src and ARIA attributes" and "Guard attribute names against bad markup" read as open — reject, planned change: step 9 hygiene graduates them.
+- ripple #9: `index.qmd` ARIA text silent on letter case — fix now, with prior-review #1.
