@@ -1,6 +1,6 @@
 # M008: Catch image roles after other tokens
 
-- **Status:** review
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -40,7 +40,7 @@ comment, and a re-render of `docs/`.
 
 ## Acceptance criteria
 
-- [ ] AC1: In a render of `_tests/aria.qmd`, `python3 _tests/check_aria.py`
+- [x] AC1: In a render of `_tests/aria.qmd`, `python3 _tests/check_aria.py`
       exits 0 with every case it had before this milestone unchanged, and
       with these new calls, each without `label` and without any name or
       hiding attribute unless one is named here. Each of these gives one
@@ -112,3 +112,11 @@ comment, and a re-render of `docs/`.
 - 2026-10-25: T4 done: README, `index.qmd`, CHANGELOG 0.7.7, DESIGN.md convention line (corrected M008), the Lua comment, `_extension.yml` 0.7.7. Check green (82 cases, 42 warnings); `quarto render` re-rendered `docs/`, sitemap kept per the M002 lesson. Served `docs/` at localhost: 17 of 17 home-page icons drew an SVG, no console errors. The style hook still flags older README lines this milestone does not touch.
 - 2026-10-25: claim audit: 22 claims read, 2 corrected — CHANGELOG.md, README.md, index.qmd (the role rule now says non-abstract, and "announces an image" became "cannot say what the icon shows"), lordicon.lua (the IMAGE_ROLES comment cites the specs' name requirement, not screen readers). The same reader re-read both and found them true; `docs/index.html` re-rendered.
 - 2026-10-25: all tasks done, check green; status set to review.
+- 2026-10-25: review return 1: AC2 — `cairn/references/wai-aria-1-3.md` names no role count; status back to in-progress.
+
+## Decisions
+
+## Review
+
+- AC1: `python3 _tests/check_aria.py` on the branch head exits 0: page and filter 82 of 82 cases, 42 of 42 warnings, gfm 0 warnings. `git diff main...HEAD -- _tests` removes no line (48 added), so every earlier case stands unchanged. The 9 warning calls are in `AFTER_TOKENS`, each matched to one warning quoting `role="<value>"`; the 8 silent calls are in `OTHER_FIRST` and the two `named-symbol-*` cases, and the log-count check (42 read, 42 expected) fails on any extra warning. The 9 warning cases failed on the filter before T3 (work log, T2).
+- AC2 (pass 1, not ticked): a scratchpad script compared the Lua `ROLE_LISTS`, the four notes' lists, and a fresh parse of the saved specs: 127 names each, no difference. URL, section, and read date are on all four notes, and counts are on three (82, 41, 3). `wai-aria-1-3.md` states no role count, so AC2 fails as written.
