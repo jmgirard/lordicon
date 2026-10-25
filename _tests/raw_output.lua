@@ -5,8 +5,9 @@
   the filter itself wrote an attribute twice; this output can.
 
   Usage: quarto pandoc lua _tests/raw_output.lua CASES.json
-  CASES.json holds a list of {"shortcode", "arg", "kwargs"} objects. Prints
-  one line of HTML per case, in order.
+  CASES.json holds a list of {"shortcode", "arg", "kwargs"} objects, where a
+  null arg calls the shortcode with no first argument. Prints one line of
+  HTML per case, in order, and an empty line for a case that returns no HTML.
 ]]
 
 -- The parts of the quarto API the filter calls, stubbed for HTML output.
@@ -29,6 +30,10 @@ for _, case in ipairs(cases) do
   for key, value in pairs(case.kwargs) do
     kwargs[key] = pandoc.Inlines({ pandoc.Str(value) })
   end
-  local result = shortcodes[case.shortcode]({ pandoc.Str(case.arg) }, kwargs)
-  print(result.text)
+  local args = {}
+  if type(case.arg) == "string" then
+    args[1] = pandoc.Str(case.arg)
+  end
+  local result = shortcodes[case.shortcode](args, kwargs)
+  print(result.text or "")
 end

@@ -14,6 +14,7 @@
   are skipped with a render warning. Keys that differ only in letter case, and
   `label` in another letter case, are forwarded with a render warning. An
   icon with an image role but no name, and not hidden, gets a render warning.
+  A call with no first argument shows no icon and gets a render warning.
 ]]
 
 -- Cache-busting identifier for the bundled player. Keep in sync with the
@@ -401,8 +402,32 @@ local function build_element(src, kwargs, call)
   return pandoc.RawInline("html", "<lord-icon " .. table.concat(attrs, " ") .. "></lord-icon>")
 end
 
+-- Handle a call with no first argument: it shows no icon, and in HTML output
+-- that ships JavaScript it gets a warning. Quarto drops a quoted first
+-- argument that starts with a space or tab before the filter runs, so the
+-- user may have written one. `what` and `example` say what to write instead.
+local function no_first_argument(shortcode, what, example)
+  if quarto.doc.isFormat("html:js") then
+    quarto.log.warning(
+      string.format(
+        "lordicon: {{< %s >}} has no first argument, so it shows no icon. "
+          .. "Quarto drops a first argument that starts with a space or tab. "
+          .. "Put %s first, with no space before it, such as {{< %s %s >}}.",
+        shortcode,
+        what,
+        shortcode,
+        example
+      )
+    )
+  end
+  return pandoc.Inlines({})
+end
+
 -- {{< li CODE ... >}} — icon from the Lordicon CDN.
 local function li(args, kwargs)
+  if args[1] == nil then
+    return no_first_argument("li", "the icon code", "wlpxtupd")
+  end
   local code = pandoc.utils.stringify(args[1])
   return build_element(
     "https://cdn.lordicon.com/" .. code .. ".json",
@@ -477,6 +502,9 @@ end
 
 -- {{< lif FILE ... >}} — icon from a local Lottie .json file.
 local function lif(args, kwargs)
+  if args[1] == nil then
+    return no_first_argument("lif", "the path of the icon file", "icon.json")
+  end
   local file = pandoc.utils.stringify(args[1])
   local call = "{{< lif " .. call_arg(file) .. " >}}"
   if quarto.doc.isFormat("html:js") then
