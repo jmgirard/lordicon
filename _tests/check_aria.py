@@ -207,6 +207,7 @@ for case in ("space-label", "space-squote", "space-tab", "space-class"):
 EXACT |= {"space-label", "space-squote", "space-tab", "space-class"}
 
 # Calls whose first argument Quarto drops, or that have none, give no icon.
+# NO_ICON also gets the calls with an empty first argument, below.
 NO_ICON = {"lost-li", "missing-lif"}
 # When another positional argument follows a dropped one, Quarto passes that
 # one as the first argument, and the call gives its icon with no warning.

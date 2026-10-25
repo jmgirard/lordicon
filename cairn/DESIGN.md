@@ -90,10 +90,11 @@ are never reused or renumbered; retiring one takes a D-entry.
   The extension may warn about a value but never drops or rewrites one. A
   default the extension adds (such as `aria-hidden`) yields to a user-supplied
   attribute. The documented exceptions are the reserved keys (`label`, and
-  `src` in any letter case) and keys that HTML does not allow as attribute
-  names. The render warns about each such skipped key with a non-empty value,
-  except `label` (D-003). A call whose first argument is empty makes no
-  element, so its keys reach none, and the render warns (D-005).
+  `src` in any letter case), keys that HTML does not allow as attribute
+  names, and every key of a call whose first argument is empty. The render
+  warns about each such skipped key with a non-empty value, except `label`
+  (D-003). A call whose first argument is empty makes no element, so its keys
+  reach none, and the render warns about the empty argument (D-005).
 - IP2: (Escaping) Every user value in emitted HTML is escaped: attribute
   values, the label, and the `li` code inside `src`.
 - IP3: (A shortcode never fails a render) Non-HTML formats get no output, and
