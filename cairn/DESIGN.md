@@ -92,7 +92,8 @@ are never reused or renumbered; retiring one takes a D-entry.
   attribute. The documented exceptions are the reserved keys (`label`, and
   `src` in any letter case) and keys that HTML does not allow as attribute
   names. The render warns about each such skipped key with a non-empty value,
-  except `label` (D-003).
+  except `label` (D-003). A call whose first argument is empty makes no
+  element, so its keys reach none, and the render warns (D-005).
 - IP2: (Escaping) Every user value in emitted HTML is escaped: attribute
   values, the label, and the `li` code inside `src`.
 - IP3: (A shortcode never fails a render) Non-HTML formats get no output, and
@@ -106,7 +107,9 @@ are never reused or renumbered; retiring one takes a D-entry.
   too: no silent break, not "forever". An upstream change to an attribute's
   meaning is Lordicon's break, not the extension's. D-003 narrows this rule:
   skipping `src` and invalid attribute names started in 0.7.3 with no warning
-  release first, because such keys never gave one valid attribute.
+  release first, because such keys never gave one valid attribute. D-005
+  narrows it too: an empty first argument has made no element since 0.7.10
+  with no warning release first, because such a call never loaded an icon.
 - IP6: (Free-license icons only) Every icon in the repo (demo pages, `docs/`,
   README examples, sample `.json` files) is one that Lordicon's free license
   lets anyone redistribute.
@@ -146,7 +149,8 @@ are never reused or renumbered; retiring one takes a D-entry.
   `src`, skipped and kept keys, key spelling, letter-case clashes, image
   roles with no name, attribute order, values that start with a space or
   tab) in the rendered page and in the raw filter output from
-  `raw_output.lua`, that calls with no first argument give no icon, and the
+  `raw_output.lua`, that calls with a missing or empty first argument give no
+  icon (M011), and the
   lordicon warnings in the render's log. `check_aria.py` models Quarto's drop
   of a value or first argument that starts with a space or tab before it
   hands the calls to `raw_output.lua` (M010). It also renders `aria.qmd` to `gfm` and checks that the
@@ -156,11 +160,11 @@ are never reused or renumbered; retiring one takes a D-entry.
 ## Known issues
 
 - The only automated check is `_tests/check_aria.py` (M001, extended M003,
-  M004, M005, M007, M009, and M010), which covers ARIA attributes, `src`, skipped and kept
+  M004, M005, M007, M009, M010, and M011), which covers ARIA attributes, `src`, skipped and kept
   keys, letter-case warnings, the nameless-role warning, the Minified warning
   and its once-per-path rule, the quoted first argument in a warning's call,
   attribute order under the C locale, `gfm` output, the warning for a call
-  with no first argument, and values and first arguments that Quarto drops
+  with no first argument or an empty one, and values and first arguments that Quarto drops
   because they start with a space or tab. The bundle dependency, the lookup of a `lif` file next to the
   document, a missing `lif` file, and formats other than HTML and `gfm` have
   no test, and the demo site's icons are checked by eye (corrected M007).
