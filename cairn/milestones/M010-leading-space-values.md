@@ -72,7 +72,7 @@ which the user declined at the question set.
       `html:js` formats give the warning of AC1 before returning. Name the
       call as `{{< li >}}` or `{{< lif >}}`, and say what to write instead,
       such as `{{< li wlpxtupd >}}`. Run the check until it exits 0.
-- [ ] T3: Add the README text of AC3 and the `index.qmd` text of AC4. Run
+- [x] T3: Add the README text of AC3 and the `index.qmd` text of AC4. Run
       `quarto render` at the repo root, commit `docs/` with the sitemap
       (LESSONS, M002), and open the home page in a browser to see its icons
       load and animate.
@@ -99,6 +99,7 @@ which the user declined at the question set.
 - 2026-10-25: implement started on branch m010-leading-space-values; unrelated untracked `.DS_Store` left unstaged.
 - 2026-10-25: T1 done: six fixture cases; `fixture_calls` drops a positional argument or value that starts with a space or tab, so `raw_output.lua` gets what a render gives the filter and the AC5 cases share one expectation for page and filter (chosen over page-only expectations); before T2 the HTML and `gfm` renders stopped at `lordicon.lua:406` (`li`) and `:480` (`lif`) with "Cannot get Attr from TypeNil" (the scope's 390 and 464 predate M009's added lines); two planted defects (no drop in `fixture_calls`; a `lif` with no argument that returns an icon) turned the check red.
 - 2026-10-25: T2 done: `li` and `lif` call `no_first_argument` when `args[1]` is nil, which warns in `html:js` formats only and returns `pandoc.Inlines({})` (chosen over `pandoc.Null()`, which `quarto pandoc lua` lacks); check exits 0 (91 cases, 49 warnings, 0 in `gfm`) and `quarto render` succeeds.
+- 2026-10-25: T3 done: README paragraph above `### Accessibility` and `index.qmd` Accessibility paragraph, written against renders this session (a tab-led and a single-quoted leading-space first argument also give the warning); `docs/` re-rendered with the sitemap; in the browser all 17 home-page icons were ready and advanced from frame 0 to 24; the simple-english hook's 27 README hits all predate this paragraph (27 before and after) and stay out of scope.
 
 ## Decisions
 
