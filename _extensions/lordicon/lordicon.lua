@@ -362,8 +362,10 @@ local function open_icon_file(file)
 end
 
 -- Warn once per file when control-dependent attributes are used with an icon
--- that was exported in Lordicon's "Minified" format. The warning names the
--- call as {{< lif FILE >}}, which is the same for every call on that file.
+-- that was exported in Lordicon's "Minified" format. The rule keys a file by
+-- its path as written, so `minified.json` and `./minified.json` each warn.
+-- The warning names the call as {{< lif FILE >}}, which is the same for every
+-- call on that path.
 local warned_minified = {}
 
 local function check_minified(file, kwargs, call)

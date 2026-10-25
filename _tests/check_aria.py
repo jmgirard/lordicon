@@ -138,6 +138,10 @@ CASES["label-two"] = DECORATIVE
 # has one.
 CASES["minified-lif"] = DECORATIVE
 CASES["raw-lif"] = DECORATIVE
+# The Minified warning fires once per path as written: a second call on
+# minified.json gives none, and ./minified.json gives its own.
+CASES["minified-again"] = DECORATIVE
+CASES["minified-dotslash"] = DECORATIVE
 
 SHOWN ={"aria-hidden": None, "aria-label": None}
 CASES.update({
@@ -204,6 +208,7 @@ WARNED.update({
     "minified-lif": [
         [CALL, "looks like a Minified Lottie export", "so Colors, STROKE, sTaTe will"]
     ],
+    "minified-dotslash": [[CALL, "looks like a Minified Lottie export", "so colors will"]],
 })
 NAMELESS = "but no name, so a screen reader announces an image"
 FIX = 'Add a label, such as label="Bell".'

@@ -78,6 +78,8 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 
 {{< lif minified.json id=minified-lif Colors=primary:red STROKE=bold sTaTe=hover >}}
 {{< lif gift_raw.json id=raw-lif Colors=primary:red STROKE=bold sTaTe=hover >}}
+{{< lif minified.json id=minified-again colors=primary:red >}}
+{{< lif ./minified.json id=minified-dotslash colors=primary:red >}}
 
 ## Role img with no name
 
