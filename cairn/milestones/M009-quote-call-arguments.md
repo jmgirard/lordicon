@@ -33,11 +33,11 @@ start with a space → M010.
 
 ## Acceptance criteria
 
-- [ ] AC1: A render of `_tests/aria.qmd` gives one Minified warning for a `lif` call on `mini fied.json` with `colors`. That file is a copy of `_tests/minified.json`. The warning names the call as `{{< lif "mini fied.json" >}}`.
-- [ ] AC2: The same render gives one skip warning for a `li` call with a `src` key and the code `a "b" c\d`. The fixture writes that code as `'a "b" c\d'`. The warning names the call as `{{< li 'a "b" c\\d' >}}`.
-- [ ] AC3: The same render gives one skip warning for a `li` call with a `src` key and the code `x=y`. The fixture writes that code as `"x=y"`. The warning names the call as `{{< li "x=y" >}}`.
-- [ ] AC4: The verify slot of `cairn/PROFILE.md` is clean. `python3 _tests/check_aria.py` exits 0, and `quarto render` at the repo root succeeds.
-- [ ] AC5: `version:` in `_extensions/lordicon/_extension.yml` reads `0.7.8`. `CHANGELOG.md` has a `## 0.7.8` section. It says that warnings now quote an argument that holds a space, `"`, or `=`.
+- [x] AC1: A render of `_tests/aria.qmd` gives one Minified warning for a `lif` call on `mini fied.json` with `colors`. That file is a copy of `_tests/minified.json`. The warning names the call as `{{< lif "mini fied.json" >}}`.
+- [x] AC2: The same render gives one skip warning for a `li` call with a `src` key and the code `a "b" c\d`. The fixture writes that code as `'a "b" c\d'`. The warning names the call as `{{< li 'a "b" c\\d' >}}`.
+- [x] AC3: The same render gives one skip warning for a `li` call with a `src` key and the code `x=y`. The fixture writes that code as `"x=y"`. The warning names the call as `{{< li "x=y" >}}`.
+- [x] AC4: The verify slot of `cairn/PROFILE.md` is clean. `python3 _tests/check_aria.py` exits 0, and `quarto render` at the repo root succeeds.
+- [x] AC5: `version:` in `_extensions/lordicon/_extension.yml` reads `0.7.8`. `CHANGELOG.md` has a `## 0.7.8` section. It says that warnings now quote an argument that holds a space, `"`, or `=`.
 
 ## Coverage
 
@@ -92,3 +92,12 @@ start with a space → M010.
 ## Decisions
 
 ## Review
+
+Pass 1, 2026-10-25, on branch head 19ea83f (contains origin/main c876208; no sync needed). No PR yet; the Copilot round is off.
+
+- AC1 evidence: a render of `_tests/aria.qmd` in a temp dir (with `mini fied.json` copied from `_tests/minified.json`) logged `lordicon: {{< lif "mini fied.json" >}} uses a file that looks like a Minified Lottie export, so colors will have no effect.`; `check_aria.py` holds that exactly one log line matches (`quoted-space`).
+- AC2 evidence: the same render logged `lordicon: {{< li 'a "b" c\\d' >}} skips the key "src"`; one matching line (`quoted-dquote`). A probe on Quarto 1.10.19 read `'a "b" c\\d'` back as `a "b" c\d`.
+- AC3 evidence: the same render logged `lordicon: {{< li "x=y" >}} skips the key "src"`; one matching line (`quoted-equals`).
+- AC4 evidence: `python3 _tests/check_aria.py` exit 0 (86 cases on page and filter, 46 of 46 warnings, gfm 0 warnings, 0 failures); `quarto render` at the root exit 0, `docs/sitemap.xml` reverted, no other change. No demo page changed, so no browser look is owed.
+- AC5 evidence: `_extension.yml` reads `version: 0.7.8`; `CHANGELOG.md` has `## 0.7.8`, whose entry says a first argument that holds a space, `"`, `=`, `\`, or `>}}` is now quoted in warnings.
+- Gate: `cairn_validate.py` exit 0, all checks passed. Profile consistency-gate: the release-walk names one marker (`_extension.yml`), so markers agree; the verify render succeeded on this head; CHANGELOG has the 0.7.8 entry. No DESIGN principle changed, so `cairn_impact` is skipped.
