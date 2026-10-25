@@ -127,6 +127,12 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li nnsymlab id=named-symbol-label role="bogus graphics-symbol" aria-label="Bell" >}}
 {{< li nnsymhid id=named-symbol-hidden role="graphics-symbol" aria-hidden=true >}}
 
+## Arguments that need quotes in a warning
+
+{{< lif "mini fied.json" id=quoted-space colors=primary:red >}}
+{{< li 'a "b" c\d' id=quoted-dquote src=x >}}
+{{< li "x=y" id=quoted-equals src=x >}}
+
 ## Attribute order
 
 {{< li wlpxtupd trigger=hover id=sorted Zeta=1 @click=2 class=big data-a=3 >}}

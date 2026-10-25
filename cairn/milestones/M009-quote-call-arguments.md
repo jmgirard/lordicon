@@ -1,13 +1,13 @@
 # M009: Quote spaced arguments in warning calls
 
-- **Status:** planned
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
 - **Principles touched:** GP2
 - **Resolves:** —
 - **Surface tier:** user-facing — it changes the render warnings that users read
-- **Branch/PR:** —
+- **Branch/PR:** m009-quote-call-arguments
 
 ## Goal
 
@@ -49,7 +49,7 @@ start with a space → M010.
 
 ## Tasks
 
-- [ ] T1: Write the three fixture cases first and see them fail. In
+- [x] T1: Write the three fixture cases first and see them fail. In
       `_tests/aria.qmd`, add a `lif` call on `"mini fied.json"` with `colors`
       and the `li` calls `'a "b" c\d'` and `"x=y"`, each with a `src` key and
       its own `id`. In `check_aria.py`, copy `minified.json` to
@@ -81,6 +81,8 @@ start with a space → M010.
 - 2026-10-25: criteria audit (full mode, Opus reader): 4 findings, all fixed. Quarto has no `\"` escape, so AC2 uses single quotes; the quote rule adds `"` and `=`; the Goal no longer says "quoted argument", which reads two ways; AC3 adds an `=` case so one exemplar does not stand for the rule. AC4 and AC5 had none.
 - 2026-10-25: changelog: one entry under 0.7.8 (D-001, D-002).
 - 2026-10-25: priority normal, not the source row's low, because M010 depends on this milestone.
+- 2026-10-25: implement: branch m009-quote-call-arguments cut from main at c876208; untracked `.DS_Store` left unstaged.
+- 2026-10-25: T1 done: 3 fixture calls and literal `WARNED` calls; `QUOTED` and `unquote` needed no change, since no fixture argument uses an escape. The check fails on the 3 call texts only (85 cases, 45 warnings read).
 
 ## Decisions
 

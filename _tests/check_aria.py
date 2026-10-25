@@ -145,6 +145,11 @@ CASES["raw-lif"] = DECORATIVE
 CASES["minified-again"] = DECORATIVE
 CASES["minified-dotslash"] = DECORATIVE
 
+# An argument that Quarto cannot read bare is quoted in the warning's call.
+CASES["quoted-space"] = {"src": "mini fied.json", **DECORATIVE}
+CASES["quoted-dquote"] = {"src": 'https://cdn.lordicon.com/a "b" c\\d.json', **DECORATIVE}
+CASES["quoted-equals"] = {"src": "https://cdn.lordicon.com/x=y.json", **DECORATIVE}
+
 SHOWN ={"aria-hidden": None, "aria-label": None}
 CASES.update({
     "nameless-img": {**SHOWN, "role": "img"},
@@ -255,6 +260,15 @@ WARNED["nameless-hidden-clash"].append(
     [CALL, CASE_CLASH, '"ARIA-HIDDEN" and "aria-hidden".', ONE]
 )
 WARNED["named-role-clash"] = [[CALL, CASE_CLASH, '"Role" and "role".', ONE]]
+# These calls are written out, not built from the argument, because the
+# warning quotes the argument as Quarto reads it back.
+WARNED.update({
+    "quoted-space": [
+        ['{{< lif "mini fied.json" >}}', "looks like a Minified Lottie export", "so colors will"]
+    ],
+    "quoted-dquote": [["{{< li 'a \"b\" c\\\\d' >}}", "skips the", '"src"']],
+    "quoted-equals": [['{{< li "x=y" >}}', "skips the", '"src"']],
+})
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern
 # (space, the ASCII controls, `"'>/=`) and its C1_CONTROL pattern
@@ -299,6 +313,7 @@ def render(to, output):
         shutil.copy(FIXTURE, workdir)
         shutil.copy(ROOT / "gift_raw.json", workdir)
         shutil.copy(ROOT / "_tests" / "minified.json", workdir)
+        shutil.copy(ROOT / "_tests" / "minified.json", workdir / "mini fied.json")
         cmd = ["quarto", "render", "aria.qmd", "--to", to]
         done = run(cmd, workdir, {**os.environ, "LC_ALL": "C.UTF-8"})
         return (workdir / output).read_text(encoding="utf-8"), done.stderr
