@@ -116,6 +116,7 @@ comment, and a re-render of `docs/`.
 - 2026-10-25: all tasks done, check green; status set to review.
 - 2026-10-25: review return 1: AC2 — `cairn/references/wai-aria-1-3.md` names no role count; status back to in-progress.
 - 2026-10-25: minor amendment: T5 added for review return 1, Coverage AC2 → T1, T3, T5. T5 done: the 1.3 note now states "Roles recorded, 1: `image`"; validate green; no code changed, so the check result stands. Status set to review.
+- 2026-10-25: step-7 approval: m008-image-roles approved for merge
 
 ## Decisions
 
