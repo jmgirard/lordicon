@@ -1,6 +1,6 @@
 # M011: Warn about an empty first argument
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -58,6 +58,8 @@ A `li` or `lif` call whose first argument is empty, such as `{{< li "" >}}`, mak
 - 2026-10-25: minor amendment to T2: `check_warnings` now requires that a warning text shared by several cases appear once per case, because the two `li` cases (and the two `lif` cases) warn with the same text; a planted second warning for empty `lif` calls failed the check with 4 lines for 2 cases.
 - 2026-10-25: T3 done: README sentence, `## 0.7.10` changelog entry, `version: 0.7.10`. `quarto render` at the root exited 0 and changed only `docs/sitemap.xml`, which was reverted. `curl` gave 404 for `https://cdn.lordicon.com/.json`, the source of the changelog's claim. The simple-english hook flags README lines that this milestone did not write; they stay as they are.
 - 2026-10-25: T4 done: D-005 appended to `cairn/DECISIONS.md`; DESIGN.md's IP1 and IP5 name the empty first argument, and the `_tests/` and Known issues text names the empty-argument check.
+- 2026-10-25: claim audit: 18 claims read, 0 corrected — CHANGELOG.md, README.md, _extensions/lordicon/lordicon.lua, _extensions/lordicon/_extension.yml, _tests/check_aria.py, _tests/aria.qmd. The reader noted that `{{< li "" wlpxtupd >}}` also shows no icon; the README keeps the narrower claim, because `fixture_calls` cannot test that call (Scope Out).
+- 2026-10-25: implement complete; `python3 _tests/check_aria.py` exits 0 and `quarto render` at the root exits 0; status set to review.
 
 ## Decisions
 
