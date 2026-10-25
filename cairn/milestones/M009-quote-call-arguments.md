@@ -59,7 +59,7 @@ start with a space → M010.
       from the fixture's argument. `check_warnings` uses that literal for
       these cases. Run the check and confirm that it fails on these three
       warnings only.
-- [ ] T2: Add the helper to `lordicon.lua` and use it in `li` and `lif`.
+- [x] T2: Add the helper to `lordicon.lua` and use it in `li` and `lif`.
       Spell out the byte set (space, tab, newline) rather than `%s`, which
       follows the locale. Update the header comment if it names the call
       format. Run the check until it exits 0.
@@ -83,6 +83,7 @@ start with a space → M010.
 - 2026-10-25: priority normal, not the source row's low, because M010 depends on this milestone.
 - 2026-10-25: implement: branch m009-quote-call-arguments cut from main at c876208; untracked `.DS_Store` left unstaged.
 - 2026-10-25: T1 done: 3 fixture calls and literal `WARNED` calls; `QUOTED` and `unquote` needed no change, since no fixture argument uses an escape. The check fails on the 3 call texts only (85 cases, 45 warnings read).
+- 2026-10-25: T2 done: `call_arg` in `lordicon.lua`, used by `li` and `lif`; named for what it writes, since the header comment names no call format. `check_aria.py` exits 0 (85 cases, 45 warnings).
 
 ## Decisions
 

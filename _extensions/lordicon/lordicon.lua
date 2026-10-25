@@ -96,6 +96,19 @@ local function invalid_name(key)
   return key == "" or key:find(INVALID_NAME) or key:find(C1_CONTROL)
 end
 
+-- Write a call's first argument as a warning shows it. Quarto reads an
+-- argument bare unless it is empty, starts with a quote, `}`, or `>`, or holds
+-- a space, tab, newline, `"`, or `=`, so such an argument goes in quotes.
+-- Quarto has no escape for a quote inside quotes, so an argument that holds
+-- `"` goes in single quotes. Inside quotes Quarto reads `\\` as `\`.
+local function call_arg(s)
+  if s ~= "" and not s:find("^[\"'}>]") and not s:find("[ \t\n\"=]") then
+    return s
+  end
+  local quote = s:find('"', 1, true) and "'" or '"'
+  return quote .. s:gsub("\\", "\\\\") .. quote
+end
+
 -- Warn that a call skipped some of its keys, naming each one in quotes.
 local function warn_skipped(call, keys, reason)
   table.sort(keys)
@@ -391,7 +404,7 @@ local function li(args, kwargs)
   return build_element(
     "https://cdn.lordicon.com/" .. code .. ".json",
     kwargs,
-    "{{< li " .. code .. " >}}"
+    "{{< li " .. call_arg(code) .. " >}}"
   )
 end
 
@@ -462,7 +475,7 @@ end
 -- {{< lif FILE ... >}} — icon from a local Lottie .json file.
 local function lif(args, kwargs)
   local file = pandoc.utils.stringify(args[1])
-  local call = "{{< lif " .. file .. " >}}"
+  local call = "{{< lif " .. call_arg(file) .. " >}}"
   if quarto.doc.isFormat("html:js") then
     check_minified(file, kwargs, call)
   end
