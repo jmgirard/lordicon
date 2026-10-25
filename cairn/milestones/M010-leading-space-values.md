@@ -119,3 +119,25 @@ Evidence gathered 2026-10-25 at 63bfd7e with Quarto 1.10.19.
 - AC6: `python3 _tests/check_aria.py` exited 0 (page and filter 91 icons and 91 cases, 49 of 49 warnings, `gfm` 0 warnings, 0 failures); `quarto render` at the root exited 0 (sitemap restored); in the browser pane at the `docs` preview, all 17 home-page icons were ready and all 17 advanced from frame 0 after `playFromStart()`.
 - AC7: `_extension.yml` reads `version: 0.7.9`; `CHANGELOG.md` has `## 0.7.9`, whose entry says a `li` or `lif` call with no first argument now shows no icon and warns in HTML, where before it stopped the render.
 - gate: `cairn_validate.py` exit 0 (all checks passed); no IP/GP line changed in DESIGN.md, so `cairn_impact` skipped; version markers agree (`_extension.yml` is the only one the release-walk names, 0.7.9); verify render green at 63bfd7e (AC6); `CHANGELOG.md` has a `## 0.7.9` entry for the user-visible change.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- blame-history #1: README says a dropped first argument leaves no icon and a warning, but in `{{< li " x" wlpxtupd >}}` Quarto promotes `wlpxtupd` and the icon renders with no warning — fix now (narrow the README and CHANGELOG sentence to a call with no other positional argument, say what happens otherwise, and pin the shift with a fixture case); the missing warning for the shift stays on candidate row "Warn when Quarto shifts arguments left"
+- blame-history #2: IP1 lists only reserved keys and invalid names as exceptions, but the branch documents values Quarto drops and a call that makes no element — follow-up, candidate row "Decide whether IP1 names Quarto's drops" (an IP change is the user's decision, D-003 precedent)
+- blame-history #3: `raw.rstrip("\n")` strips the empty line of a no-icon case placed last, so `zip(strict=True)` raises — fix now
+- blame-history #4: `no_first_argument` returns `pandoc.Inlines({})` while `build_element` returns `pandoc.Null()` — reject (false): no defect shown; renders to HTML, revealjs, typst, docx, and `gfm` on 1.10.19 gave no error and no empty paragraph (diff-bug probe), and `pandoc.Null` is nil under `quarto pandoc lua`
+- blame-history #5: the warning says Quarto drops a leading-space first argument even for `{{< li id=x >}}`, where nothing was dropped — reject (false): the sentence states Quarto's rule, not that this call lost one, and AC1 asks for it
+- blame-history #6: `index.qmd` table header lost one space — fix now (same as diff-bug #4)
+- blame-history #7: a tab reaches Quarto's drop as spaces (LESSONS M003) — reject (false): no shipped text names a mechanism, and the rendered result matches the "space or tab" wording (same as prior-review #1)
+- diff-bug #1: same as blame-history #3 — fix now
+- diff-bug #2: `shortcode, *rest = words` silently ignores extra positional words, where `shortcode, arg = words` failed loudly — fix now (fail on more than one positional word left after the drop)
+- diff-bug #3: on the filter side the four AC5 cases repeat the `bare` path — reject (planned change): AC5 puts them in the fixture to pin Quarto's drop on the page, and T1 chose one expectation for page and filter
+- diff-bug #4: unrelated one-space change misaligns the `index.qmd` table header — fix now
+- diff-bug #5: two empty-return idioms, and Quarto 1.3's handling of empty `Inlines` is unverified — reject (false): same as blame-history #4; no failure observed
+- diff-bug #6: every no-argument warning reads the same `{{< li >}}`, so several in one document cannot be told apart — reject (planned change): the filter cannot see the dropped text, and AC1 names the call this way
+- diff-bug #7: the `lost-li` warning holds `{{< li wlpxtupd >}}`, the call name of 11 cases, so a future generic `WARNED` entry could match two lines — reject (false): no current entry does, and `check_warnings` would report it as a FAIL
+- diff-bug #8: an added DESIGN.md line runs past 100 columns — reject (style)
+- diff-bug #9: docs do not cover other leading whitespace such as U+00A0 — reject (false): the claims are scoped to space and tab, which the probes confirm
+- prior-review #1: the tab case runs Quarto's space path, since Pandoc expands a tab (LESSONS M003) — reject (false): same as blame-history #7
+- ripple #1: IP1 does not list the new losses — follow-up, same row as blame-history #2
+- ripple #2: candidate row "Keep values that start with a space" still reads as open — reject (planned change): the started row is graduated by post-merge hygiene
+- ripple #3: README's "keys that the extension does not pass on are listed below the table" does not cover Quarto's drops — reject (false): that list is about the extension, and the Quarto paragraph is separate and says the drop happens before the extension runs
+- ripple note: the lordicon.lua header and README say "the render warns" without "in HTML" — reject (style): the existing warning claims in both are unqualified the same way, and README's Customizing text describes HTML output
