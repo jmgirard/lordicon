@@ -28,10 +28,10 @@
 ## Acceptance criteria
 <!-- owner: plan · create/amend-via-gate; review reads, never reinterprets. -->
 
-- [ ] AC1: `_tests/check_aria.py` compares the attribute names of the `sorted` case of `_tests/aria.qmd`, a `li` call whose keys are written out of order (`trigger=hover id=sorted Zeta=1 @click=2 class=big data-a=3`), in the order Python's HTML parser reads them from both the raw filter output and the rendered page, against the literal list `src`, `@click`, `zeta`, `class`, `data-a`, `id`, `trigger`, `aria-hidden`.
-- [ ] AC2: `_tests/check_aria.py` also renders `_tests/aria.qmd` to `gfm`, and fails unless that render exits 0, its output file holds neither `lord-icon` nor `{{<`, and its log holds no line with `lordicon:`.
-- [ ] AC3: `_tests/aria.qmd` gains a second `lif minified.json` call and a `lif ./minified.json` call, each with a `colors` key. `_tests/check_aria.py` expects no warning for the second `minified.json` call and one warning naming `{{< lif ./minified.json >}}` for the `./minified.json` call, inside its existing check that the log holds no other lordicon warning. The comment above `warned_minified` in `_extensions/lordicon/lordicon.lua` says that the rule keys a file by its path as written.
-- [ ] AC4: At the head of the milestone branch, `python3 _tests/check_aria.py` exits 0, and `git diff origin/main...HEAD -- _extensions/` changes only Lua comment lines (lines whose text after leading spaces starts with `--`, or lines inside a `--[[ ]]` block). After `quarto render` at the repo root exits 0, `git status --porcelain docs/` lists only `docs/sitemap.xml`, and `git diff docs/sitemap.xml` changes only lines holding `<lastmod>`.
+- [x] AC1: `_tests/check_aria.py` compares the attribute names of the `sorted` case of `_tests/aria.qmd`, a `li` call whose keys are written out of order (`trigger=hover id=sorted Zeta=1 @click=2 class=big data-a=3`), in the order Python's HTML parser reads them from both the raw filter output and the rendered page, against the literal list `src`, `@click`, `zeta`, `class`, `data-a`, `id`, `trigger`, `aria-hidden`.
+- [x] AC2: `_tests/check_aria.py` also renders `_tests/aria.qmd` to `gfm`, and fails unless that render exits 0, its output file holds neither `lord-icon` nor `{{<`, and its log holds no line with `lordicon:`.
+- [x] AC3: `_tests/aria.qmd` gains a second `lif minified.json` call and a `lif ./minified.json` call, each with a `colors` key. `_tests/check_aria.py` expects no warning for the second `minified.json` call and one warning naming `{{< lif ./minified.json >}}` for the `./minified.json` call, inside its existing check that the log holds no other lordicon warning. The comment above `warned_minified` in `_extensions/lordicon/lordicon.lua` says that the rule keys a file by its path as written.
+- [x] AC4: At the head of the milestone branch, `python3 _tests/check_aria.py` exits 0, and `git diff origin/main...HEAD -- _extensions/` changes only Lua comment lines (lines whose text after leading spaces starts with `--`, or lines inside a `--[[ ]]` block). After `quarto render` at the repo root exits 0, `git status --porcelain docs/` lists only `docs/sitemap.xml`, and `git diff docs/sitemap.xml` changes only lines holding `<lastmod>`.
 
 ## Coverage
 <!-- owner: plan · create/amend-via-gate -->
@@ -71,3 +71,15 @@
 - 2026-10-25: T4 done: docstring and DESIGN Known issues and Architecture updated. `check_aria.py` exits 0 (65 cases, 33 warnings, gfm 0 warnings); `quarto render` exits 0 and changed only `<lastmod>` lines of `docs/sitemap.xml`, which was then restored; the `_extensions/` diff is 2 removed and 4 added `--` comment lines. No demo page changed, so the verify slot's browser look has nothing to open.
 - 2026-10-25: claim audit: not owed — internal tier.
 - 2026-10-25: implement complete; status review.
+
+## Decisions
+<!-- owner: implement / review · append-only; milestone-local. -->
+
+## Review
+<!-- owner: review · exclusive. -->
+
+- AC1: `aria.qmd:109` holds the `sorted` call as written in the criterion; `ORDER["sorted"]` (`check_aria.py:175`) is the literal list; `check()` compares it at `check_aria.py:381` and runs for both `page` and `filter` (`:408`, `:409`). Fresh run: 0 failures. T1's planted removal of `table.sort` failed this case in both outputs.
+- AC2: `check_non_html()` (`check_aria.py:282`, called at `:412`) renders `aria.qmd` with `--to gfm` through `run()`, which exits 1 on a nonzero exit (`:261`); it fails on `lord-icon` or `{{<` in `aria.md` (`:285`) and on any `lordicon:` log line (`:286`). Fresh run: 519 characters read, 0 warnings, 0 failures.
+- AC3: `aria.qmd:81` (`lif minified.json`, `colors`) and `:82` (`lif ./minified.json`, `colors`); `WARNED` has an entry for `minified-dotslash` naming the call (`check_aria.py:213`) and none for `minified-again`; the count check (`:356`) fails on any other lordicon warning. Fresh run: 33 warnings read, 33 expected. `lordicon.lua:364-368` says the rule keys a file by its path as written.
+- AC4: at 24fa71b, `python3 _tests/check_aria.py` exits 0; `git diff origin/main...HEAD -- _extensions/` is one hunk of 2 removed and 4 added lines, each starting `--`. `quarto render` exits 0; `git status --porcelain docs/` lists only `docs/sitemap.xml`, whose diff has 2 changed lines, both `<lastmod>`; the sitemap was then restored.
+- gate: `cairn_validate.py` exit 0, all checks passed; no principle text changed, so `cairn_impact` skipped. Toolchain: the one named marker `_extension.yml` holds 0.7.6, unchanged; the verify render succeeds (AC4); no user-visible change, so no changelog entry is owed.
