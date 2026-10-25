@@ -2,6 +2,10 @@
 
 This file lists the changes in each version of the extension, newest first.
 
+## 0.7.10
+
+- A `li` or `lif` call whose only positional argument is empty now shows no icon, and in HTML output the render warns. Examples are `{{< li "" >}}` and `{{< lif '' >}}`. Before, `li` made an icon with `src="https://cdn.lordicon.com/.json"`, a file that the CDN does not have, and `lif` made one with `src=""`. The render did not warn about the empty argument.
+
 ## 0.7.9
 
 - A `li` or `lif` call with no first argument now shows no icon, and in HTML output the render warns. Before, the call stopped the render with the error `Cannot get Attr from TypeNil`. Quarto drops a first argument that starts with a space or tab. So a call whose only positional argument starts with one, such as `{{< li " wlpxtupd" >}}`, also has no first argument. The warning says so.

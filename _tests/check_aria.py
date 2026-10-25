@@ -207,6 +207,7 @@ for case in ("space-label", "space-squote", "space-tab", "space-class"):
 EXACT |= {"space-label", "space-squote", "space-tab", "space-class"}
 
 # Calls whose first argument Quarto drops, or that have none, give no icon.
+# NO_ICON also gets the calls with an empty first argument, below.
 NO_ICON = {"lost-li", "missing-lif"}
 # When another positional argument follows a dropped one, Quarto passes that
 # one as the first argument, and the call gives its icon with no warning.
@@ -290,6 +291,14 @@ WARNED.update({
 NO_ARG = "has no first argument, so it shows no icon. Quarto drops a first argument that starts with a space or tab."
 WARNED["lost-li"] = [[CALL, NO_ARG, "such as {{< li wlpxtupd >}}."]]
 WARNED["missing-lif"] = [[CALL, NO_ARG, "such as {{< lif icon.json >}}."]]
+# A first argument of "" or '' gives no icon. The warning writes it as "",
+# which CALL cannot build from an empty argument.
+EMPTY_ARG = "has an empty first argument, so it shows no icon."
+NO_ICON |= {"empty-li", "empty-li-inline", "empty-lif", "empty-lif-inline"}
+for case in ("empty-li", "empty-li-inline"):
+    WARNED[case] = [['{{< li "" >}}', EMPTY_ARG, "such as {{< li wlpxtupd >}}."]]
+for case in ("empty-lif", "empty-lif-inline"):
+    WARNED[case] = [['{{< lif "" >}}', EMPTY_ARG, "such as {{< lif icon.json >}}."]]
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern
 # (space, the ASCII controls, `"'>/=`) and its C1_CONTROL pattern
@@ -402,7 +411,7 @@ def check_spelling(calls, raw):
     # Split on "\n" alone: splitlines() also breaks at U+0085, a C1 control.
     # Remove only the last newline: a case with no icon prints an empty line.
     for call, line in zip(calls, raw.removesuffix("\n").split("\n"), strict=True):
-        if call["arg"] is None:  # no icon, so an empty line
+        if not call["arg"]:  # a missing or empty first argument: no icon, so an empty line
             continue
         for key, value in call["kwargs"].items():
             skipped = (
@@ -414,20 +423,25 @@ def check_spelling(calls, raw):
 
 
 def check_warnings(calls, log):
-    """Each warning in WARNED matches exactly one lordicon line of the log."""
+    """Each warning in WARNED matches exactly one lordicon line of the log. A
+    warning names the call but not its id, so cases whose warnings hold the
+    same texts match one line each between them."""
     lines = [line for line in log.split("\n") if "lordicon:" in line]
     failures = []
     expected = 0
+    wanted = {}
     for call in calls:
         case = call["kwargs"].get("id")
         words = [call["shortcode"]] + ([call["arg"]] if call["arg"] is not None else [])
         name = f"{{{{< {' '.join(words)} >}}}}"
         for warning in WARNED.get(case, []):
-            texts = [name if text is CALL else text for text in warning]
-            found = [line for line in lines if all(text in line for text in texts)]
-            if len(found) != 1:
-                failures.append(f"log {case}: {len(found)} warnings hold {texts!r}")
+            texts = tuple(name if text is CALL else text for text in warning)
+            wanted.setdefault(texts, []).append(case)
             expected += 1
+    for texts, cases in wanted.items():
+        found = [line for line in lines if all(text in line for text in texts)]
+        if len(found) != len(cases):
+            failures.append(f"log {', '.join(cases)}: {len(found)} warnings hold {list(texts)!r}")
     if len(lines) != expected:
         failures.append(f"log: {len(lines)} lordicon warnings, expected {expected}")
     print(f"log: {len(lines)} lordicon warnings read, {expected} expected")
@@ -451,7 +465,7 @@ def check(where, html):
         if dupes:
             failures.append(f"{where} {case}: attribute twice: {', '.join(dupes)}")
         if case in NO_ICON:
-            failures.append(f"{where} {case}: <lord-icon> from a call with no first argument")
+            failures.append(f"{where} {case}: <lord-icon> from a call with a missing or empty first argument")
             continue
         if case not in CASES:
             failures.append(f"{where} {case}: <lord-icon> with no expected case")

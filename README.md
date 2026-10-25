@@ -108,7 +108,9 @@ a first argument that starts with a space or tab. A call such as
 `{{< li " wlpxtupd" >}}` then shows no icon, and the render warns that the call
 has no first argument. If another positional argument follows, as in
 `{{< li " x" wlpxtupd >}}`, Quarto uses that one as the first argument, and the
-render does not warn.
+render does not warn. A call whose only positional argument is empty, such as
+`{{< li "" >}}`, also shows no icon, and the render warns that the first
+argument is empty.
 
 ### Accessibility
 
