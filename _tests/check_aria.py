@@ -290,6 +290,14 @@ WARNED.update({
 NO_ARG = "has no first argument, so it shows no icon. Quarto drops a first argument that starts with a space or tab."
 WARNED["lost-li"] = [[CALL, NO_ARG, "such as {{< li wlpxtupd >}}."]]
 WARNED["missing-lif"] = [[CALL, NO_ARG, "such as {{< lif icon.json >}}."]]
+# A first argument of "" or '' gives no icon. The warning writes it as "",
+# which CALL cannot build from an empty argument.
+EMPTY_ARG = "has an empty first argument, so it shows no icon."
+NO_ICON |= {"empty-li", "empty-li-inline", "empty-lif", "empty-lif-inline"}
+for case in ("empty-li", "empty-li-inline"):
+    WARNED[case] = [['{{< li "" >}}', EMPTY_ARG, "such as {{< li wlpxtupd >}}."]]
+for case in ("empty-lif", "empty-lif-inline"):
+    WARNED[case] = [['{{< lif "" >}}', EMPTY_ARG, "such as {{< lif icon.json >}}."]]
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern
 # (space, the ASCII controls, `"'>/=`) and its C1_CONTROL pattern
@@ -402,7 +410,7 @@ def check_spelling(calls, raw):
     # Split on "\n" alone: splitlines() also breaks at U+0085, a C1 control.
     # Remove only the last newline: a case with no icon prints an empty line.
     for call, line in zip(calls, raw.removesuffix("\n").split("\n"), strict=True):
-        if call["arg"] is None:  # no icon, so an empty line
+        if not call["arg"]:  # a missing or empty first argument: no icon, so an empty line
             continue
         for key, value in call["kwargs"].items():
             skipped = (
@@ -451,7 +459,7 @@ def check(where, html):
         if dupes:
             failures.append(f"{where} {case}: attribute twice: {', '.join(dupes)}")
         if case in NO_ICON:
-            failures.append(f"{where} {case}: <lord-icon> from a call with no first argument")
+            failures.append(f"{where} {case}: <lord-icon> from a call with a missing or empty first argument")
             continue
         if case not in CASES:
             failures.append(f"{where} {case}: <lord-icon> with no expected case")

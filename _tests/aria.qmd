@@ -141,6 +141,13 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< lif id=missing-lif >}}
 {{< li " x" wlpxtupd id=shift-li >}}
 
+## An empty first argument
+
+{{< li "" id=empty-li >}}
+{{< lif '' id=empty-lif >}}
+
+Inside a paragraph: {{< li '' id=empty-li-inline >}} and {{< lif "" id=empty-lif-inline >}}.
+
 ## Values that start with a space or tab
 
 {{< li wlpxtupd id=space-label label=" Bell " >}}
