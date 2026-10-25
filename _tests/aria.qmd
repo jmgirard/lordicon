@@ -132,6 +132,7 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< lif "mini fied.json" id=quoted-space colors=primary:red >}}
 {{< li 'a "b" c\d' id=quoted-dquote src=x >}}
 {{< li "x=y" id=quoted-equals src=x >}}
+{{< li "a\\b" id=quoted-backslash src=x >}}
 
 ## Attribute order
 

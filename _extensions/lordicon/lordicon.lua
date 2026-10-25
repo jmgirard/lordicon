@@ -98,11 +98,12 @@ end
 
 -- Write a call's first argument as a warning shows it. Quarto reads an
 -- argument bare unless it is empty, starts with a quote, `}`, or `>`, or holds
--- a space, tab, newline, `"`, or `=`, so such an argument goes in quotes.
--- Quarto has no escape for a quote inside quotes, so an argument that holds
--- `"` goes in single quotes. Inside quotes Quarto reads `\\` as `\`.
+-- a space, tab, newline, `"`, `=`, `\`, or `>}}`, so such an argument goes in
+-- quotes. Quarto has no escape for a quote inside quotes, so an argument that
+-- holds `"` goes in single quotes. Inside quotes Quarto reads `\\` as `\`.
 local function call_arg(s)
-  if s ~= "" and not s:find("^[\"'}>]") and not s:find("[ \t\n\"=]") then
+  if s ~= "" and not s:find("^[\"'}>]") and not s:find("[ \t\n\"=\\]")
+    and not s:find(">}}", 1, true) then
     return s
   end
   local quote = s:find('"', 1, true) and "'" or '"'

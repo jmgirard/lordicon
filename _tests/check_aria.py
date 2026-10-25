@@ -149,6 +149,7 @@ CASES["minified-dotslash"] = DECORATIVE
 CASES["quoted-space"] = {"src": "mini fied.json", **DECORATIVE}
 CASES["quoted-dquote"] = {"src": 'https://cdn.lordicon.com/a "b" c\\d.json', **DECORATIVE}
 CASES["quoted-equals"] = {"src": "https://cdn.lordicon.com/x=y.json", **DECORATIVE}
+CASES["quoted-backslash"] = {"src": "https://cdn.lordicon.com/a\\b.json", **DECORATIVE}
 
 SHOWN ={"aria-hidden": None, "aria-label": None}
 CASES.update({
@@ -268,6 +269,7 @@ WARNED.update({
     ],
     "quoted-dquote": [["{{< li 'a \"b\" c\\\\d' >}}", "skips the", '"src"']],
     "quoted-equals": [['{{< li "x=y" >}}', "skips the", '"src"']],
+    "quoted-backslash": [['{{< li "a\\\\b" >}}', "skips the", '"src"']],
 })
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern
@@ -330,7 +332,8 @@ def check_non_html():
 
 
 def unquote(part):
-    return part[1:-1] if part[0] in "\"'" else part
+    # Inside quotes, Quarto reads `\\` as `\`.
+    return part[1:-1].replace("\\\\", "\\") if part[0] in "\"'" else part
 
 
 def fixture_calls():
