@@ -135,17 +135,17 @@ comment, and a re-render of `docs/`.
 - diff-bug #5: `bogus image` repeats the path of `bogus img` — reject (planned change): AC1 names it.
 - diff-bug #6: `bogus  img` adds no filter path — reject (planned change): AC1 names it.
 - diff-bug #7: `button img` overlaps `bogus presentation img` — reject (planned change): AC1 names both.
-- diff-bug #8: the test comment says the role is the one a browser "knows", not the filter's list — fix now.
-- diff-bug #9: README.md line 130 runs to 145 characters among lines wrapped near 80 — fix now.
+- diff-bug #8: the test comment says the role is the one a browser "knows", not the filter's list — fix now, fixed d67fa89.
+- diff-bug #9: README.md line 130 runs to 145 characters among lines wrapped near 80 — fix now, fixed d67fa89.
 - diff-bug #10: the docs do not say that `image` comes from the WAI-ARIA 1.3 draft — reject (false): the text lists `image` apart from the three specs ("plus `image`") and states nothing wrong.
-- diff-bug #11: `ROLE_LISTS` splits on `[^\n ]+`, so a later tab would join two names — fix now: the split now matches `[a-z-]+`.
+- diff-bug #11: `ROLE_LISTS` splits on `[^\n ]+`, so a later tab would join two names — fix now: the split now matches `[a-z-]+`, fixed d67fa89.
 - diff-bug #12: the absorbed candidate row is still in the ROADMAP — reject (planned change): post-merge hygiene graduates a row marked `started M008`.
 - blame-history #1: `role="doc-cover img"` gives no warning, though a browser without DPUB-ARIA uses `img` — reject (planned change): Scope Out names `doc-cover`, and the docs state the WAI-ARIA rule, not each browser's support.
 - blame-history #2: the choice to leave out the 1.3 draft roles has no D-entry — reject (false): a deferral lives in the ROADMAP, here the parked row "Know the WAI-ARIA 1.3 draft roles", not in DECISIONS.md.
 - blame-history #3: pages with a nameless `role="<other> img"` or `graphics-symbol` now warn — reject (planned change): the Goal calls for it and CHANGELOG 0.7.7 states it.
 - blame-history #4: the new README and index.qmd prose is not wrapped like the M005 text — README fixed with diff-bug #9; index.qmd reject (style): its paragraphs are one line each throughout.
-- blame-history #5: `wai-aria-1-3.md` says the warning covers `image` since 0.7.5, true only for a first-token `image` — fix now.
-- prior-review #1: no planted-defect run is recorded for the new scan — fix now: a plant that stops the scan at any `IMAGE_ROLES` token (skipping `KNOWN_ROLES`) turned the check red, 47 warnings against 42 expected, and the file was restored.
+- blame-history #5: `wai-aria-1-3.md` says the warning covers `image` since 0.7.5, true only for a first-token `image` — fix now, fixed d67fa89.
+- prior-review #1: no planted-defect run is recorded for the new scan — fix now: a plant that stops the scan at any `IMAGE_ROLES` token (skipping `KNOWN_ROLES`) turned the check red, 47 warnings against 42 expected, and the file was restored. After d67fa89 the check is green again (82 cases, 42 warnings) and the role comparison still finds 127 equal names.
 - prior-review #2: the scan folds case with `ascii_lower`, while M004 chose `pandoc.text.lower` for clashes — reject (false): every role name is lowercase ASCII, and `pandoc.text.lower` would only add matches through non-ASCII letters such as U+212A KELVIN SIGN, which an ASCII role match does not accept.
 - prior-review #3: README line 130 breaks the wrap — fixed with diff-bug #9.
 - prior-review #4: `graphics-symbol` warnings rest on a spec whose change log names a `group` superclass — reject (planned change): the plan gate chose it, and Graphics-AAM maps the role to image.
