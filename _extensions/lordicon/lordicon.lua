@@ -96,11 +96,12 @@ local function invalid_name(key)
   return key == "" or key:find(INVALID_NAME) or key:find(C1_CONTROL)
 end
 
--- Write a call's first argument as a warning shows it. Quarto reads an
--- argument bare unless it is empty, starts with a quote, `}`, or `>`, or holds
--- a space, tab, newline, `"`, `=`, `\`, or `>}}`, so such an argument goes in
--- quotes. Quarto has no escape for a quote inside quotes, so an argument that
--- holds `"` goes in single quotes. Inside quotes Quarto reads `\\` as `\`.
+-- Write a call's first argument as a warning shows it. Quarto cannot read an
+-- argument bare when it is empty, starts with a quote, `}`, or `>`, holds a
+-- space, tab, newline, `"`, `=`, `\\`, or `>}}`, or ends in `\`. Such an
+-- argument goes in quotes, and so does any other that holds `\`. Quarto has
+-- no escape for a quote inside quotes, so an argument that holds `"` goes in
+-- single quotes. Inside quotes Quarto reads `\\` as `\`.
 local function call_arg(s)
   if s ~= "" and not s:find("^[\"'}>]") and not s:find("[ \t\n\"=\\]")
     and not s:find(">}}", 1, true) then

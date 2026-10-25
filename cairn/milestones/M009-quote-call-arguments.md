@@ -1,6 +1,6 @@
 # M009: Quote spaced arguments in warning calls
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -86,6 +86,8 @@ start with a space → M010.
 - 2026-10-25: T2 done: `call_arg` in `lordicon.lua`, used by `li` and `lif`; named for what it writes, since the header comment names no call format. `check_aria.py` exits 0 (85 cases, 45 warnings).
 - 2026-10-25: T3 done: version 0.7.8 and CHANGELOG 0.7.8; `quarto render` at the root exits 0, and `docs/sitemap.xml` was reverted since no demo page changed.
 - 2026-10-25: minor amendment: claim audit found `call_arg` wrote an argument holding `\` or `>}}` bare, which Quarto misreads; the helper now quotes both, `unquote` in `check_aria.py` reads `\\` as `\`, and fixture case `quoted-backslash` was seen to fail before the fix and pass after (86 cases, 46 warnings). `>}}` has no fixture case, since the fixture reader's own pattern ends a call at `>}}`.
+- 2026-10-25: claim audit: 12 claims read, 2 corrected — _extensions/lordicon/lordicon.lua (the `call_arg` comment: a single inner `\` reads fine bare, so the comment names `\\` and a trailing `\`), CHANGELOG.md (lists `\` and `>}}`).
+- 2026-10-25: implement complete: verify clean (`check_aria.py` 86 cases, 46 warnings, 0 failures; `quarto render` exit 0, sitemap reverted); status review.
 
 ## Decisions
 
