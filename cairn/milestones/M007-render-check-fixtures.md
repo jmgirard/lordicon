@@ -4,7 +4,7 @@
      cairn_validate's <150 over the plan-owned body. -->
 # M007: Check sorting, non-HTML output, and Minified spellings
 
-- **Status:** in-progress   <!-- owner: transitioning skill · mirror-update; cairn/ROADMAP.md is the authority -->
+- **Status:** review   <!-- owner: transitioning skill · mirror-update; cairn/ROADMAP.md is the authority -->
 - **Priority:** normal   <!-- owner: plan · create/amend-via-gate; high | normal | low -->
 - **Depends on:** —   <!-- owner: plan · create/amend-via-gate; M<xx>, M<yy> or — -->
 - **Driving RR:** —   <!-- owner: plan · create/amend-via-gate; RR<NN> whose Binding criteria bind this milestone's ACs (binding-criteria check), or — -->
@@ -47,7 +47,7 @@
 - [x] T1: Add `{{< li wlpxtupd trigger=hover id=sorted Zeta=1 @click=2 class=big data-a=3 >}}` to `_tests/aria.qmd` with a `CASES` entry, and an `ORDER` table in `_tests/check_aria.py` that `check()` compares, in order, against the names `IconParser` reads, for both the raw output and the page. Remove `table.sort(keys)` at `lordicon.lua:290` for one run and make sure that the check fails on `sorted`, then restore it.
 - [x] T2: Add a `gfm` render of `aria.qmd` to `check_aria.py`, in its own temporary directory with the same copied files and `LC_ALL=C.UTF-8` as `render_page()`. Fail on a nonzero exit, on `lord-icon` or `{{<` in the output, and on any `lordicon:` line in its log. For one run, make `build_element` (`lordicon.lua:267`) skip its format test and make sure that the check fails, then restore it.
 - [x] T3: Add `minified-again` (`lif minified.json`, `colors=primary:red`) and `minified-dotslash` (`lif ./minified.json`, `colors=primary:red`) to `aria.qmd`, with `CASES` entries and a `WARNED` entry for `minified-dotslash` only. Reword the comment at `lordicon.lua:364` to say that the rule keys a file by its path as written. For one run each, remove the `warned_minified[file]` return and strip a leading `./` from the key, and make sure that each run fails on its case, then restore the code.
-- [ ] T4: Update the `check_aria.py` docstring, and DESIGN.md's Known issues and Architecture lines for `_tests/`, to name the new checks. Run `python3 _tests/check_aria.py` (exit 0), then `quarto render` at the repo root, check `git status --porcelain docs/` and `git diff docs/sitemap.xml`, and run `git checkout -- docs/sitemap.xml`.
+- [x] T4: Update the `check_aria.py` docstring, and DESIGN.md's Known issues and Architecture lines for `_tests/`, to name the new checks. Run `python3 _tests/check_aria.py` (exit 0), then `quarto render` at the repo root, check `git status --porcelain docs/` and `git diff docs/sitemap.xml`, and run `git checkout -- docs/sitemap.xml`.
 
 ## Work log
 <!-- owner: any skill · append-only; one line per entry; absolute dates. -->
@@ -68,3 +68,6 @@
 - 2026-10-25: T1 done: `sorted` case and `ORDER` table; check passes (63 cases); with `table.sort(keys)` removed the `sorted` case failed in both the page and the raw output, then the filter was restored.
 - 2026-10-25: T2 done: `render_page()` became `render(to, output)` so the HTML and `gfm` renders share one setup; `check_non_html()` passes (0 warnings); with the format test in `build_element` replaced by `if false` it failed on `lord-icon` in the output and on 31 warnings, then the filter was restored.
 - 2026-10-25: T3 done: `minified-again` and `minified-dotslash` cases (65 cases, 33 warnings) and the reworded `warned_minified` comment. With the once-per-path return removed, the count check failed (34 for 33), and the extra line was a second `{{< lif minified.json >}}` warning; with the key stripping `./`, `minified-dotslash` failed. The filter was restored from a copy each time.
+- 2026-10-25: T4 done: docstring and DESIGN Known issues and Architecture updated. `check_aria.py` exits 0 (65 cases, 33 warnings, gfm 0 warnings); `quarto render` exits 0 and changed only `<lastmod>` lines of `docs/sitemap.xml`, which was then restored; the `_extensions/` diff is 2 removed and 4 added `--` comment lines. No demo page changed, so the verify slot's browser look has nothing to open.
+- 2026-10-25: claim audit: not owed — internal tier.
+- 2026-10-25: implement complete; status review.

@@ -9,7 +9,9 @@ the expected values below, in two places:
   lowercases attribute names, so the check also reads this output as text to
   confirm that each forwarded key keeps the spelling the user wrote.
 
-It also checks the lordicon warnings in the render's log against WARNED.
+It also checks the attribute order of the cases in ORDER, the lordicon
+warnings in the render's log against WARNED, and that a render of the fixture
+to gfm gives no <lord-icon> and no lordicon warning.
 
 The fixture renders in a temporary directory, so the demo site in docs/ is
 not touched. Exits 1 when any check fails. Usage: python3 _tests/check_aria.py
