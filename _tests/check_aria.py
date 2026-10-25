@@ -162,6 +162,14 @@ CASES.update({
 TWICE["nameless-hidden-clash"] = {"aria-hidden": 2}
 TWICE["named-role-clash"] = {"role": 2}
 
+# The attribute names of each case, in order: `src`, the forwarded keys in
+# byte order, then the ARIA defaults. The parser lowercases `Zeta`, which
+# sorts before `class` only by byte.
+CASES["sorted"] = DECORATIVE
+ORDER = {
+    "sorted": ["src", "@click", "zeta", "class", "data-a", "id", "trigger", "aria-hidden"],
+}
+
 # The value the page keeps of names that appear twice: the first in the
 # filter's byte order. `dict(attrs)` in check() keeps the last, so only the
 # page is checked.
@@ -352,6 +360,8 @@ def check(where, html):
             failures.append(f"{where} {case}: <lord-icon> with no expected case")
             continue
         seen.add(case)
+        if case in ORDER and names != ORDER[case]:
+            failures.append(f"{where} {case}: attribute order is {names}, expected {ORDER[case]}")
         expected = CASES[case]
         if where == "page":
             expected = {**expected, **PAGE_ONLY.get(case, {})}

@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-24 (review M006: archived; graduated 1 row, added 1
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M007 | Check sorting, non-HTML output, and Minified spellings | planned | — | normal | milestones/M007-render-check-fixtures.md |
+| M007 | Check sorting, non-HTML output, and Minified spellings | in-progress | — | normal | milestones/M007-render-check-fixtures.md |
 | M006 | Name the call in the Minified warning | done | — | normal | milestones/archive/M006-minified-warning-call.md |
 | M005 | Warn when a role icon has no name | done | — | normal | milestones/archive/M005-nameless-role-warning.md |
 | M004 | Warn about keys in another letter case | done | — | normal | milestones/archive/M004-letter-case-warnings.md |

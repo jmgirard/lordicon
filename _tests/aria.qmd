@@ -102,4 +102,8 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li nnpres id=named-first-presentation role="presentation img" >}}
 {{< li nnclash id=named-role-clash role=img Role=presentation >}}
 
+## Attribute order
+
+{{< li wlpxtupd trigger=hover id=sorted Zeta=1 @click=2 class=big data-a=3 >}}
+
 [Caption]{#caption}
