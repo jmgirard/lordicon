@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-25 (review M010: archived, M007 row pruned; graduat
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M011 | Warn about an empty first argument | planned | — | normal | milestones/M011-empty-first-argument.md |
+| M011 | Warn about an empty first argument | in-progress | — | normal | milestones/M011-empty-first-argument.md |
 | M010 | Warn on a lost first argument and document leading spaces | done | M009 | normal | milestones/archive/M010-leading-space-values.md |
 | M009 | Quote spaced arguments in warning calls | done | — | normal | milestones/archive/M009-quote-call-arguments.md |
 | M008 | Catch image roles after other tokens | done | — | normal | milestones/archive/M008-image-role-after-tokens.md |

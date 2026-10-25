@@ -1,13 +1,13 @@
 # M011: Warn about an empty first argument
 
-- **Status:** planned
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
 - **Principles touched:** IP1, IP3, IP5, GP2, GP4
 - **Resolves:** —
 - **Surface tier:** user-facing — it changes what a shortcode call renders and warns
-- **Branch/PR:** —
+- **Branch/PR:** m011-empty-first-argument
 
 ## Goal
 
@@ -51,6 +51,7 @@ A `li` or `lif` call whose first argument is empty, such as `{{< li "" >}}`, mak
 - 2026-10-25: collision check: absorbed the candidate row "Warn about an empty first argument"; the IP1 row overlaps on the no-element result and stays for the missing argument and Quarto's drops; no D-entry or archived milestone covers an empty argument; inbox sweep: 0 open issues, 0 open PRs.
 - 2026-10-25: criteria audit (full mode, fresh Opus reader): 10 findings. Fixed: two cases varied shortcode, quote, and place together (now four cases); IP1/IP5 conflict (T4 writes D-005, AC1 tagged); `check_warnings` cannot build an empty call name (T1 uses literal strings); AC2 paraphrased the warning (exact text); README overclaimed for `{{< li "" x >}}` (narrowed to an only positional argument); `docs/` re-render unstated (Scope); `check_spelling` and `NO_ICON` edits unnamed (T1). Answered: `''` premise (probe render passes it through); a dropped argument could pass AC1 on the page (AC2's empty-argument text tells the two paths apart); `lif ''` warns as `""` (intended, `call_arg` writes double quotes).
 - 2026-10-25: byte-sort row vet: a probe render under `LC_ALL=en_US.UTF-8` gave collation `C`, so that row's premise did not hold in a render; the row stays as it is.
+- 2026-10-25: implement started on branch m011-empty-first-argument; the untracked `.DS_Store` at the repo root is not milestone work and stays unstaged.
 
 ## Decisions
 
