@@ -244,7 +244,8 @@ for _, list in ipairs(ROLE_LISTS) do
   end
 end
 
--- Roles that a screen reader announces as an image and that need a name.
+-- `img`, its synonym `image`, and its subclass `graphics-symbol`: roles that
+-- the specs say need a name.
 local IMAGE_ROLES = {
   img = true,
   image = true,
@@ -272,10 +273,10 @@ local function warn_nameless_role(call, keys, kwargs, label)
     return
   end
   -- WAI-ARIA tells a browser to use the first token of the role that names a
-  -- role, so the check skips tokens until one is in KNOWN_ROLES, the roles
-  -- that the ARIA specs define: "bogus img" gives img, and "presentation img"
-  -- gives presentation. The warning covers the roles in IMAGE_ROLES. ASCII
-  -- whitespace is spelled out because %s follows the locale.
+  -- non-abstract role, so the check skips tokens until one is in KNOWN_ROLES:
+  -- "bogus img" gives img, and "presentation img" gives presentation. The
+  -- warning covers the roles in IMAGE_ROLES. ASCII whitespace is spelled out
+  -- because %s follows the locale.
   local first
   for token in role:gmatch("[^\t\n\f\r ]+") do
     local name = ascii_lower(token)

@@ -1,6 +1,6 @@
 # M008: Catch image roles after other tokens
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -110,3 +110,5 @@ comment, and a re-render of `docs/`.
 - 2026-10-25: T2 done: 17 fixture calls (9 warn, 8 do not). Before the filter change the check failed only on the 9 new warnings (33 of 42 read), and every attribute case passed, so two spaces and U+00A0 reach the page as written. The U+00A0 was written by a one-line Python replace, because the Edit tool turned it into a space.
 - 2026-10-25: T3 done: `ROLE_LISTS`, `KNOWN_ROLES`, and `IMAGE_ROLES` in `lordicon.lua`, and a token scan replacing the first-token match. Check: 82 cases, 42 warnings, 0 failures. A one-off script found the Lua table, the notes, and a fresh parse of the saved specs equal at 127 names each. Choice: the lists are kept as one string per spec, so each can be compared with its note line for line.
 - 2026-10-25: T4 done: README, `index.qmd`, CHANGELOG 0.7.7, DESIGN.md convention line (corrected M008), the Lua comment, `_extension.yml` 0.7.7. Check green (82 cases, 42 warnings); `quarto render` re-rendered `docs/`, sitemap kept per the M002 lesson. Served `docs/` at localhost: 17 of 17 home-page icons drew an SVG, no console errors. The style hook still flags older README lines this milestone does not touch.
+- 2026-10-25: claim audit: 22 claims read, 2 corrected — CHANGELOG.md, README.md, index.qmd (the role rule now says non-abstract, and "announces an image" became "cannot say what the icon shows"), lordicon.lua (the IMAGE_ROLES comment cites the specs' name requirement, not screen readers). The same reader re-read both and found them true; `docs/index.html` re-rendered.
+- 2026-10-25: all tasks done, check green; status set to review.
