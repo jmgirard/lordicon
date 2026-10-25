@@ -76,7 +76,7 @@ which the user declined at the question set.
       `quarto render` at the repo root, commit `docs/` with the sitemap
       (LESSONS, M002), and open the home page in a browser to see its icons
       load and animate.
-- [ ] T4: Raise `version:` to `0.7.9` and add the `## 0.7.9` CHANGELOG
+- [x] T4: Raise `version:` to `0.7.9` and add the `## 0.7.9` CHANGELOG
       section. Update the `_tests/` line of DESIGN.md Architecture and its
       Known issues entry to name the no-argument and leading-space cases.
 
@@ -100,6 +100,7 @@ which the user declined at the question set.
 - 2026-10-25: T1 done: six fixture cases; `fixture_calls` drops a positional argument or value that starts with a space or tab, so `raw_output.lua` gets what a render gives the filter and the AC5 cases share one expectation for page and filter (chosen over page-only expectations); before T2 the HTML and `gfm` renders stopped at `lordicon.lua:406` (`li`) and `:480` (`lif`) with "Cannot get Attr from TypeNil" (the scope's 390 and 464 predate M009's added lines); two planted defects (no drop in `fixture_calls`; a `lif` with no argument that returns an icon) turned the check red.
 - 2026-10-25: T2 done: `li` and `lif` call `no_first_argument` when `args[1]` is nil, which warns in `html:js` formats only and returns `pandoc.Inlines({})` (chosen over `pandoc.Null()`, which `quarto pandoc lua` lacks); check exits 0 (91 cases, 49 warnings, 0 in `gfm`) and `quarto render` succeeds.
 - 2026-10-25: T3 done: README paragraph above `### Accessibility` and `index.qmd` Accessibility paragraph, written against renders this session (a tab-led and a single-quoted leading-space first argument also give the warning); `docs/` re-rendered with the sitemap; in the browser all 17 home-page icons were ready and advanced from frame 0 to 24; the simple-english hook's 27 README hits all predate this paragraph (27 before and after) and stay out of scope.
+- 2026-10-25: T4 done: `version: 0.7.9` (the only extension version marker), `## 0.7.9` CHANGELOG entry, DESIGN `_tests/` line and Known issues entry name the no-argument and leading-space cases; check exits 0 and `quarto render` succeeds (no page changed, sitemap restored).
 
 ## Decisions
 

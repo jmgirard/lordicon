@@ -2,6 +2,10 @@
 
 This file lists the changes in each version of the extension, newest first.
 
+## 0.7.9
+
+- A `li` or `lif` call with no first argument now shows no icon, and in HTML output the render warns. Before, the call stopped the render with the error `Cannot get Attr from TypeNil`. Quarto drops a first argument that starts with a space or tab, such as `{{< li " wlpxtupd" >}}`, so such a call also has no first argument. The warning says so.
+
 ## 0.7.8
 
 - Render warnings now quote a call's first argument unless it holds only ASCII letters, digits, and `-._/:~+@`. So an argument that holds a space, `"`, `'`, `=`, or `\` is quoted. Quarto reads the call in the warning back as the same argument. A warning about `{{< lif "my icon.json" >}}` now shows that call. Before, it showed `{{< lif my icon.json >}}`. An argument that holds `"` goes in single quotes, because Quarto has no escape for a quote inside double quotes.

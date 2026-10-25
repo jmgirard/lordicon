@@ -144,19 +144,24 @@ are never reused or renumbered; retiring one takes a D-entry.
   pages, so a new page in another format must be added to that list.
 - `_tests/`: `check_aria.py` checks the attributes of `aria.qmd` icons (ARIA,
   `src`, skipped and kept keys, key spelling, letter-case clashes, image
-  roles with no name, attribute order) in the rendered page and in the
-  raw filter output from `raw_output.lua`, and the lordicon warnings in the
-  render's log. It also renders `aria.qmd` to `gfm` and checks that the
+  roles with no name, attribute order, values that start with a space or
+  tab) in the rendered page and in the raw filter output from
+  `raw_output.lua`, that calls with no first argument give no icon, and the
+  lordicon warnings in the render's log. `check_aria.py` models Quarto's drop
+  of a value or first argument that starts with a space or tab before it
+  hands the calls to `raw_output.lua` (M010). It also renders `aria.qmd` to `gfm` and checks that the
   output holds no icon and no unexpanded shortcode, and the log no lordicon
   warning (M007).
 
 ## Known issues
 
 - The only automated check is `_tests/check_aria.py` (M001, extended M003,
-  M004, M005, M007, and M009), which covers ARIA attributes, `src`, skipped and kept
+  M004, M005, M007, M009, and M010), which covers ARIA attributes, `src`, skipped and kept
   keys, letter-case warnings, the nameless-role warning, the Minified warning
   and its once-per-path rule, the quoted first argument in a warning's call,
-  attribute order under the C locale, and `gfm` output. The bundle dependency, the lookup of a `lif` file next to the
+  attribute order under the C locale, `gfm` output, the warning for a call
+  with no first argument, and values and first arguments that Quarto drops
+  because they start with a space or tab. The bundle dependency, the lookup of a `lif` file next to the
   document, a missing `lif` file, and formats other than HTML and `gfm` have
   no test, and the demo site's icons are checked by eye (corrected M007).
 - lordicon.com no longer gives out CDN codes in its export UI, so `li` works for
