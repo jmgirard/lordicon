@@ -146,15 +146,18 @@ are never reused or renumbered; retiring one takes a D-entry.
   roles with no name, attribute order) in the rendered page and in the
   raw filter output from `raw_output.lua`, and the lordicon warnings in the
   render's log. It also renders `aria.qmd` to `gfm` and checks that the
-  output holds no icon and the log no lordicon warning (M007).
+  output holds no icon and no unexpanded shortcode, and the log no lordicon
+  warning (M007).
 
 ## Known issues
 
 - The only automated check is `_tests/check_aria.py` (M001, extended M003,
   M004, M005, and M007), which covers ARIA attributes, `src`, skipped and kept
   keys, letter-case warnings, the nameless-role warning, the Minified warning
-  and its once-per-path rule, attribute order, and `gfm` output. The demo
-  site's icons are checked by eye (corrected M007).
+  and its once-per-path rule, attribute order under the C locale, and `gfm`
+  output. The bundle dependency, the lookup of a `lif` file next to the
+  document, a missing `lif` file, and formats other than HTML and `gfm` have
+  no test, and the demo site's icons are checked by eye (corrected M007).
 - lordicon.com no longer gives out CDN codes in its export UI, so `li` works for
   codes users already have but new codes are hard to find (README).
 - RStudio Viewer shows icons only from version 2022.12.0+353 (README).

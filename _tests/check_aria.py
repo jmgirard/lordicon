@@ -266,8 +266,8 @@ def run(cmd, cwd, env=None):
 
 
 def render(to, output):
-    """Render the fixture to a format, returning the output file and the
-    render's log."""
+    """Render the fixture to a format, returning the output file's text and
+    the render's log."""
     with tempfile.TemporaryDirectory() as tmp:
         workdir = Path(tmp)
         shutil.copytree(ROOT / "_extensions", workdir / "_extensions")
