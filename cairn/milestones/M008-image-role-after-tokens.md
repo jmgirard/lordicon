@@ -54,13 +54,13 @@ comment, and a re-render of `docs/`.
       `role="graphics-document img"`, `role="bogus"`, `role` set to `bogus`,
       U+00A0, and `img`, `role="bogus graphics-symbol" aria-label="Bell"`,
       and `role="graphics-symbol" aria-hidden=true`.
-- [ ] AC2: The filter's known-role list holds exactly the role names that
+- [x] AC2: The filter's known-role list holds exactly the role names that
       four source notes under `cairn/references/` record: the non-abstract
       roles of WAI-ARIA 1.2, the roles of DPUB-ARIA 1.1, the roles of
       Graphics-ARIA 1.0, and `image` from the WAI-ARIA 1.3 draft. Each note
       names the spec's URL, the section it copied, the date it was read, and
       its role count.
-- [ ] AC3: The README, the demo home page (`index.qmd`), and a CHANGELOG
+- [x] AC3: The README, the demo home page (`index.qmd`), and a CHANGELOG
       0.7.7 entry say that the render reads the first role that the ARIA
       specs define and warns for `img`, `image`, and `graphics-symbol`. The
       DESIGN.md convention line on the warning and the comment above the
@@ -123,3 +123,7 @@ comment, and a re-render of `docs/`.
 
 - AC1: `python3 _tests/check_aria.py` on the branch head exits 0: page and filter 82 of 82 cases, 42 of 42 warnings, gfm 0 warnings. `git diff main...HEAD -- _tests` removes no line (48 added), so every earlier case stands unchanged. The 9 warning calls are in `AFTER_TOKENS`, each matched to one warning quoting `role="<value>"`; the 8 silent calls are in `OTHER_FIRST` and the two `named-symbol-*` cases, and the log-count check (42 read, 42 expected) fails on any extra warning. The 9 warning cases failed on the filter before T3 (work log, T2).
 - AC2 (pass 1, not ticked): a scratchpad script compared the Lua `ROLE_LISTS`, the four notes' lists, and a fresh parse of the saved specs: 127 names each, no difference. URL, section, and read date are on all four notes, and counts are on three (82, 41, 3). `wai-aria-1-3.md` states no role count, so AC2 fails as written.
+- Pass 2: since pass 1 only `cairn/` files changed (`git diff 086a6dc..HEAD --name-only`), so the AC1 run stands for the code under review.
+- AC2: the comparison script again finds the Lua table, the notes, and the specs at 127 names each with no difference. Each note names its URL, section (§5.4 and §7.1; §3.1; §4.1; `#image`), read date 2026-10-25, and count (82, 41, 3, and "Roles recorded, 1" on `wai-aria-1-3.md`).
+- AC3: README.md:125-130, index.qmd:61, and CHANGELOG.md `## 0.7.7` (lines 7-8) say the render reads the first word of `role` that names a non-abstract role in the ARIA specs and warns for `img`, `image`, and `graphics-symbol`. DESIGN.md:57 names the three roles and `KNOWN_ROLES`. The comment above the token scan in `lordicon.lua` states the first-non-abstract-role rule and points to `IMAGE_ROLES`, whose comment names the three roles. `_extension.yml` line 3 reads `version: 0.7.7`. `docs/index.html` holds the new sentence once and was committed in 086a6dc, the same commit as the last `index.qmd` change.
+- Gate: `cairn_validate.py` all checks passed (exit 0); `cairn_impact.py --changed` reports no changed principle. Version markers: the release-walk names only `_extension.yml`, which reads 0.7.7. Verify render: `check_aria.py` renders `aria.qmd` green on the code under review, and `quarto render` ran at 086a6dc with no later code change. Changelog: `CHANGELOG.md` has a `## 0.7.7` section for this change.
