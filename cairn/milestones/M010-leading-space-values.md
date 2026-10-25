@@ -1,13 +1,13 @@
 # M010: Warn on a lost first argument and document leading spaces
 
-- **Status:** planned
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** M009
 - **Driving RR:** —
 - **Principles touched:** IP3, GP2, GP4
 - **Resolves:** —
 - **Surface tier:** user-facing — it changes render behavior, a render warning, and the user docs
-- **Branch/PR:** —
+- **Branch/PR:** m010-leading-space-values
 
 ## Goal
 
@@ -56,7 +56,7 @@ which the user declined at the question set.
 
 ## Tasks
 
-- [ ] T1: Write the fixture cases first and see the check fail. In
+- [x] T1: Write the fixture cases first and see the check fail. In
       `_tests/aria.qmd`, add the two calls of AC1 and the four calls of AC5,
       each with its own `id`. Write the tab of AC5 with a short script and
       confirm the byte with `od -c` (LESSONS, M008). Make `fixture_calls`
@@ -96,6 +96,8 @@ which the user declined at the question set.
 - 2026-10-25: plan chose Depends on M009 because both raise the version and edit CHANGELOG; M009 takes 0.7.8 and this milestone 0.7.9.
 - 2026-10-25: criteria audit (full mode, Opus reader) of the criteria the question set changed: 7 findings. Fixed: "space or tab" in AC1; "no warning names the dropped value" in AC3, since `role=img` still gives the nameless-image warning; AC5 now varies the quote style, a tab, and a non-label key, and its last sentence states what the fixture gives; Depends on M009 for AC7. Answered: an empty first argument becomes a candidate row, toward the narrower promise; the call name `{{< li >}}` is what the filter can know; the browser look in AC6 is the profile's own verify step. AC2 and AC4 had none.
 - 2026-10-25: changelog: one entry under 0.7.9 (D-001, D-002).
+- 2026-10-25: implement started on branch m010-leading-space-values; unrelated untracked `.DS_Store` left unstaged.
+- 2026-10-25: T1 done: six fixture cases; `fixture_calls` drops a positional argument or value that starts with a space or tab, so `raw_output.lua` gets what a render gives the filter and the AC5 cases share one expectation for page and filter (chosen over page-only expectations); before T2 the HTML and `gfm` renders stopped at `lordicon.lua:406` (`li`) and `:480` (`lif`) with "Cannot get Attr from TypeNil" (the scope's 390 and 464 predate M009's added lines); two planted defects (no drop in `fixture_calls`; a `lif` with no argument that returns an icon) turned the check red.
 
 ## Decisions
 

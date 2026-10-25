@@ -135,6 +135,18 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li "a\\b" id=quoted-backslash src=x >}}
 {{< li "it's" id=quoted-squote src=x >}}
 
+## A first argument that Quarto drops, or none
+
+{{< li " ibydboev" id=lost-li >}}
+{{< lif id=missing-lif >}}
+
+## Values that start with a space or tab
+
+{{< li wlpxtupd id=space-label label=" Bell " >}}
+{{< li wlpxtupd id=space-squote label=' Bell' >}}
+{{< li wlpxtupd id=space-tab label="	Bell" >}}
+{{< li wlpxtupd id=space-class class=" x" >}}
+
 ## Attribute order
 
 {{< li wlpxtupd trigger=hover id=sorted Zeta=1 @click=2 class=big data-a=3 >}}

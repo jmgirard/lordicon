@@ -9,9 +9,10 @@ the expected values below, in two places:
   lowercases attribute names, so the check also reads this output as text to
   confirm that each forwarded key keeps the spelling the user wrote.
 
-It also checks the attribute order of the cases in ORDER, the lordicon
-warnings in the render's log against WARNED, and that a render of the fixture
-to gfm gives no <lord-icon> and no lordicon warning.
+It also checks the attribute order of the cases in ORDER, that the cases in
+NO_ICON give no <lord-icon>, the lordicon warnings in the render's log against
+WARNED, and that a render of the fixture to gfm gives no <lord-icon> and no
+lordicon warning.
 
 The fixture renders in a temporary directory, so the demo site in docs/ is
 not touched. Exits 1 when any check fails. Usage: python3 _tests/check_aria.py
@@ -199,6 +200,15 @@ CASES["named-symbol-hidden"] = {"aria-hidden": "true", "role": "graphics-symbol"
 TWICE["nameless-hidden-clash"] = {"aria-hidden": 2}
 TWICE["named-role-clash"] = {"role": 2}
 
+# Quarto drops a quoted value that starts with a space or tab, with its key,
+# so these icons stay decorative and keep no class.
+for case in ("space-label", "space-squote", "space-tab", "space-class"):
+    CASES[case] = DECORATIVE
+EXACT |= {"space-label", "space-squote", "space-tab", "space-class"}
+
+# Calls whose first argument Quarto drops, or that have none, give no icon.
+NO_ICON = {"lost-li", "missing-lif"}
+
 # The attribute names of each case, in order: `src`, the forwarded keys in
 # byte order, then the ARIA defaults. The parser lowercases `Zeta`, which
 # sorts before `class` only by byte.
@@ -273,6 +283,9 @@ WARNED.update({
     "quoted-backslash": [['{{< li "a\\\\b" >}}', "skips the", '"src"']],
     "quoted-squote": [['{{< li "it\'s" >}}', "skips the", '"src"']],
 })
+NO_ARG = "has no first argument, so it shows no icon. Quarto drops a first argument that starts with a space or tab."
+WARNED["lost-li"] = [[CALL, NO_ARG, "such as {{< li wlpxtupd >}}."]]
+WARNED["missing-lif"] = [[CALL, NO_ARG, "such as {{< lif icon.json >}}."]]
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern
 # (space, the ASCII controls, `"'>/=`) and its C1_CONTROL pattern
@@ -339,7 +352,10 @@ def unquote(part):
 
 
 def fixture_calls():
-    """Read each li or lif shortcode call from the fixture."""
+    """Read each li or lif shortcode call from the fixture, as the filter gets
+    it. Quarto drops a positional argument or a value that starts with a space
+    or tab, so such an argument is left out, and `arg` is None when the call
+    has no first argument."""
     calls = []
     for body in re.findall(r"\{\{<\s*(lif?\s.*?)\s*>\}\}", FIXTURE.read_text()):
         words, kwargs, pos = [], {}, 0
@@ -348,11 +364,16 @@ def fixture_calls():
             if not item:
                 sys.exit(f"FAIL cannot read the fixture call {{{{< {body} >}}}}")
             if item["key"]:
-                kwargs[unquote(item["key"])] = unquote(item["value"])
+                value = unquote(item["value"])
+                if not value.startswith((" ", "\t")):
+                    kwargs[unquote(item["key"])] = value
             else:
-                words.append(unquote(item["word"]))
+                word = unquote(item["word"])
+                if not word.startswith((" ", "\t")):
+                    words.append(word)
             pos = item.end()
-        shortcode, arg = words
+        shortcode, *rest = words
+        arg = rest[0] if rest else None
         calls.append({"shortcode": shortcode, "arg": arg, "kwargs": kwargs})
     return calls
 
@@ -374,6 +395,8 @@ def check_spelling(calls, raw):
     failures = []
     # Split on "\n" alone: splitlines() also breaks at U+0085, a C1 control.
     for call, line in zip(calls, raw.rstrip("\n").split("\n"), strict=True):
+        if call["arg"] is None:  # no icon, so an empty line
+            continue
         for key, value in call["kwargs"].items():
             skipped = (
                 key in ("label", "") or key.lower() == "src" or INVALID_NAME.search(key)
@@ -390,7 +413,8 @@ def check_warnings(calls, log):
     expected = 0
     for call in calls:
         case = call["kwargs"].get("id")
-        name = f"{{{{< {call['shortcode']} {call['arg']} >}}}}"
+        words = [call["shortcode"]] + ([call["arg"]] if call["arg"] is not None else [])
+        name = f"{{{{< {' '.join(words)} >}}}}"
         for warning in WARNED.get(case, []):
             texts = [name if text is CALL else text for text in warning]
             found = [line for line in lines if all(text in line for text in texts)]
@@ -419,6 +443,9 @@ def check(where, html):
         })
         if dupes:
             failures.append(f"{where} {case}: attribute twice: {', '.join(dupes)}")
+        if case in NO_ICON:
+            failures.append(f"{where} {case}: <lord-icon> from a call with no first argument")
+            continue
         if case not in CASES:
             failures.append(f"{where} {case}: <lord-icon> with no expected case")
             continue
