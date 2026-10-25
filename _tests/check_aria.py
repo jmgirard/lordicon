@@ -9,7 +9,9 @@ the expected values below, in two places:
   lowercases attribute names, so the check also reads this output as text to
   confirm that each forwarded key keeps the spelling the user wrote.
 
-It also checks the lordicon warnings in the render's log against WARNED.
+It also checks the attribute order of the cases in ORDER, the lordicon
+warnings in the render's log against WARNED, and that a render of the fixture
+to gfm gives no <lord-icon> and no lordicon warning.
 
 The fixture renders in a temporary directory, so the demo site in docs/ is
 not touched. Exits 1 when any check fails. Usage: python3 _tests/check_aria.py
@@ -138,6 +140,10 @@ CASES["label-two"] = DECORATIVE
 # has one.
 CASES["minified-lif"] = DECORATIVE
 CASES["raw-lif"] = DECORATIVE
+# The Minified warning fires once per path as written: a second call on
+# minified.json gives none, and ./minified.json gives its own.
+CASES["minified-again"] = DECORATIVE
+CASES["minified-dotslash"] = DECORATIVE
 
 SHOWN ={"aria-hidden": None, "aria-label": None}
 CASES.update({
@@ -161,6 +167,14 @@ CASES.update({
 })
 TWICE["nameless-hidden-clash"] = {"aria-hidden": 2}
 TWICE["named-role-clash"] = {"role": 2}
+
+# The attribute names of each case, in order: `src`, the forwarded keys in
+# byte order, then the ARIA defaults. The parser lowercases `Zeta`, which
+# sorts before `class` only by byte.
+CASES["sorted"] = DECORATIVE
+ORDER = {
+    "sorted": ["src", "@click", "zeta", "class", "data-a", "id", "trigger", "aria-hidden"],
+}
 
 # The value the page keeps of names that appear twice: the first in the
 # filter's byte order. `dict(attrs)` in check() keeps the last, so only the
@@ -196,6 +210,7 @@ WARNED.update({
     "minified-lif": [
         [CALL, "looks like a Minified Lottie export", "so Colors, STROKE, sTaTe will"]
     ],
+    "minified-dotslash": [[CALL, "looks like a Minified Lottie export", "so colors will"]],
 })
 NAMELESS = "but no name, so a screen reader announces an image"
 FIX = 'Add a label, such as label="Bell".'
@@ -250,17 +265,28 @@ def run(cmd, cwd, env=None):
     return done
 
 
-def render_page():
-    """Render the fixture, returning the page and the render's log."""
+def render(to, output):
+    """Render the fixture to a format, returning the output file's text and
+    the render's log."""
     with tempfile.TemporaryDirectory() as tmp:
         workdir = Path(tmp)
         shutil.copytree(ROOT / "_extensions", workdir / "_extensions")
         shutil.copy(FIXTURE, workdir)
         shutil.copy(ROOT / "gift_raw.json", workdir)
         shutil.copy(ROOT / "_tests" / "minified.json", workdir)
-        cmd = ["quarto", "render", "aria.qmd", "--to", "html"]
+        cmd = ["quarto", "render", "aria.qmd", "--to", to]
         done = run(cmd, workdir, {**os.environ, "LC_ALL": "C.UTF-8"})
-        return (workdir / "aria.html").read_text(encoding="utf-8"), done.stderr
+        return (workdir / output).read_text(encoding="utf-8"), done.stderr
+
+
+def check_non_html():
+    """A render to a format other than HTML gives no icon and no warning."""
+    text, log = render("gfm", "aria.md")
+    failures = [f"gfm: the output holds {s!r}" for s in ("lord-icon", "{{<") if s in text]
+    lines = [line for line in log.split("\n") if "lordicon:" in line]
+    failures += [f"gfm: warning {line!r}" for line in lines]
+    print(f"gfm: {len(text)} characters and {len(lines)} lordicon warnings read")
+    return failures
 
 
 def unquote(part):
@@ -352,6 +378,8 @@ def check(where, html):
             failures.append(f"{where} {case}: <lord-icon> with no expected case")
             continue
         seen.add(case)
+        if case in ORDER and names != ORDER[case]:
+            failures.append(f"{where} {case}: attribute order is {names}, expected {ORDER[case]}")
         expected = CASES[case]
         if where == "page":
             expected = {**expected, **PAGE_ONLY.get(case, {})}
@@ -374,13 +402,14 @@ def check(where, html):
 
 def main():
     calls = fixture_calls()
-    page, log = render_page()
+    page, log = render("html", "aria.html")
     raw = filter_output(calls)
     failures = (
         check("page", page)
         + check("filter", raw)
         + check_spelling(calls, raw)
         + check_warnings(calls, log)
+        + check_non_html()
     )
     for line in failures:
         print("FAIL", line)
