@@ -96,6 +96,22 @@ local function invalid_name(key)
   return key == "" or key:find(INVALID_NAME) or key:find(C1_CONTROL)
 end
 
+-- Write a call's first argument as a warning shows it. Quarto has two
+-- shortcode readers with different rules for a bare argument: its Lua reader
+-- can misread one that holds `=`, `"`, `\\`, or `>}}`, and its check of a call
+-- on its own line rejects one that holds a quote or whitespace. So the
+-- argument goes bare only when it holds nothing but ASCII letters, digits,
+-- and `-._/:~+@`, and in quotes otherwise. Quarto has no escape for a quote
+-- inside quotes, so an argument that holds `"` goes in single quotes. Inside
+-- quotes Quarto reads `\\` as `\`.
+local function call_arg(s)
+  if s:find("^[A-Za-z0-9._/:~+@%-]+$") then
+    return s
+  end
+  local quote = s:find('"', 1, true) and "'" or '"'
+  return quote .. s:gsub("\\", "\\\\") .. quote
+end
+
 -- Warn that a call skipped some of its keys, naming each one in quotes.
 local function warn_skipped(call, keys, reason)
   table.sort(keys)
@@ -391,7 +407,7 @@ local function li(args, kwargs)
   return build_element(
     "https://cdn.lordicon.com/" .. code .. ".json",
     kwargs,
-    "{{< li " .. code .. " >}}"
+    "{{< li " .. call_arg(code) .. " >}}"
   )
 end
 
@@ -414,8 +430,8 @@ end
 -- Warn once per path when control-dependent attributes are used with an icon
 -- that was exported in Lordicon's "Minified" format. The rule keys a file by
 -- its path as written, so `minified.json` and `./minified.json` each warn.
--- The warning names the call as {{< lif FILE >}}, which is the same for every
--- call on that path.
+-- The warning names the call as {{< lif FILE >}}, with FILE written by
+-- call_arg, which is the same for every call on that path.
 local warned_minified = {}
 
 local function check_minified(file, kwargs, call)
@@ -462,7 +478,7 @@ end
 -- {{< lif FILE ... >}} — icon from a local Lottie .json file.
 local function lif(args, kwargs)
   local file = pandoc.utils.stringify(args[1])
-  local call = "{{< lif " .. file .. " >}}"
+  local call = "{{< lif " .. call_arg(file) .. " >}}"
   if quarto.doc.isFormat("html:js") then
     check_minified(file, kwargs, call)
   end

@@ -153,10 +153,10 @@ are never reused or renumbered; retiring one takes a D-entry.
 ## Known issues
 
 - The only automated check is `_tests/check_aria.py` (M001, extended M003,
-  M004, M005, and M007), which covers ARIA attributes, `src`, skipped and kept
+  M004, M005, M007, and M009), which covers ARIA attributes, `src`, skipped and kept
   keys, letter-case warnings, the nameless-role warning, the Minified warning
-  and its once-per-path rule, attribute order under the C locale, and `gfm`
-  output. The bundle dependency, the lookup of a `lif` file next to the
+  and its once-per-path rule, the quoted first argument in a warning's call,
+  attribute order under the C locale, and `gfm` output. The bundle dependency, the lookup of a `lif` file next to the
   document, a missing `lif` file, and formats other than HTML and `gfm` have
   no test, and the demo site's icons are checked by eye (corrected M007).
 - lordicon.com no longer gives out CDN codes in its export UI, so `li` works for

@@ -2,6 +2,10 @@
 
 This file lists the changes in each version of the extension, newest first.
 
+## 0.7.8
+
+- Render warnings now quote a call's first argument unless it holds only ASCII letters, digits, and `-._/:~+@`. So an argument that holds a space, `"`, `'`, `=`, or `\` is quoted. Quarto reads the call in the warning back as the same argument. A warning about `{{< lif "my icon.json" >}}` now shows that call. Before, it showed `{{< lif my icon.json >}}`. An argument that holds `"` goes in single quotes, because Quarto has no escape for a quote inside double quotes.
+
 ## 0.7.7
 
 - The nameless-image warning now skips words in `role` that are not roles. It reads the first word that names a non-abstract ARIA role, which is the rule that WAI-ARIA gives browsers. Before, it read only the first word, so `role="bogus img"` gave no warning. The known roles are the non-abstract roles of WAI-ARIA 1.2, the roles of DPUB-ARIA 1.1 and Graphics-ARIA 1.0, and `image`.

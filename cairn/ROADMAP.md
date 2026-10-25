@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-25 (review M008: archived, M005 row pruned; graduat
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M009 | Quote spaced arguments in warning calls | planned | — | normal | milestones/M009-quote-call-arguments.md |
+| M009 | Quote spaced arguments in warning calls | review | — | normal | milestones/M009-quote-call-arguments.md |
 | M010 | Warn on a lost first argument and document leading spaces | planned | M009 | normal | milestones/M010-leading-space-values.md |
 | M008 | Catch image roles after other tokens | done | — | normal | milestones/archive/M008-image-role-after-tokens.md |
 | M007 | Check sorting, non-HTML output, and Minified spellings | done | — | normal | milestones/archive/M007-render-check-fixtures.md |

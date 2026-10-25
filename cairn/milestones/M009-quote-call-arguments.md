@@ -1,13 +1,13 @@
 # M009: Quote spaced arguments in warning calls
 
-- **Status:** planned
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
 - **Principles touched:** GP2
 - **Resolves:** —
 - **Surface tier:** user-facing — it changes the render warnings that users read
-- **Branch/PR:** —
+- **Branch/PR:** m009-quote-call-arguments
 
 ## Goal
 
@@ -33,11 +33,11 @@ start with a space → M010.
 
 ## Acceptance criteria
 
-- [ ] AC1: A render of `_tests/aria.qmd` gives one Minified warning for a `lif` call on `mini fied.json` with `colors`. That file is a copy of `_tests/minified.json`. The warning names the call as `{{< lif "mini fied.json" >}}`.
-- [ ] AC2: The same render gives one skip warning for a `li` call with a `src` key and the code `a "b" c\d`. The fixture writes that code as `'a "b" c\d'`. The warning names the call as `{{< li 'a "b" c\\d' >}}`.
-- [ ] AC3: The same render gives one skip warning for a `li` call with a `src` key and the code `x=y`. The fixture writes that code as `"x=y"`. The warning names the call as `{{< li "x=y" >}}`.
-- [ ] AC4: The verify slot of `cairn/PROFILE.md` is clean. `python3 _tests/check_aria.py` exits 0, and `quarto render` at the repo root succeeds.
-- [ ] AC5: `version:` in `_extensions/lordicon/_extension.yml` reads `0.7.8`. `CHANGELOG.md` has a `## 0.7.8` section. It says that warnings now quote an argument that holds a space, `"`, or `=`.
+- [x] AC1: A render of `_tests/aria.qmd` gives one Minified warning for a `lif` call on `mini fied.json` with `colors`. That file is a copy of `_tests/minified.json`. The warning names the call as `{{< lif "mini fied.json" >}}`.
+- [x] AC2: The same render gives one skip warning for a `li` call with a `src` key and the code `a "b" c\d`. The fixture writes that code as `'a "b" c\d'`. The warning names the call as `{{< li 'a "b" c\\d' >}}`.
+- [x] AC3: The same render gives one skip warning for a `li` call with a `src` key and the code `x=y`. The fixture writes that code as `"x=y"`. The warning names the call as `{{< li "x=y" >}}`.
+- [x] AC4: The verify slot of `cairn/PROFILE.md` is clean. `python3 _tests/check_aria.py` exits 0, and `quarto render` at the repo root succeeds.
+- [x] AC5: `version:` in `_extensions/lordicon/_extension.yml` reads `0.7.8`. `CHANGELOG.md` has a `## 0.7.8` section. It says that warnings now quote an argument that holds a space, `"`, or `=`.
 
 ## Coverage
 
@@ -49,7 +49,7 @@ start with a space → M010.
 
 ## Tasks
 
-- [ ] T1: Write the three fixture cases first and see them fail. In
+- [x] T1: Write the three fixture cases first and see them fail. In
       `_tests/aria.qmd`, add a `lif` call on `"mini fied.json"` with `colors`
       and the `li` calls `'a "b" c\d'` and `"x=y"`, each with a `src` key and
       its own `id`. In `check_aria.py`, copy `minified.json` to
@@ -59,11 +59,11 @@ start with a space → M010.
       from the fixture's argument. `check_warnings` uses that literal for
       these cases. Run the check and confirm that it fails on these three
       warnings only.
-- [ ] T2: Add the helper to `lordicon.lua` and use it in `li` and `lif`.
+- [x] T2: Add the helper to `lordicon.lua` and use it in `li` and `lif`.
       Spell out the byte set (space, tab, newline) rather than `%s`, which
       follows the locale. Update the header comment if it names the call
       format. Run the check until it exits 0.
-- [ ] T3: Raise `version:` to `0.7.8` and add the `## 0.7.8` CHANGELOG
+- [x] T3: Raise `version:` to `0.7.8` and add the `## 0.7.8` CHANGELOG
       section. Run `quarto render` at the repo root, then
       `git checkout -- docs/sitemap.xml`, since no demo page changes.
 
@@ -81,7 +81,44 @@ start with a space → M010.
 - 2026-10-25: criteria audit (full mode, Opus reader): 4 findings, all fixed. Quarto has no `\"` escape, so AC2 uses single quotes; the quote rule adds `"` and `=`; the Goal no longer says "quoted argument", which reads two ways; AC3 adds an `=` case so one exemplar does not stand for the rule. AC4 and AC5 had none.
 - 2026-10-25: changelog: one entry under 0.7.8 (D-001, D-002).
 - 2026-10-25: priority normal, not the source row's low, because M010 depends on this milestone.
+- 2026-10-25: implement: branch m009-quote-call-arguments cut from main at c876208; untracked `.DS_Store` left unstaged.
+- 2026-10-25: T1 done: 3 fixture calls and literal `WARNED` calls; `QUOTED` and `unquote` needed no change, since no fixture argument uses an escape. The check fails on the 3 call texts only (85 cases, 45 warnings read).
+- 2026-10-25: T2 done: `call_arg` in `lordicon.lua`, used by `li` and `lif`; named for what it writes, since the header comment names no call format. `check_aria.py` exits 0 (85 cases, 45 warnings).
+- 2026-10-25: T3 done: version 0.7.8 and CHANGELOG 0.7.8; `quarto render` at the root exits 0, and `docs/sitemap.xml` was reverted since no demo page changed.
+- 2026-10-25: minor amendment: claim audit found `call_arg` wrote an argument holding `\` or `>}}` bare, which Quarto misreads; the helper now quotes both, `unquote` in `check_aria.py` reads `\\` as `\`, and fixture case `quoted-backslash` was seen to fail before the fix and pass after (86 cases, 46 warnings). `>}}` has no fixture case, since the fixture reader's own pattern ends a call at `>}}`.
+- 2026-10-25: claim audit: 12 claims read, 2 corrected — _extensions/lordicon/lordicon.lua (the `call_arg` comment: a single inner `\` reads fine bare, so the comment names `\\` and a trailing `\`), CHANGELOG.md (lists `\` and `>}}`).
+- 2026-10-25: implement complete: verify clean (`check_aria.py` 86 cases, 46 warnings, 0 failures; `quarto render` exit 0, sitemap reverted); status review.
+- 2026-10-25: review fix: the plan's choice to copy Quarto's bare-token rule was falsified by a call on its own line (`{{< li it's >}}` fails the render); `call_arg` now writes bare only an argument of ASCII letters, digits, and `-._/:~+@`, a set no Quarto reader splits, rather than a longer list of characters to quote.
+- 2026-10-25: step-7 approval: m009-quote-call-arguments approved for merge
 
 ## Decisions
 
 ## Review
+
+Pass 1, 2026-10-25, on branch head 19ea83f (contains origin/main c876208; no sync needed). No PR yet; the Copilot round is off.
+
+- AC1 evidence: a render of `_tests/aria.qmd` in a temp dir (with `mini fied.json` copied from `_tests/minified.json`) logged `lordicon: {{< lif "mini fied.json" >}} uses a file that looks like a Minified Lottie export, so colors will have no effect.`; `check_aria.py` holds that exactly one log line matches (`quoted-space`).
+- AC2 evidence: the same render logged `lordicon: {{< li 'a "b" c\\d' >}} skips the key "src"`; one matching line (`quoted-dquote`). A probe on Quarto 1.10.19 read `'a "b" c\\d'` back as `a "b" c\d`.
+- AC3 evidence: the same render logged `lordicon: {{< li "x=y" >}} skips the key "src"`; one matching line (`quoted-equals`).
+- AC4 evidence: `python3 _tests/check_aria.py` exit 0 (86 cases on page and filter, 46 of 46 warnings, gfm 0 warnings, 0 failures); `quarto render` at the root exit 0, `docs/sitemap.xml` reverted, no other change. No demo page changed, so no browser look is owed.
+- AC5 evidence: `_extension.yml` reads `version: 0.7.8`; `CHANGELOG.md` has `## 0.7.8`, whose entry says a first argument that holds a space, `"`, `=`, `\`, or `>}}` is now quoted in warnings.
+- Gate: `cairn_validate.py` exit 0, all checks passed. Profile consistency-gate: the release-walk names one marker (`_extension.yml`), so markers agree; the verify render succeeded on this head; CHANGELOG has the 0.7.8 entry. No DESIGN principle changed, so `cairn_impact` is skipped.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: an argument holding `'` was written bare (`{{< li it's >}}`), and Quarto's check of a call on its own line rejects it ("Invalid Shortcode"), confirmed by probe — fix now: `call_arg` writes an argument bare only when it holds nothing but ASCII letters, digits, and `-._/:~+@`; fixture case `quoted-squote` failed before and passes after; each warning call of the five quoted cases read back unchanged on its own line, fixed 91ee415
+- diff-bug #2: the `call_arg` comment named only the Lua reader's rule — fix now: the comment names both readers, fixed 91ee415
+- diff-bug #3: a value holding an HTML entity (`a&amp;amp;b`) cannot read back the same in any form — reject (edge): an icon code or file name that holds an entity is outside documented and common use, and the effect is warning text only
+- diff-bug #4: the CHANGELOG trigger list left out cases the code quotes — fix now: the entry states the bare set and gives examples, fixed 91ee415
+- diff-bug #5: the Scope list of quoted characters omits `\` and `>}}` — reject (planned change): Scope is plan-owned, and the work log's minor-amendment line records the wider rule
+- diff-bug #6: `quoted-equals` runs the same code path as `quoted-backslash` — reject (planned change): AC3 names that case
+- diff-bug #7: the `src` values in the new `CASES` entries test Quarto, not the diff — reject (false): they confirm that each case's argument reaches the filter as the argument its warning names, which the call-text check relies on
+- blame-history #1: the `check_minified` comment still showed the bare call form — fix now, fixed 91ee415
+- blame-history #2: a bare `{{< li a\b >}}` now warns as `{{< li "a\\b" >}}` — reject (false): the Goal is a call that Quarto reads back as the same argument, which the quoted form is, and the filter cannot know how the user quoted it
+- prior-review #1: no test feeds the warning's call back through Quarto — reject (false): for four of the five quoted cases the fixture holds the exact call text the warning prints, so the fixture's own read is that test; the fifth (`'a "b" c\\d'`) was read back by probe
+- prior-review #2: the CHANGELOG trigger list is incomplete — fix now (same as diff-bug #4), fixed 91ee415
+- prior-review #3: the `check_minified` comment (same as blame-history #1) — fix now, fixed 91ee415
+- prior-review #4: the `call_arg` comment named `\\` while the code checked one `\` — reject (false) at the time; the rewritten comment and code (91ee415) no longer differ there
+- ripple #1: the ROADMAP row "Quote file names that hold spaces" still describes the bug — reject (planned change): post-merge hygiene removes the row
+- ripple #2: the `check_minified` comment (same as blame-history #1) — fix now, fixed 91ee415
+- ripple #3: DESIGN.md Known issues did not list the new check coverage — fix now, fixed 91ee415
+- Return floor: diff-bug #1 changes warning text only, with no wrong render and no criterion failing (AC1–AC5 still hold), so it is fixed on the branch with no return.
+- After the fixes: `check_aria.py` exit 0 (87 cases, 47 of 47 warnings, gfm 0); `quarto render` exit 0, sitemap reverted. AC5 re-read: the 0.7.8 entry now says an argument holding a space, `"`, `'`, `=`, or `\` is quoted. AC1–AC3 warning texts are unchanged.
