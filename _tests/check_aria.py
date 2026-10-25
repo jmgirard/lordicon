@@ -165,7 +165,7 @@ CASES.update({
     "named-first-presentation": {**SHOWN, "role": "presentation img"},
     "named-role-clash": SHOWN,
 })
-# The role a browser uses is the first token that names a role it knows.
+# The role is the first token that names a role in the filter's ARIA list.
 AFTER_TOKENS = {
     "nameless-after-bogus": "bogus img",
     "nameless-after-abstract": "landmark img",

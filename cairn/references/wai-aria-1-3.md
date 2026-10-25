@@ -16,7 +16,7 @@ Extraction: verified 2026-10-25 against the source by a read of the fetched HTML
 
 ## Traces to
 
-- `_extensions/lordicon/lordicon.lua`: the `KNOWN_ROLES` table and the image-role set in `warn_nameless_role` take `image`. The warning covers it since 0.7.5.
+- `_extensions/lordicon/lordicon.lua`: the `KNOWN_ROLES` table and the image-role set in `warn_nameless_role` take `image`. A first-token `image` warns since 0.7.5, and `image` after other tokens since 0.7.7.
 
 ## Open questions
 

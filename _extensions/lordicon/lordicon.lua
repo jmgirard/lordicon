@@ -239,7 +239,7 @@ local ROLE_LISTS = {
 }
 local KNOWN_ROLES = {}
 for _, list in ipairs(ROLE_LISTS) do
-  for name in list:gmatch("[^\n ]+") do
+  for name in list:gmatch("[a-z-]+") do
     KNOWN_ROLES[name] = true
   end
 end
