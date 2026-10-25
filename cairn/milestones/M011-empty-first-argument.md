@@ -64,6 +64,8 @@ A `li` or `lif` call whose first argument is empty, such as `{{< li "" >}}`, mak
 
 ## Decisions
 
+- 2026-10-25 (review): Before 0.7.10, `{{< li "" label="Bell" >}}` made an element with `role="img"` and `aria-label="Bell"`, so a screen reader could announce an image that the page never showed. D-005's reason, that such a call never loaded an icon, covers this output too: it named an image that was not there, so no warning release comes first. Raised by the blame-history reviewer.
+
 ## Review
 
 Evidence gathered 2026-10-25 on branch m011-empty-first-argument at b2f7c83, level with origin/main 1bb7a2b.
@@ -73,3 +75,27 @@ Evidence gathered 2026-10-25 on branch m011-empty-first-argument at b2f7c83, lev
 - AC3: README.md:111-113, in `## Customizing` (README.md:62, next heading 115), says a call whose only positional argument is empty, such as `{{< li "" >}}`, shows no icon and the render warns. CHANGELOG.md's first version heading is `## 0.7.10` (line 5), and its entry (line 7) names the empty first argument. `_extensions/lordicon/_extension.yml:3` reads `version: 0.7.10`.
 - AC4: `python3 _tests/check_aria.py` exit 0 (AC1 run); `quarto render` at the repo root exit 0, which changed only `docs/sitemap.xml`, reverted.
 - Gate: `cairn_validate.py` all checks passed. `cairn_impact.py --changed` reported no changed principles, because it reads uncommitted edits and the IP1/IP5 edit is in T4's commit; `cairn_impact.py IP1 IP5` listed the references. Live ones outside history: DESIGN.md:134 (GP5 cites IP1, still true) and the ROADMAP row "Decide whether IP1 names Quarto's drops", whose list of IP1 exceptions was corrected in place to add the empty first argument. Version markers: `_extension.yml` and CHANGELOG.md both say 0.7.10. Changelog entry present. The verify render ran on the review head.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: `check_warnings` grouping lets a 2+0 split between two cases that share a warning text pass — follow-up, row "Match each warning to its own call" (the separate AC2 render printed the four warnings in call order)
+- diff-bug #2: CHANGELOG "The render gave no warning" is false for an empty call with other keys, which got skipped-key or nameless-role warnings — fix now, fixed 9b5a5a4
+- diff-bug #3: "in HTML output" does not hold for epub — reject, style: the repo's docs use "HTML output" for `html:js` formats, as the 0.7.9 entry does
+- diff-bug #4: the empty-argument text writes `""` instead of calling `call_arg("")` — reject, planned change: the plan named that text, and `call_arg("")` returns `""`
+- diff-bug #5: `{{< li {{< meta empty >}} >}}` reaches the filter as a placeholder and gives a wrong `src` with no warning — follow-up, row "Warn about a nested shortcode argument" (not introduced by this diff)
+- diff-bug #6: T1's change of fixture heading has no work-log line — fix now, fixed 9b5a5a4
+- diff-bug #7: IP1's "the render warns" leaves out the `html:js` condition — reject, style: IP3 states the format rule for every warning
+- diff-bug #8: the `""` and `''` cases repeat one filter path — reject, planned change: the criteria audit asked for both quote forms to pin the `''` premise
+- blame-history #1: D-005's reason contradicts the work log's "falsified by a user report" — reject, false: that line names the evidence class that would falsify the choice, not a report received
+- blame-history #2: D-005 does not address that `{{< li "" label="Bell" >}}` gave an element with a name — fix now, milestone-local Decisions entry 2026-10-25 (review)
+- blame-history #3: same as diff-bug #1 — follow-up, row "Match each warning to its own call"
+- blame-history #4: `check_aria.py:209` comment omits the empty cases — fix now, fixed 9b5a5a4
+- blame-history #5: CHANGELOG says any empty first argument, README a lone one — fix now, CHANGELOG narrowed to "only positional argument"
+- blame-history #6: the candidate row "Warn about an empty first argument" is still listed — reject, planned change: post-merge hygiene graduates it
+- prior-review #1: `{{< li "" wlpxtupd >}}` is neither documented nor tested, as M010 fixed for the shift case — follow-up, row "Say that an empty argument never shifts"
+- prior-review #2: lines over 100 columns — reject, style (as M010 diff-bug #8)
+- ripple #1: IP1's exception list omits the empty first argument — fix now, fixed 9b5a5a4
+- ripple #2: `lordicon.lua:12-13` exception list omits the empty argument — reject, false: lines 17-18 of the same comment state it
+- ripple #3: ROADMAP row "Warn about an empty first argument" stays in the present tense — reject, planned change: hygiene graduates it
+- ripple #4: `check_aria.py:209` comment — fix now, fixed 9b5a5a4 (same as blame-history #4)
+- ripple #5: `fixture_calls` docstring says `arg` is None only with no first argument — reject, false: that stays true, and an empty argument is ""
+- ripple #6: `aria.qmd:138` heading does not name the empty case — reject, false: the empty cases have their own heading at line 144
+- Return floor: no finding shows a criterion failing or a load-bearing defect; no return. Fix-now: 7, follow-up: 4 (3 new rows), rejected: 11.

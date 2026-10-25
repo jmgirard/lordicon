@@ -4,7 +4,7 @@ This file lists the changes in each version of the extension, newest first.
 
 ## 0.7.10
 
-- A `li` or `lif` call whose first argument is empty now shows no icon, and in HTML output the render warns. Examples are `{{< li "" >}}` and `{{< lif '' >}}`. Before, `li` made an icon with `src="https://cdn.lordicon.com/.json"`, a file that the CDN does not have, and `lif` made one with `src=""`. The render did not warn about the empty argument.
+- A `li` or `lif` call whose only positional argument is empty now shows no icon, and in HTML output the render warns. Examples are `{{< li "" >}}` and `{{< lif '' >}}`. Before, `li` made an icon with `src="https://cdn.lordicon.com/.json"`, a file that the CDN does not have, and `lif` made one with `src=""`. The render did not warn about the empty argument.
 
 ## 0.7.9
 
