@@ -89,6 +89,7 @@ start with a space → M010.
 - 2026-10-25: claim audit: 12 claims read, 2 corrected — _extensions/lordicon/lordicon.lua (the `call_arg` comment: a single inner `\` reads fine bare, so the comment names `\\` and a trailing `\`), CHANGELOG.md (lists `\` and `>}}`).
 - 2026-10-25: implement complete: verify clean (`check_aria.py` 86 cases, 46 warnings, 0 failures; `quarto render` exit 0, sitemap reverted); status review.
 - 2026-10-25: review fix: the plan's choice to copy Quarto's bare-token rule was falsified by a call on its own line (`{{< li it's >}}` fails the render); `call_arg` now writes bare only an argument of ASCII letters, digits, and `-._/:~+@`, a set no Quarto reader splits, rather than a longer list of characters to quote.
+- 2026-10-25: step-7 approval: m009-quote-call-arguments approved for merge
 
 ## Decisions
 
