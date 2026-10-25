@@ -71,6 +71,7 @@
 - 2026-10-25: T4 done: docstring and DESIGN Known issues and Architecture updated. `check_aria.py` exits 0 (65 cases, 33 warnings, gfm 0 warnings); `quarto render` exits 0 and changed only `<lastmod>` lines of `docs/sitemap.xml`, which was then restored; the `_extensions/` diff is 2 removed and 4 added `--` comment lines. No demo page changed, so the verify slot's browser look has nothing to open.
 - 2026-10-25: claim audit: not owed — internal tier.
 - 2026-10-25: implement complete; status review.
+- 2026-10-25: step-7 approval: m007-render-check-fixtures approved for merge
 
 ## Decisions
 <!-- owner: implement / review · append-only; milestone-local. -->
