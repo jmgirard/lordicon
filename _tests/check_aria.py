@@ -150,6 +150,7 @@ CASES["quoted-space"] = {"src": "mini fied.json", **DECORATIVE}
 CASES["quoted-dquote"] = {"src": 'https://cdn.lordicon.com/a "b" c\\d.json', **DECORATIVE}
 CASES["quoted-equals"] = {"src": "https://cdn.lordicon.com/x=y.json", **DECORATIVE}
 CASES["quoted-backslash"] = {"src": "https://cdn.lordicon.com/a\\b.json", **DECORATIVE}
+CASES["quoted-squote"] = {"src": "https://cdn.lordicon.com/it's.json", **DECORATIVE}
 
 SHOWN ={"aria-hidden": None, "aria-label": None}
 CASES.update({
@@ -270,6 +271,7 @@ WARNED.update({
     "quoted-dquote": [["{{< li 'a \"b\" c\\\\d' >}}", "skips the", '"src"']],
     "quoted-equals": [['{{< li "x=y" >}}', "skips the", '"src"']],
     "quoted-backslash": [['{{< li "a\\\\b" >}}', "skips the", '"src"']],
+    "quoted-squote": [['{{< li "it\'s" >}}', "skips the", '"src"']],
 })
 
 # The characters that the filter skips a key for: its INVALID_NAME pattern

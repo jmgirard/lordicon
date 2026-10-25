@@ -4,7 +4,7 @@ This file lists the changes in each version of the extension, newest first.
 
 ## 0.7.8
 
-- If a call's first argument holds a space, `"`, `=`, `\`, or `>}}`, its warnings now quote it. Quarto then reads the call in the warning back as the same argument. A warning about `{{< lif "my icon.json" >}}` now shows that call. Before, it showed `{{< lif my icon.json >}}`. An argument that holds `"` goes in single quotes, because Quarto has no escape for a quote inside double quotes.
+- Render warnings now quote a call's first argument unless it holds only ASCII letters, digits, and `-._/:~+@`. So an argument that holds a space, `"`, `'`, `=`, or `\` is quoted. Quarto reads the call in the warning back as the same argument. A warning about `{{< lif "my icon.json" >}}` now shows that call. Before, it showed `{{< lif my icon.json >}}`. An argument that holds `"` goes in single quotes, because Quarto has no escape for a quote inside double quotes.
 
 ## 0.7.7
 

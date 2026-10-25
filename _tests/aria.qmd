@@ -133,6 +133,7 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li 'a "b" c\d' id=quoted-dquote src=x >}}
 {{< li "x=y" id=quoted-equals src=x >}}
 {{< li "a\\b" id=quoted-backslash src=x >}}
+{{< li "it's" id=quoted-squote src=x >}}
 
 ## Attribute order
 
