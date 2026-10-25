@@ -210,6 +210,47 @@ local NAMES_OR_HIDES = {
   inert = true,
 }
 
+-- The role names that the ARIA specs define, so that the nameless-role check
+-- can skip a token that is not a role, as a browser does. Abstract roles are
+-- left out because they never apply. Sources: the non-abstract roles of
+-- WAI-ARIA 1.2 (section 5.4), the roles of DPUB-ARIA 1.1 (section 3.1) and of
+-- Graphics-ARIA 1.0 (section 4.1), and `image` from the WAI-ARIA 1.3 draft.
+local ROLE_LISTS = {
+  [[alert alertdialog application article banner blockquote button caption
+    cell checkbox code columnheader combobox complementary contentinfo
+    definition deletion dialog directory document emphasis feed figure form
+    generic grid gridcell group heading img insertion link list listbox
+    listitem log main marquee math meter menu menubar menuitem
+    menuitemcheckbox menuitemradio navigation none note option paragraph
+    presentation progressbar radio radiogroup region row rowgroup rowheader
+    scrollbar search searchbox separator slider spinbutton status strong
+    subscript superscript switch tab table tablist tabpanel term textbox time
+    timer toolbar tooltip tree treegrid treeitem]],
+  [[doc-abstract doc-acknowledgments doc-afterword doc-appendix doc-backlink
+    doc-biblioentry doc-bibliography doc-biblioref doc-chapter doc-colophon
+    doc-conclusion doc-cover doc-credit doc-credits doc-dedication doc-endnote
+    doc-endnotes doc-epigraph doc-epilogue doc-errata doc-example doc-footnote
+    doc-foreword doc-glossary doc-glossref doc-index doc-introduction
+    doc-noteref doc-notice doc-pagebreak doc-pagefooter doc-pageheader
+    doc-pagelist doc-part doc-preface doc-prologue doc-pullquote doc-qna
+    doc-subtitle doc-tip doc-toc]],
+  [[graphics-document graphics-object graphics-symbol]],
+  [[image]],
+}
+local KNOWN_ROLES = {}
+for _, list in ipairs(ROLE_LISTS) do
+  for name in list:gmatch("[^\n ]+") do
+    KNOWN_ROLES[name] = true
+  end
+end
+
+-- Roles that a screen reader announces as an image and that need a name.
+local IMAGE_ROLES = {
+  img = true,
+  image = true,
+  ["graphics-symbol"] = true,
+}
+
 -- Warn about an icon that the page gives an image role but no name: a screen
 -- reader then announces an image and cannot say what it shows. `keys` is
 -- sorted, and for keys that differ only in letter case the page keeps the
@@ -230,12 +271,19 @@ local function warn_nameless_role(call, keys, kwargs, label)
   if role == nil then
     return
   end
-  -- The check reads only the first token of the role. A browser uses the
-  -- first role it knows, so a value such as "bogus img" is not caught.
-  -- ASCII whitespace is spelled out because %s follows the locale.
-  local first = role:match("^[\t\n\f\r ]*([^\t\n\f\r ]+)")
-  first = first and ascii_lower(first)
-  if first ~= "img" and first ~= "image" then
+  -- A browser uses the first token of the role that names a role it knows,
+  -- so the check skips tokens until one is in KNOWN_ROLES: "bogus img" gives
+  -- img, and "presentation img" gives presentation. ASCII whitespace is
+  -- spelled out because %s follows the locale.
+  local first
+  for token in role:gmatch("[^\t\n\f\r ]+") do
+    local name = ascii_lower(token)
+    if KNOWN_ROLES[name] then
+      first = name
+      break
+    end
+  end
+  if not IMAGE_ROLES[first] then
     return
   end
   local hidden = kept["aria-hidden"]

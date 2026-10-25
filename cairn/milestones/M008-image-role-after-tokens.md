@@ -81,10 +81,10 @@ comment, and a re-render of `docs/`.
       `wai-aria-1-3.md`, the last recording only `image`), each with its
       URL, section, read date, and role list with count, and add their
       `INDEX.md` lines.
-- [ ] T2: Add the AC1 calls to `_tests/aria.qmd` and their expectations to
+- [x] T2: Add the AC1 calls to `_tests/aria.qmd` and their expectations to
       `_tests/check_aria.py` (`CASES` and `WARNED`). Run the check and see
       the new warning cases fail before the filter changes.
-- [ ] T3: In `lordicon.lua`, add the known-role table built from the T1
+- [x] T3: In `lordicon.lua`, add the known-role table built from the T1
       notes and replace the first-token match (line 236) with a scan that
       splits on ASCII whitespace and takes the first known token. Run the
       check green. Compare the table with the notes' lists by a one-off
@@ -107,3 +107,5 @@ comment, and a re-render of `docs/`.
 - 2026-10-25: version and changelog: patch bump to 0.7.7 per D-001, as 0.7.5 did for the first version of this warning.
 - 2026-10-25: implement started on branch m008-image-roles; the untracked `.DS_Store` stays unstaged.
 - 2026-10-25: T1 done: four source notes and INDEX lines. A parse of the fetched specs gives 82 non-abstract WAI-ARIA 1.2 roles (12 abstract left out), 41 DPUB-ARIA 1.1 roles, 3 Graphics-ARIA 1.0 roles, and `image` from the 1.3 draft: 127 names.
+- 2026-10-25: T2 done: 17 fixture calls (9 warn, 8 do not). Before the filter change the check failed only on the 9 new warnings (33 of 42 read), and every attribute case passed, so two spaces and U+00A0 reach the page as written. The U+00A0 was written by a one-line Python replace, because the Edit tool turned it into a space.
+- 2026-10-25: T3 done: `ROLE_LISTS`, `KNOWN_ROLES`, and `IMAGE_ROLES` in `lordicon.lua`, and a token scan replacing the first-token match. Check: 82 cases, 42 warnings, 0 failures. A one-off script found the Lua table, the notes, and a fresh parse of the saved specs equal at 127 names each. Choice: the lists are kept as one string per spec, so each can be compared with its note line for line.

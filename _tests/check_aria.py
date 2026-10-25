@@ -165,6 +165,30 @@ CASES.update({
     "named-first-presentation": {**SHOWN, "role": "presentation img"},
     "named-role-clash": SHOWN,
 })
+# The role a browser uses is the first token that names a role it knows.
+AFTER_TOKENS = {
+    "nameless-after-bogus": "bogus img",
+    "nameless-after-abstract": "landmark img",
+    "nameless-after-upper": "BOGUS Img",
+    "nameless-two-spaces": "bogus  img",
+    "nameless-after-bogus-image": "bogus image",
+    "nameless-symbol": "graphics-symbol",
+    "nameless-symbol-img": "graphics-symbol img",
+    "nameless-after-bogus-symbol": "bogus graphics-symbol",
+    "nameless-symbol-mixed": "Graphics-Symbol img",
+}
+OTHER_FIRST = {
+    "named-bogus-presentation": "bogus presentation img",
+    "named-button": "button img",
+    "named-doc-cover": "doc-cover img",
+    "named-graphics-document": "graphics-document img",
+    "named-bogus": "bogus",
+    "named-nbsp": "bogus img",
+}
+for case, role in {**AFTER_TOKENS, **OTHER_FIRST}.items():
+    CASES[case] = {**SHOWN, "role": role}
+CASES["named-symbol-label"] = {"aria-hidden": None, "role": "bogus graphics-symbol", "aria-label": "Bell"}
+CASES["named-symbol-hidden"] = {"aria-hidden": "true", "role": "graphics-symbol", "aria-label": None}
 TWICE["nameless-hidden-clash"] = {"aria-hidden": 2}
 TWICE["named-role-clash"] = {"role": 2}
 
@@ -224,6 +248,7 @@ for case, role in {
     "clash-role": "img",
     "clash-two": "img",
     "clash-empty": "img",
+    **AFTER_TOKENS,
 }.items():
     WARNED.setdefault(case, []).append([CALL, f'role="{role}"', NAMELESS, FIX])
 WARNED["nameless-hidden-clash"].append(
