@@ -127,3 +127,27 @@ comment, and a re-render of `docs/`.
 - AC2: the comparison script again finds the Lua table, the notes, and the specs at 127 names each with no difference. Each note names its URL, section (§5.4 and §7.1; §3.1; §4.1; `#image`), read date 2026-10-25, and count (82, 41, 3, and "Roles recorded, 1" on `wai-aria-1-3.md`).
 - AC3: README.md:125-130, index.qmd:61, and CHANGELOG.md `## 0.7.7` (lines 7-8) say the render reads the first word of `role` that names a non-abstract role in the ARIA specs and warns for `img`, `image`, and `graphics-symbol`. DESIGN.md:57 names the three roles and `KNOWN_ROLES`. The comment above the token scan in `lordicon.lua` states the first-non-abstract-role rule and points to `IMAGE_ROLES`, whose comment names the three roles. `_extension.yml` line 3 reads `version: 0.7.7`. `docs/index.html` holds the new sentence once and was committed in 086a6dc, the same commit as the last `index.qmd` change.
 - Gate: `cairn_validate.py` all checks passed (exit 0); `cairn_impact.py --changed` reports no changed principle. Version markers: the release-walk names only `_extension.yml`, which reads 0.7.7. Verify render: `check_aria.py` renders `aria.qmd` green on the code under review, and `quarto render` ran at 086a6dc with no later code change. Changelog: `CHANGELOG.md` has a `## 0.7.7` section for this change.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: the warning text says a screen reader "announces an image", which the docs no longer claim for `graphics-symbol` — reject (false): Graphics-AAM 1.0 §7.2 maps `graphics-symbol` to the image role in MSAA, UIA, ATK, and AXAPI.
+- diff-bug #2: `named-symbol-label` and `named-symbol-hidden` re-test the name and hiding branch — reject (planned change): AC1 names both calls.
+- diff-bug #3: `graphics-symbol img` runs the same path as `graphics-symbol` — reject (planned change): AC1 names it as the spec's fallback form.
+- diff-bug #4: `Graphics-Symbol img` repeats the case-folding path of `BOGUS Img` — reject (planned change): AC1 names it.
+- diff-bug #5: `bogus image` repeats the path of `bogus img` — reject (planned change): AC1 names it.
+- diff-bug #6: `bogus  img` adds no filter path — reject (planned change): AC1 names it.
+- diff-bug #7: `button img` overlaps `bogus presentation img` — reject (planned change): AC1 names both.
+- diff-bug #8: the test comment says the role is the one a browser "knows", not the filter's list — fix now.
+- diff-bug #9: README.md line 130 runs to 145 characters among lines wrapped near 80 — fix now.
+- diff-bug #10: the docs do not say that `image` comes from the WAI-ARIA 1.3 draft — reject (false): the text lists `image` apart from the three specs ("plus `image`") and states nothing wrong.
+- diff-bug #11: `ROLE_LISTS` splits on `[^\n ]+`, so a later tab would join two names — fix now: the split now matches `[a-z-]+`.
+- diff-bug #12: the absorbed candidate row is still in the ROADMAP — reject (planned change): post-merge hygiene graduates a row marked `started M008`.
+- blame-history #1: `role="doc-cover img"` gives no warning, though a browser without DPUB-ARIA uses `img` — reject (planned change): Scope Out names `doc-cover`, and the docs state the WAI-ARIA rule, not each browser's support.
+- blame-history #2: the choice to leave out the 1.3 draft roles has no D-entry — reject (false): a deferral lives in the ROADMAP, here the parked row "Know the WAI-ARIA 1.3 draft roles", not in DECISIONS.md.
+- blame-history #3: pages with a nameless `role="<other> img"` or `graphics-symbol` now warn — reject (planned change): the Goal calls for it and CHANGELOG 0.7.7 states it.
+- blame-history #4: the new README and index.qmd prose is not wrapped like the M005 text — README fixed with diff-bug #9; index.qmd reject (style): its paragraphs are one line each throughout.
+- blame-history #5: `wai-aria-1-3.md` says the warning covers `image` since 0.7.5, true only for a first-token `image` — fix now.
+- prior-review #1: no planted-defect run is recorded for the new scan — fix now: a plant that stops the scan at any `IMAGE_ROLES` token (skipping `KNOWN_ROLES`) turned the check red, 47 warnings against 42 expected, and the file was restored.
+- prior-review #2: the scan folds case with `ascii_lower`, while M004 chose `pandoc.text.lower` for clashes — reject (false): every role name is lowercase ASCII, and `pandoc.text.lower` would only add matches through non-ASCII letters such as U+212A KELVIN SIGN, which an ASCII role match does not accept.
+- prior-review #3: README line 130 breaks the wrap — fixed with diff-bug #9.
+- prior-review #4: `graphics-symbol` warnings rest on a spec whose change log names a `group` superclass — reject (planned change): the plan gate chose it, and Graphics-AAM maps the role to image.
+- ripple #1-3: the notes say the table "takes the 82/41/3 names" though it holds 127 — reject (false): each note says the table takes that note's names, which it does.
+- ripple #4: the ROADMAP candidate row still describes the bug as open — reject (planned change): hygiene graduates it.
