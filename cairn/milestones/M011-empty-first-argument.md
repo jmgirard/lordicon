@@ -21,10 +21,10 @@ A `li` or `lif` call whose first argument is empty, such as `{{< li "" >}}`, mak
 
 ## Acceptance criteria
 
-- [ ] AC1: A `li` or `lif` call whose first argument is empty gives no `<lord-icon>` element in an HTML render, as `python3 _tests/check_aria.py` shows in the page and in the raw filter output for four new `_tests/aria.qmd` cases: `{{< li "" >}}` on its own line, `{{< li '' >}}` inside a paragraph, `{{< lif '' >}}` on its own line, and `{{< lif "" >}}` inside a paragraph (RB tripwire: ip-touching).
-- [ ] AC2: In the same run, the HTML render's log holds exactly one lordicon warning for each of those four calls, holding the call as `{{< li "" >}}` or `{{< lif "" >}}`, the text `has an empty first argument, so it shows no icon.`, and the example call `{{< li wlpxtupd >}}` or `{{< lif icon.json >}}`; the run's `gfm` render of the fixture gives no icon and no lordicon warning.
-- [ ] AC3: README.md's Customizing section says that a call whose only positional argument is empty, such as `{{< li "" >}}`, shows no icon and that the render warns; CHANGELOG.md's first version section is `## 0.7.10` and holds that change; `_extensions/lordicon/_extension.yml` reads `version: 0.7.10`.
-- [ ] AC4: `python3 _tests/check_aria.py` exits 0, and `quarto render` at the repo root succeeds.
+- [x] AC1: A `li` or `lif` call whose first argument is empty gives no `<lord-icon>` element in an HTML render, as `python3 _tests/check_aria.py` shows in the page and in the raw filter output for four new `_tests/aria.qmd` cases: `{{< li "" >}}` on its own line, `{{< li '' >}}` inside a paragraph, `{{< lif '' >}}` on its own line, and `{{< lif "" >}}` inside a paragraph (RB tripwire: ip-touching).
+- [x] AC2: In the same run, the HTML render's log holds exactly one lordicon warning for each of those four calls, holding the call as `{{< li "" >}}` or `{{< lif "" >}}`, the text `has an empty first argument, so it shows no icon.`, and the example call `{{< li wlpxtupd >}}` or `{{< lif icon.json >}}`; the run's `gfm` render of the fixture gives no icon and no lordicon warning.
+- [x] AC3: README.md's Customizing section says that a call whose only positional argument is empty, such as `{{< li "" >}}`, shows no icon and that the render warns; CHANGELOG.md's first version section is `## 0.7.10` and holds that change; `_extensions/lordicon/_extension.yml` reads `version: 0.7.10`.
+- [x] AC4: `python3 _tests/check_aria.py` exits 0, and `quarto render` at the repo root succeeds.
 
 ## Coverage
 
@@ -64,3 +64,11 @@ A `li` or `lif` call whose first argument is empty, such as `{{< li "" >}}`, mak
 ## Decisions
 
 ## Review
+
+Evidence gathered 2026-10-25 on branch m011-empty-first-argument at b2f7c83, level with origin/main 1bb7a2b.
+
+- AC1: `python3 _tests/check_aria.py` exit 0, 0 failures, 92 icons for 92 cases in the page and in the filter output. `NO_ICON` holds `empty-li`, `empty-lif` (own lines, `""` and `''`) and `empty-li-inline`, `empty-lif-inline` (one paragraph, `''` and `""`), so any `<lord-icon>` from them would fail. A separate HTML render of the fixture's "An empty first argument" section gave 0 `<lord-icon>`. T1's run against the unchanged filter failed on all four cases in both places.
+- AC2: same run: log 53 of 53 lordicon warnings, 0 failures, with each `WARNED` text tuple matched once per case. The separate render printed 4 warnings: twice `lordicon: {{< li "" >}} has an empty first argument, so it shows no icon. Put the icon code first, such as {{< li wlpxtupd >}}.` and twice the `lif` form ending `such as {{< lif icon.json >}}.` The check's `gfm` render: 0 lordicon warnings, no `lord-icon` or `{{<` in 776 characters; the separate `gfm` render matched (0 and 0).
+- AC3: README.md:111-113, in `## Customizing` (README.md:62, next heading 115), says a call whose only positional argument is empty, such as `{{< li "" >}}`, shows no icon and the render warns. CHANGELOG.md's first version heading is `## 0.7.10` (line 5), and its entry (line 7) names the empty first argument. `_extensions/lordicon/_extension.yml:3` reads `version: 0.7.10`.
+- AC4: `python3 _tests/check_aria.py` exit 0 (AC1 run); `quarto render` at the repo root exit 0, which changed only `docs/sitemap.xml`, reverted.
+- Gate: `cairn_validate.py` all checks passed. `cairn_impact.py --changed` reported no changed principles, because it reads uncommitted edits and the IP1/IP5 edit is in T4's commit; `cairn_impact.py IP1 IP5` listed the references. Live ones outside history: DESIGN.md:134 (GP5 cites IP1, still true) and the ROADMAP row "Decide whether IP1 names Quarto's drops", whose list of IP1 exceptions was corrected in place to add the empty first argument. Version markers: `_extension.yml` and CHANGELOG.md both say 0.7.10. Changelog entry present. The verify render ran on the review head.
