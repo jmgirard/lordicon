@@ -68,7 +68,7 @@ which the user declined at the question set.
       (LESSONS, M005), so give the AC5 cases page-side expectations. Give the
       AC1 cases a way to expect no `<lord-icon>`. Confirm that the HTML and
       `gfm` renders now stop at `lordicon.lua:390`.
-- [ ] T2: In `li` and `lif`, return no element when `args[1]` is nil, and in
+- [x] T2: In `li` and `lif`, return no element when `args[1]` is nil, and in
       `html:js` formats give the warning of AC1 before returning. Name the
       call as `{{< li >}}` or `{{< lif >}}`, and say what to write instead,
       such as `{{< li wlpxtupd >}}`. Run the check until it exits 0.
@@ -98,6 +98,7 @@ which the user declined at the question set.
 - 2026-10-25: changelog: one entry under 0.7.9 (D-001, D-002).
 - 2026-10-25: implement started on branch m010-leading-space-values; unrelated untracked `.DS_Store` left unstaged.
 - 2026-10-25: T1 done: six fixture cases; `fixture_calls` drops a positional argument or value that starts with a space or tab, so `raw_output.lua` gets what a render gives the filter and the AC5 cases share one expectation for page and filter (chosen over page-only expectations); before T2 the HTML and `gfm` renders stopped at `lordicon.lua:406` (`li`) and `:480` (`lif`) with "Cannot get Attr from TypeNil" (the scope's 390 and 464 predate M009's added lines); two planted defects (no drop in `fixture_calls`; a `lif` with no argument that returns an icon) turned the check red.
+- 2026-10-25: T2 done: `li` and `lif` call `no_first_argument` when `args[1]` is nil, which warns in `html:js` formats only and returns `pandoc.Inlines({})` (chosen over `pandoc.Null()`, which `quarto pandoc lua` lacks); check exits 0 (91 cases, 49 warnings, 0 in `gfm`) and `quarto render` succeeds.
 
 ## Decisions
 
