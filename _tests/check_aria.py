@@ -258,17 +258,28 @@ def run(cmd, cwd, env=None):
     return done
 
 
-def render_page():
-    """Render the fixture, returning the page and the render's log."""
+def render(to, output):
+    """Render the fixture to a format, returning the output file and the
+    render's log."""
     with tempfile.TemporaryDirectory() as tmp:
         workdir = Path(tmp)
         shutil.copytree(ROOT / "_extensions", workdir / "_extensions")
         shutil.copy(FIXTURE, workdir)
         shutil.copy(ROOT / "gift_raw.json", workdir)
         shutil.copy(ROOT / "_tests" / "minified.json", workdir)
-        cmd = ["quarto", "render", "aria.qmd", "--to", "html"]
+        cmd = ["quarto", "render", "aria.qmd", "--to", to]
         done = run(cmd, workdir, {**os.environ, "LC_ALL": "C.UTF-8"})
-        return (workdir / "aria.html").read_text(encoding="utf-8"), done.stderr
+        return (workdir / output).read_text(encoding="utf-8"), done.stderr
+
+
+def check_non_html():
+    """A render to a format other than HTML gives no icon and no warning."""
+    text, log = render("gfm", "aria.md")
+    failures = [f"gfm: the output holds {s!r}" for s in ("lord-icon", "{{<") if s in text]
+    lines = [line for line in log.split("\n") if "lordicon:" in line]
+    failures += [f"gfm: warning {line!r}" for line in lines]
+    print(f"gfm: {len(text)} characters and {len(lines)} lordicon warnings read")
+    return failures
 
 
 def unquote(part):
@@ -384,13 +395,14 @@ def check(where, html):
 
 def main():
     calls = fixture_calls()
-    page, log = render_page()
+    page, log = render("html", "aria.html")
     raw = filter_output(calls)
     failures = (
         check("page", page)
         + check("filter", raw)
         + check_spelling(calls, raw)
         + check_warnings(calls, log)
+        + check_non_html()
     )
     for line in failures:
         print("FAIL", line)
