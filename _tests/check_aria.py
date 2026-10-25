@@ -422,20 +422,25 @@ def check_spelling(calls, raw):
 
 
 def check_warnings(calls, log):
-    """Each warning in WARNED matches exactly one lordicon line of the log."""
+    """Each warning in WARNED matches exactly one lordicon line of the log. A
+    warning names the call but not its id, so cases whose warnings hold the
+    same texts match one line each between them."""
     lines = [line for line in log.split("\n") if "lordicon:" in line]
     failures = []
     expected = 0
+    wanted = {}
     for call in calls:
         case = call["kwargs"].get("id")
         words = [call["shortcode"]] + ([call["arg"]] if call["arg"] is not None else [])
         name = f"{{{{< {' '.join(words)} >}}}}"
         for warning in WARNED.get(case, []):
-            texts = [name if text is CALL else text for text in warning]
-            found = [line for line in lines if all(text in line for text in texts)]
-            if len(found) != 1:
-                failures.append(f"log {case}: {len(found)} warnings hold {texts!r}")
+            texts = tuple(name if text is CALL else text for text in warning)
+            wanted.setdefault(texts, []).append(case)
             expected += 1
+    for texts, cases in wanted.items():
+        found = [line for line in lines if all(text in line for text in texts)]
+        if len(found) != len(cases):
+            failures.append(f"log {', '.join(cases)}: {len(found)} warnings hold {list(texts)!r}")
     if len(lines) != expected:
         failures.append(f"log: {len(lines)} lordicon warnings, expected {expected}")
     print(f"log: {len(lines)} lordicon warnings read, {expected} expected")
