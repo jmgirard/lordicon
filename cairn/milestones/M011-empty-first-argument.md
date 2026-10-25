@@ -61,6 +61,7 @@ A `li` or `lif` call whose first argument is empty, such as `{{< li "" >}}`, mak
 - 2026-10-25: claim audit: 18 claims read, 0 corrected — CHANGELOG.md, README.md, _extensions/lordicon/lordicon.lua, _extensions/lordicon/_extension.yml, _tests/check_aria.py, _tests/aria.qmd. The reader noted that `{{< li "" wlpxtupd >}}` also shows no icon; the README keeps the narrower claim, because `fixture_calls` cannot test that call (Scope Out).
 - 2026-10-25: catch-up minor amendment to T1: the four cases went under a new `## An empty first argument` heading (`_tests/aria.qmd:144`), not under "A first argument that Quarto drops, or none", because Quarto does not drop an empty argument.
 - 2026-10-25: implement complete; `python3 _tests/check_aria.py` exits 0 and `quarto render` at the root exits 0; status set to review.
+- 2026-10-25: step-7 approval: m011-empty-first-argument approved for merge
 
 ## Decisions
 
@@ -85,10 +86,10 @@ Evidence gathered 2026-10-25 on branch m011-empty-first-argument at b2f7c83, lev
 - diff-bug #7: IP1's "the render warns" leaves out the `html:js` condition — reject, style: IP3 states the format rule for every warning
 - diff-bug #8: the `""` and `''` cases repeat one filter path — reject, planned change: the criteria audit asked for both quote forms to pin the `''` premise
 - blame-history #1: D-005's reason contradicts the work log's "falsified by a user report" — reject, false: that line names the evidence class that would falsify the choice, not a report received
-- blame-history #2: D-005 does not address that `{{< li "" label="Bell" >}}` gave an element with a name — fix now, milestone-local Decisions entry 2026-10-25 (review)
+- blame-history #2: D-005 does not address that `{{< li "" label="Bell" >}}` gave an element with a name — fix now, milestone-local Decisions entry 2026-10-25 (review), fixed 510f23a
 - blame-history #3: same as diff-bug #1 — follow-up, row "Match each warning to its own call"
 - blame-history #4: `check_aria.py:209` comment omits the empty cases — fix now, fixed 9b5a5a4
-- blame-history #5: CHANGELOG says any empty first argument, README a lone one — fix now, CHANGELOG narrowed to "only positional argument"
+- blame-history #5: CHANGELOG says any empty first argument, README a lone one — fix now, CHANGELOG narrowed to "only positional argument", fixed 510f23a
 - blame-history #6: the candidate row "Warn about an empty first argument" is still listed — reject, planned change: post-merge hygiene graduates it
 - prior-review #1: `{{< li "" wlpxtupd >}}` is neither documented nor tested, as M010 fixed for the shift case — follow-up, row "Say that an empty argument never shifts"
 - prior-review #2: lines over 100 columns — reject, style (as M010 diff-bug #8)
