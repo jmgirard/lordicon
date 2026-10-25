@@ -1,6 +1,6 @@
 # M008: Catch image roles after other tokens
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -71,7 +71,7 @@ comment, and a re-render of `docs/`.
 ## Coverage
 
 - AC1 → T2, T3
-- AC2 → T1, T3
+- AC2 → T1, T3, T5
 - AC3 → T4
 
 ## Tasks
@@ -93,6 +93,8 @@ comment, and a re-render of `docs/`.
       DESIGN.md convention line (line 57), the Lua comment, a CHANGELOG
       0.7.7 entry, and `_extension.yml` to 0.7.7. Run `quarto render`, keep
       the re-rendered `docs/`, and look at the home page in a browser.
+- [x] T5: State the role count on `cairn/references/wai-aria-1-3.md`
+      (review return 1).
 
 ## Work log
 
@@ -113,6 +115,7 @@ comment, and a re-render of `docs/`.
 - 2026-10-25: claim audit: 22 claims read, 2 corrected — CHANGELOG.md, README.md, index.qmd (the role rule now says non-abstract, and "announces an image" became "cannot say what the icon shows"), lordicon.lua (the IMAGE_ROLES comment cites the specs' name requirement, not screen readers). The same reader re-read both and found them true; `docs/index.html` re-rendered.
 - 2026-10-25: all tasks done, check green; status set to review.
 - 2026-10-25: review return 1: AC2 — `cairn/references/wai-aria-1-3.md` names no role count; status back to in-progress.
+- 2026-10-25: minor amendment: T5 added for review return 1, Coverage AC2 → T1, T3, T5. T5 done: the 1.3 note now states "Roles recorded, 1: `image`"; validate green; no code changed, so the check result stands. Status set to review.
 
 ## Decisions
 

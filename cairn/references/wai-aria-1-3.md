@@ -10,6 +10,7 @@ Extraction: verified 2026-10-25 against the source by a read of the fetched HTML
 
 ## Extracted values
 
+- Roles recorded, 1: `image`. The draft defines more roles, and this note leaves them out.
 - `image`, `#image`: "A container for a collection of elements that form an image. See synonym `img`."
 - `img`, `#img`: the same text, with "See synonym `image`."
 
