@@ -271,10 +271,11 @@ local function warn_nameless_role(call, keys, kwargs, label)
   if role == nil then
     return
   end
-  -- A browser uses the first token of the role that names a role it knows,
-  -- so the check skips tokens until one is in KNOWN_ROLES: "bogus img" gives
-  -- img, and "presentation img" gives presentation. ASCII whitespace is
-  -- spelled out because %s follows the locale.
+  -- WAI-ARIA tells a browser to use the first token of the role that names a
+  -- role, so the check skips tokens until one is in KNOWN_ROLES, the roles
+  -- that the ARIA specs define: "bogus img" gives img, and "presentation img"
+  -- gives presentation. The warning covers the roles in IMAGE_ROLES. ASCII
+  -- whitespace is spelled out because %s follows the locale.
   local first
   for token in role:gmatch("[^\t\n\f\r ]+") do
     local name = ascii_lower(token)

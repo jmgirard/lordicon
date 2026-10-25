@@ -89,7 +89,7 @@ comment, and a re-render of `docs/`.
       splits on ASCII whitespace and takes the first known token. Run the
       check green. Compare the table with the notes' lists by a one-off
       script and record the result in the work log.
-- [ ] T4: Update the README (line 125), `index.qmd` (line 61), the
+- [x] T4: Update the README (line 125), `index.qmd` (line 61), the
       DESIGN.md convention line (line 57), the Lua comment, a CHANGELOG
       0.7.7 entry, and `_extension.yml` to 0.7.7. Run `quarto render`, keep
       the re-rendered `docs/`, and look at the home page in a browser.
@@ -109,3 +109,4 @@ comment, and a re-render of `docs/`.
 - 2026-10-25: T1 done: four source notes and INDEX lines. A parse of the fetched specs gives 82 non-abstract WAI-ARIA 1.2 roles (12 abstract left out), 41 DPUB-ARIA 1.1 roles, 3 Graphics-ARIA 1.0 roles, and `image` from the 1.3 draft: 127 names.
 - 2026-10-25: T2 done: 17 fixture calls (9 warn, 8 do not). Before the filter change the check failed only on the 9 new warnings (33 of 42 read), and every attribute case passed, so two spaces and U+00A0 reach the page as written. The U+00A0 was written by a one-line Python replace, because the Edit tool turned it into a space.
 - 2026-10-25: T3 done: `ROLE_LISTS`, `KNOWN_ROLES`, and `IMAGE_ROLES` in `lordicon.lua`, and a token scan replacing the first-token match. Check: 82 cases, 42 warnings, 0 failures. A one-off script found the Lua table, the notes, and a fresh parse of the saved specs equal at 127 names each. Choice: the lists are kept as one string per spec, so each can be compared with its note line for line.
+- 2026-10-25: T4 done: README, `index.qmd`, CHANGELOG 0.7.7, DESIGN.md convention line (corrected M008), the Lua comment, `_extension.yml` 0.7.7. Check green (82 cases, 42 warnings); `quarto render` re-rendered `docs/`, sitemap kept per the M002 lesson. Served `docs/` at localhost: 17 of 17 home-page icons drew an SVG, no console errors. The style hook still flags older README lines this milestone does not touch.
