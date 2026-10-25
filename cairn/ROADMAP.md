@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-25 (review M007: archived; graduated 1 row, added 0
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M008 | Catch image roles after other tokens | planned | — | normal | milestones/M008-image-role-after-tokens.md |
+| M008 | Catch image roles after other tokens | review | — | normal | milestones/M008-image-role-after-tokens.md |
 | M007 | Check sorting, non-HTML output, and Minified spellings | done | — | normal | milestones/archive/M007-render-check-fixtures.md |
 | M006 | Name the call in the Minified warning | done | — | normal | milestones/archive/M006-minified-warning-call.md |
 | M005 | Warn when a role icon has no name | done | — | normal | milestones/archive/M005-nameless-role-warning.md |

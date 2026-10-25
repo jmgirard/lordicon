@@ -54,10 +54,11 @@ Convenience shorthands do not qualify.
   pass it. No label gives `aria-hidden="true"`, unless the user passes a
   non-empty `aria-hidden`, `aria-label`, `aria-labelledby`, or `role` (corrected M001).
   These four names match in any letter case (corrected M003).
-- An icon whose kept `role` starts with the token `img` or `image`, with no
-  `aria-label`, `aria-labelledby`, `title`, `hidden`, or `inert` and no
-  `aria-hidden` of `true`, gets one render warning per call that it has no
-  name (M005).
+- An icon whose kept `role` has `img`, `image`, or `graphics-symbol` as its
+  first token that names a role in `KNOWN_ROLES` (WAI-ARIA 1.2, DPUB-ARIA 1.1,
+  Graphics-ARIA 1.0, and `image`), with no `aria-label`, `aria-labelledby`,
+  `title`, `hidden`, or `inert` and no `aria-hidden` of `true`, gets one render
+  warning per call that it has no name (M005, corrected M008).
 - Forwarded keys in one call that are equal after `pandoc.text.lower`, and a
   forwarded key such as `Label` that lowercases to `label`, still reach the
   element, and the render gives one warning per kind for each call (M004).

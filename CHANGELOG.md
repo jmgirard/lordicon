@@ -2,6 +2,11 @@
 
 This file lists the changes in each version of the extension, newest first.
 
+## 0.7.7
+
+- The nameless-image warning now skips words in `role` that are not roles. It reads the first word that names a non-abstract ARIA role, which is the rule that WAI-ARIA gives browsers. Before, it read only the first word, so `role="bogus img"` gave no warning. The known roles are the non-abstract roles of WAI-ARIA 1.2, the roles of DPUB-ARIA 1.1 and Graphics-ARIA 1.0, and `image`.
+- The warning now also covers `graphics-symbol`, a role that Graphics-ARIA 1.0 says needs a name. That spec suggests `role="graphics-symbol img"`. If such an icon has no name, the render now warns.
+
 ## 0.7.6
 
 - The Minified-export warning of `lif` now names the shortcode call, such as `{{< lif icon.json >}}`, as the other render warnings do. Before, it named only the file.

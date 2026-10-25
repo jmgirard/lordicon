@@ -122,10 +122,14 @@ readers announce the icon:
 {{< li wlpxtupd role="img" aria-label="Loading complete" >}}
 ```
 
-If an icon gets `role="img"` (or `role="image"`) but no name, the render warns.
-A screen reader then announces an image without saying what it shows.
-A name comes from `label`, `aria-label`, `aria-labelledby`, or `title`. If you
-also pass `aria-hidden="true"`, `hidden`, or `inert`, the render does not warn.
+If an icon gets an image role (`img`, `image`, or `graphics-symbol`) but no
+name, the render warns. A screen reader then cannot say what the icon shows.
+The render reads the first word of `role` that names a non-abstract role in
+the ARIA specs, which is the rule that WAI-ARIA gives browsers. These specs are
+WAI-ARIA 1.2, DPUB-ARIA 1.1, and Graphics-ARIA 1.0, plus `image`. So
+`role="bogus img"` warns, and `role="presentation img"` does not. A name comes
+from `label`, `aria-label`, `aria-labelledby`, or `title`. If you also pass
+`aria-hidden="true"`, `hidden`, or `inert`, the render does not warn.
 
 ## Note
 

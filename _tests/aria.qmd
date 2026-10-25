@@ -104,6 +104,29 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li nnpres id=named-first-presentation role="presentation img" >}}
 {{< li nnclash id=named-role-clash role=img Role=presentation >}}
 
+## Image role after other tokens
+
+{{< li nrbogus id=nameless-after-bogus role="bogus img" >}}
+{{< li nrabstract id=nameless-after-abstract role="landmark img" >}}
+{{< li nrcase id=nameless-after-upper role="BOGUS Img" >}}
+{{< li nrspaces id=nameless-two-spaces role="bogus  img" >}}
+{{< li nrbimage id=nameless-after-bogus-image role="bogus image" >}}
+{{< li nrsym id=nameless-symbol role="graphics-symbol" >}}
+{{< li nrsymimg id=nameless-symbol-img role="graphics-symbol img" >}}
+{{< li nrbsym id=nameless-after-bogus-symbol role="bogus graphics-symbol" >}}
+{{< li nrsymup id=nameless-symbol-mixed role="Graphics-Symbol img" >}}
+
+## Another role first, or a name
+
+{{< li nnbpres id=named-bogus-presentation role="bogus presentation img" >}}
+{{< li nnbutton id=named-button role="button img" >}}
+{{< li nncover id=named-doc-cover role="doc-cover img" >}}
+{{< li nngdoc id=named-graphics-document role="graphics-document img" >}}
+{{< li nnbogus id=named-bogus role="bogus" >}}
+{{< li nnnbsp id=named-nbsp role="bogus img" >}}
+{{< li nnsymlab id=named-symbol-label role="bogus graphics-symbol" aria-label="Bell" >}}
+{{< li nnsymhid id=named-symbol-hidden role="graphics-symbol" aria-hidden=true >}}
+
 ## Attribute order
 
 {{< li wlpxtupd trigger=hover id=sorted Zeta=1 @click=2 class=big data-a=3 >}}
