@@ -1,13 +1,13 @@
 # M008: Catch image roles after other tokens
 
-- **Status:** planned
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
 - **Principles touched:** IP1, IP3, GP2, GP4
 - **Resolves:** —
 - **Surface tier:** user-facing — it changes which shortcode calls give a render warning, and the README and demo text that describe it
-- **Branch/PR:** —
+- **Branch/PR:** m008-image-roles
 
 ## Goal
 
@@ -76,7 +76,7 @@ comment, and a re-render of `docs/`.
 
 ## Tasks
 
-- [ ] T1: Write the four source notes from `templates/source-note.md`
+- [x] T1: Write the four source notes from `templates/source-note.md`
       (`wai-aria-1-2.md`, `dpub-aria-1-1.md`, `graphics-aria-1-0.md`,
       `wai-aria-1-3.md`, the last recording only `image`), each with its
       URL, section, read date, and role list with count, and add their
@@ -105,3 +105,5 @@ comment, and a re-render of `docs/`.
 - 2026-10-25: plan gate chose the published role lists plus `image` over adding the WAI-ARIA 1.3 draft roles, because the draft can change; falsified by a user report of a false warning for a 1.3 role placed first.
 - 2026-10-25: criteria audit (full mode, fresh Opus reader): 6 findings, all fixed — docs claim narrowed from browsers to the ARIA specs; notes name URL, section, date, and count; deprecated roles kept and the 1.3 note records only `image`; six AC1 cases added (`bogus image`, U+00A0, a name and a hiding attribute with `graphics-symbol`, `Graphics-Symbol`, `button img`) and untestable separators moved to Out; DESIGN line and Lua comment added to AC3; the warning quotes the value as written. A committed comparison script was not added: the list is a fixed table checked once at T3 and at review.
 - 2026-10-25: version and changelog: patch bump to 0.7.7 per D-001, as 0.7.5 did for the first version of this warning.
+- 2026-10-25: implement started on branch m008-image-roles; the untracked `.DS_Store` stays unstaged.
+- 2026-10-25: T1 done: four source notes and INDEX lines. A parse of the fetched specs gives 82 non-abstract WAI-ARIA 1.2 roles (12 abstract left out), 41 DPUB-ARIA 1.1 roles, 3 Graphics-ARIA 1.0 roles, and `image` from the 1.3 draft: 127 names.
