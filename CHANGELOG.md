@@ -4,7 +4,7 @@ This file lists the changes in each version of the extension, newest first.
 
 ## 0.7.9
 
-- A `li` or `lif` call with no first argument now shows no icon, and in HTML output the render warns. Before, the call stopped the render with the error `Cannot get Attr from TypeNil`. Quarto drops a first argument that starts with a space or tab, such as `{{< li " wlpxtupd" >}}`, so such a call also has no first argument. The warning says so.
+- A `li` or `lif` call with no first argument now shows no icon, and in HTML output the render warns. Before, the call stopped the render with the error `Cannot get Attr from TypeNil`. Quarto drops a first argument that starts with a space or tab. So a call whose only positional argument starts with one, such as `{{< li " wlpxtupd" >}}`, also has no first argument. The warning says so.
 
 ## 0.7.8
 

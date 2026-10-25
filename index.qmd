@@ -62,7 +62,7 @@ If an icon gets an image role (`img`, `image`, or `graphics-symbol`) but no name
 
 Quarto drops a `label` value that starts with a space or tab, such as `label=" Money bag"`, together with its key, before the extension runs. An icon with no other ARIA key then stays hidden from screen readers. Remove the leading space to fix it.
 
-| Shortcode                            | Icon                               |
+| Shortcode                             | Icon                               |
 |---------------------------------------|------------------------------------|
 | `{{{< li ibydboev >}}}` *(decorative)* | {{< li ibydboev >}}      |
 | `{{{< li ibydboev label="Money bag" >}}}` | {{< li ibydboev label="Money bag" >}}      |

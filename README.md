@@ -104,9 +104,11 @@ Quarto drops a `key="value"` whose value starts with a space or tab, in `"` or
 `'` quotes, together with its key. This happens before the extension runs, so
 no warning names the dropped value. For example, `label=" Bell"` labels
 nothing. Remove the leading space to fix it: `label="Bell"`. Quarto also drops
-a first argument that starts with a space or tab, such as
-`{{< li " wlpxtupd" >}}`. The call then shows no icon, and the render warns
-that the call has no first argument.
+a first argument that starts with a space or tab. A call such as
+`{{< li " wlpxtupd" >}}` then shows no icon, and the render warns that the call
+has no first argument. If another positional argument follows, as in
+`{{< li " x" wlpxtupd >}}`, Quarto uses that one as the first argument, and the
+render does not warn.
 
 ### Accessibility
 

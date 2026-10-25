@@ -139,6 +139,7 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 
 {{< li " ibydboev" id=lost-li >}}
 {{< lif id=missing-lif >}}
+{{< li " x" wlpxtupd id=shift-li >}}
 
 ## Values that start with a space or tab
 

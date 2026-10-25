@@ -104,6 +104,7 @@ which the user declined at the question set.
 - 2026-10-25: claim audit: 32 claims read, 0 corrected — CHANGELOG.md, README.md, index.qmd, docs/index.html, lordicon.lua, _tests/check_aria.py, _tests/raw_output.lua, _tests/aria.qmd
 - 2026-10-25: claim audit caveat: a leading-space first argument followed by another positional lets Quarto promote the second, with no warning; recorded as candidate row "Warn when Quarto shifts arguments left" rather than widening the criteria.
 - 2026-10-25: implement complete; status review; handing off to /milestone-review.
+- 2026-10-25: review fix-now: `shift-li` fixture case pins Quarto's promotion of a second positional argument; README and CHANGELOG narrowed to a call with no other positional argument; `check_spelling` removes only the last newline; `fixture_calls` fails on more than one positional argument; `index.qmd` header space restored; check exits 0 (92 cases, 49 warnings), `quarto render` changed no page.
 
 ## Decisions
 

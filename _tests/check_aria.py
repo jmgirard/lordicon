@@ -208,6 +208,10 @@ EXACT |= {"space-label", "space-squote", "space-tab", "space-class"}
 
 # Calls whose first argument Quarto drops, or that have none, give no icon.
 NO_ICON = {"lost-li", "missing-lif"}
+# When another positional argument follows a dropped one, Quarto passes that
+# one as the first argument, and the call gives its icon with no warning.
+CASES["shift-li"] = {"src": ICON, **DECORATIVE}
+EXACT.add("shift-li")
 
 # The attribute names of each case, in order: `src`, the forwarded keys in
 # byte order, then the ARIA defaults. The parser lowercases `Zeta`, which
@@ -373,6 +377,8 @@ def fixture_calls():
                     words.append(word)
             pos = item.end()
         shortcode, *rest = words
+        if len(rest) > 1:
+            sys.exit(f"FAIL the fixture call {{{{< {body} >}}}} has more than one argument")
         arg = rest[0] if rest else None
         calls.append({"shortcode": shortcode, "arg": arg, "kwargs": kwargs})
     return calls
@@ -394,7 +400,8 @@ def check_spelling(calls, raw):
     """Each forwarded key appears in the raw output as the user wrote it."""
     failures = []
     # Split on "\n" alone: splitlines() also breaks at U+0085, a C1 control.
-    for call, line in zip(calls, raw.rstrip("\n").split("\n"), strict=True):
+    # Remove only the last newline: a case with no icon prints an empty line.
+    for call, line in zip(calls, raw.removesuffix("\n").split("\n"), strict=True):
         if call["arg"] is None:  # no icon, so an empty line
             continue
         for key, value in call["kwargs"].items():
