@@ -1,6 +1,6 @@
 # M010: Warn on a lost first argument and document leading spaces
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** M009
 - **Driving RR:** —
@@ -101,6 +101,9 @@ which the user declined at the question set.
 - 2026-10-25: T2 done: `li` and `lif` call `no_first_argument` when `args[1]` is nil, which warns in `html:js` formats only and returns `pandoc.Inlines({})` (chosen over `pandoc.Null()`, which `quarto pandoc lua` lacks); check exits 0 (91 cases, 49 warnings, 0 in `gfm`) and `quarto render` succeeds.
 - 2026-10-25: T3 done: README paragraph above `### Accessibility` and `index.qmd` Accessibility paragraph, written against renders this session (a tab-led and a single-quoted leading-space first argument also give the warning); `docs/` re-rendered with the sitemap; in the browser all 17 home-page icons were ready and advanced from frame 0 to 24; the simple-english hook's 27 README hits all predate this paragraph (27 before and after) and stay out of scope.
 - 2026-10-25: T4 done: `version: 0.7.9` (the only extension version marker), `## 0.7.9` CHANGELOG entry, DESIGN `_tests/` line and Known issues entry name the no-argument and leading-space cases; check exits 0 and `quarto render` succeeds (no page changed, sitemap restored).
+- 2026-10-25: claim audit: 32 claims read, 0 corrected — CHANGELOG.md, README.md, index.qmd, docs/index.html, lordicon.lua, _tests/check_aria.py, _tests/raw_output.lua, _tests/aria.qmd
+- 2026-10-25: claim audit caveat: a leading-space first argument followed by another positional lets Quarto promote the second, with no warning; recorded as candidate row "Warn when Quarto shifts arguments left" rather than widening the criteria.
+- 2026-10-25: implement complete; status review; handing off to /milestone-review.
 
 ## Decisions
 
