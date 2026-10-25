@@ -83,3 +83,18 @@
 - AC3: `aria.qmd:81` (`lif minified.json`, `colors`) and `:82` (`lif ./minified.json`, `colors`); `WARNED` has an entry for `minified-dotslash` naming the call (`check_aria.py:213`) and none for `minified-again`; the count check (`:356`) fails on any other lordicon warning. Fresh run: 33 warnings read, 33 expected. `lordicon.lua:364-368` says the rule keys a file by its path as written.
 - AC4: at 24fa71b, `python3 _tests/check_aria.py` exits 0; `git diff origin/main...HEAD -- _extensions/` is one hunk of 2 removed and 4 added lines, each starting `--`. `quarto render` exits 0; `git status --porcelain docs/` lists only `docs/sitemap.xml`, whose diff has 2 changed lines, both `<lastmod>`; the sitemap was then restored.
 - gate: `cairn_validate.py` exit 0, all checks passed; no principle text changed, so `cairn_impact` skipped. Toolchain: the one named marker `_extension.yml` holds 0.7.6, unchanged; the verify render succeeds (AC4); no user-visible change, so no changelog entry is owed.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: DESIGN Known issues implied everything but the demo site is tested — fix now, fixed 55e8733 (names the untested parts).
+- diff-bug #2: the `minified-again` no-warning claim rests on the total count, whose failure names no case — reject (planned change: AC3 names the count check).
+- diff-bug #3: a nonzero `gfm` render exits before earlier HTML failures print — reject (edge: a `gfm` render that fails while the HTML render passes, outside common use; effect is a lost message on a run that already fails; `filter_output` has the same pattern).
+- diff-bug #4: `render()` docstring said it returns the output file, not its text — fix now, fixed 55e8733.
+- diff-bug #5: DESIGN Architecture line left out the `{{<` part of the gfm check — fix now, fixed 55e8733.
+- blame-history #1: pins a second warning for `./minified.json` that a later fix must change — reject (planned change: the user chose at the plan gate to test the rule as it is).
+- blame-history #2: `lordicon.lua:364` still said "once per file" above the new lines — fix now, fixed 55e8733 ("once per path").
+- blame-history #3: DESIGN lists "attribute order" as covered, but only under the C locale — fix now, fixed 55e8733 ("under the C locale").
+- prior-review #1: the order check cannot see a locale-dependent sort — reject (planned change: Scope Out leaves it in "Sort keys by byte, not by locale").
+- prior-review #2: the rule's granularity changed with no D-entry — reject (false: behavior is unchanged; M006's archive already records the key as the path as written).
+- ripple #1: `lordicon.lua:364` "once per file" — fix now, fixed 55e8733 (same as blame-history #2).
+- ripple #2: ROADMAP candidate row "Add a render check with fixtures" lists this work as pending — reject (planned change: post-merge hygiene graduates the row, which carries `started M007`).
+- ripple #3: PROFILE verify text does not name the new checks — reject (false: its statement stays true and the verify command is unchanged).
+- fix-now re-verify: `python3 _tests/check_aria.py` 0 failures at 55e8733; `_extensions/` diff still `--` comment lines only. No snapshot files in the diff. No open PR, so no conversation read.
