@@ -35,8 +35,21 @@ local RESERVED = {
 -- as "ß".
 -- INVALID_NAME covers space and the ASCII controls; C1_CONTROL covers
 -- U+0080 to U+009F, which UTF-8 writes as the byte 194 and a second byte.
-local INVALID_NAME = "[\0-\32\127\"'>/=]"
+-- HTML parsers keep a `<` in a name but report it as an error, so it is
+-- skipped too.
+local INVALID_NAME = "[\0-\32\127\"'<>/=]"
 local C1_CONTROL = "\194[\128-\159]"
+
+-- HTML also forbids the 66 Unicode noncharacters in a name. In UTF-8,
+-- U+FDD0 to U+FDEF are 239 183 and 144 to 175; U+FFFE and U+FFFF are
+-- 239 191 and 190 or 191; and U+nFFFE and U+nFFFF of planes 1 to 16 are a
+-- lead byte, a second byte whose low four bits are all 1, then 191 and 190
+-- or 191.
+local NONCHARACTERS = {
+  "\239\183[\144-\175]",
+  "\239\191[\190\191]",
+  "[\240-\244][\143\159\175\191]\191[\190\191]",
+}
 
 -- ARIA attributes that, when passed by the user in any letter case, replace
 -- the aria-hidden default given to an icon without a label.
@@ -95,7 +108,15 @@ end
 
 -- A key that HTML does not allow as an attribute name.
 local function invalid_name(key)
-  return key == "" or key:find(INVALID_NAME) or key:find(C1_CONTROL)
+  if key == "" or key:find(INVALID_NAME) or key:find(C1_CONTROL) then
+    return true
+  end
+  for _, pattern in ipairs(NONCHARACTERS) do
+    if key:find(pattern) then
+      return true
+    end
+  end
+  return false
 end
 
 -- Write a call's first argument as a warning shows it. Quarto has two
@@ -363,8 +384,9 @@ local function build_element(src, kwargs, call)
   end
   if #invalid_keys > 0 then
     warn_skipped(call, invalid_keys, "an attribute name cannot be empty or "
-      .. "hold spaces, control characters, quotes, >, /, or =. Rename the key "
-      .. "or remove it.")
+      .. "hold spaces, control characters, quotes, >, /, =, or Unicode "
+      .. "noncharacters such as U+FFFE. HTML parsers also report a < in a "
+      .. "name as an error. Rename the key or remove it.")
   end
   warn_case_clashes(call, keys)
   warn_label_case(call, keys)
