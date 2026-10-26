@@ -68,3 +68,18 @@ IP1 names a call with no first argument as a call whose keys reach no element, a
 - 2026-10-26 AC3: the last `### D-` heading in `cairn/DECISIONS.md` is D-007; its Decision names the M013 plan gate choice, the missing-argument change, and the Quarto-drop sentence, and says "IP5 does not change, because a call with no first argument stopped the render before 0.7.9". Pass.
 - 2026-10-26 AC4: `git diff --name-only origin/main...HEAD` (origin/main 0566f1c, HEAD a9006d3) lists `cairn/DECISIONS.md`, `cairn/DESIGN.md`, `cairn/ROADMAP.md`, `cairn/milestones/M013-ip1-missing-argument.md`. Pass.
 - 2026-10-26 gate: `cairn_validate` all checks passed; `cairn_impact IP1` live references are DESIGN.md:144 (GP5's "(IP1)", still true), the ROADMAP M013 row, and the candidate row this milestone graduates; `--changed` reports none because it reads the working tree. Version marker `_extension.yml` 0.7.11, unchanged; `check_aria.py` 0 failures on a tree whose only later change is under `cairn/`; changelog entry not needed, no user-visible change.
+- spawned: diff-bug, ripple (internal tier, docs-only diff).
+- diff-bug #1: IP1's "each such skipped key" sentence claimed a per-key warning for the keys of a missing- or empty-argument call, which `no_first_argument` never gives — fix now, fixed 7f91a3c (the sentence now covers the first two kinds only).
+- diff-bug #2: the Conventions bullet names no call-level exception, so it contradicts IP1 — fix now, fixed 7f91a3c (one sentence citing D-005 and D-007).
+- diff-bug #3: "positional argument" says more than README shows, which names only a first argument — reject, false: the 2026-10-24 (M005) lesson records Quarto dropping a quoted positional argument that starts with a space or tab.
+- diff-bug #4: IP1 said only the value is dropped, but README says a quoted value goes with its key — fix now, fixed 7f91a3c.
+- diff-bug #5: the drop sentence could read as contradicting the missing-argument exception — fix now, fixed 7f91a3c (a clause names the call a dropped first argument leaves).
+- diff-bug #6: IP1 did not say that the warning comes only in HTML output — fix now, fixed 7f91a3c.
+- diff-bug (unranked note): D-007's heading says "no first argument" where IP1 says "missing" — reject, style: both name the nil case, and D-007's Context says which.
+- ripple #1: the ROADMAP candidate row "Decide whether IP1 names Quarto's drops" is stale — reject, planned change: this milestone absorbs it and post-merge hygiene graduates it.
+- ripple #2: the Conventions bullet names no call-level exception — same as diff-bug #2, fixed 7f91a3c.
+- ripple #3: IP5 does not mention a missing first argument — reject, planned change: D-007 keeps IP5 unchanged and says why; the diff-bug lens confirmed that every version before 0.7.9 stopped the render on such a call.
+- ripple #4: README's list of keys the extension does not pass on has no entry for a missing or empty first argument — reject, false: the list names kinds of key, and README lines 110-116 cover both calls.
+- 2026-10-26 AC1 (re-read after 7f91a3c): IP1 lines 98-101 say "every key of a call whose first argument is missing or empty" and "A call whose first argument is missing or empty makes no element, so its keys reach none, and in HTML output the render warns once about the argument (D-005, D-007)". Pass.
+- 2026-10-26 AC2 (re-read after 7f91a3c): IP1 lines 101-106 say Quarto drops a quoted value or a positional argument that starts with a space or tab before the extension runs, and "Such a value or argument never reaches the extension and is not one of these exceptions". Pass.
+- 2026-10-26 AC4 (re-run after 7f91a3c): `git diff --name-only origin/main...HEAD` lists the same 4 paths, all under `cairn/`; `cairn_validate` all checks passed. Pass.
