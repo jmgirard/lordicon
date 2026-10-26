@@ -47,8 +47,9 @@ Convenience shorthands do not qualify.
 - Every shortcode `key=value` with a non-empty value goes to the `<lord-icon>`
   element as an attribute, except three kinds of key: `label` in lowercase; `src` in any
   letter case; and a key that is empty or holds whitespace, a control
-  character, `"`, `'`, `>`, `/`, or `=`. For each call, the render gives one
-  warning per kind for the last two kinds (D-003, corrected M003). Attributes
+  character, `"`, `'`, `<`, `>`, `/`, `=`, or a Unicode noncharacter. For each
+  call, the render gives one warning per kind for the last two kinds (D-003,
+  corrected M003, D-006). Attributes
   are escaped and sorted for stable output.
 - `label` gives `role="img"` and `aria-label`, each only when the user did not
   pass it. No label gives `aria-hidden="true"`, unless the user passes a
@@ -91,9 +92,9 @@ are never reused or renumbered; retiring one takes a D-entry.
   default the extension adds (such as `aria-hidden`) yields to a user-supplied
   attribute. The documented exceptions are the reserved keys (`label`, and
   `src` in any letter case), keys that HTML does not allow as attribute
-  names, and every key of a call whose first argument is empty. The render
-  warns about each such skipped key with a non-empty value, except `label`
-  (D-003). A call whose first argument is empty makes no element, so its keys
+  names or that hold a `<`, which HTML parsers report as an error, and every
+  key of a call whose first argument is empty. The render warns about each
+  such skipped key with a non-empty value, except `label` (D-003, D-006). A call whose first argument is empty makes no element, so its keys
   reach none, and the render warns about the empty argument (D-005).
 - IP2: (Escaping) Every user value in emitted HTML is escaped: attribute
   values, the label, and the `li` code inside `src`.
@@ -111,6 +112,9 @@ are never reused or renumbered; retiring one takes a D-entry.
   release first, because such keys never gave one valid attribute. D-005
   narrows it too: an empty first argument has made no element since 0.7.10
   with no warning release first, because such a call never loaded an icon.
+  D-006 narrows it too: skipping a key that holds `<` or a Unicode
+  noncharacter started in 0.7.11 with no warning release first, because no
+  `<lord-icon>` attribute has such a name.
 - IP6: (Free-license icons only) Every icon in the repo (demo pages, `docs/`,
   README examples, sample `.json` files) is one that Lordicon's free license
   lets anyone redistribute.
@@ -161,7 +165,7 @@ are never reused or renumbered; retiring one takes a D-entry.
 ## Known issues
 
 - The only automated check is `_tests/check_aria.py` (M001, extended M003,
-  M004, M005, M007, M009, M010, and M011), which covers ARIA attributes, `src`, skipped and kept
+  M004, M005, M007, M009, M010, M011, and M012), which covers ARIA attributes, `src`, skipped and kept
   keys, letter-case warnings, the nameless-role warning, the Minified warning
   and its once-per-path rule, the quoted first argument in a warning's call,
   attribute order under the C locale, `gfm` output, the warning for a call

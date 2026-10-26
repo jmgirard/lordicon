@@ -40,7 +40,7 @@ A shortcode key that holds `<` or a Unicode noncharacter is left out of the `<lo
 - [x] T1: Write source notes `cairn/references/whatwg-html.md` (§13.1.2.3 Attributes, the attribute-name rule that excludes noncharacters; §13.2.2 Parse errors, `unexpected-character-in-attribute-name` for `<`) and `cairn/references/whatwg-infra.md` (§4.6 Code points, the noncharacter definition), each with its `INDEX.md` line.
 - [x] T2: Tests first. Add the AC1 and AC3 cases to `_tests/aria.qmd`, each with a kept key beside the tested one. Write the non-ASCII keys with a short script and confirm the bytes with `od -c`. In `check_aria.py`, build the 66 code points from the §4.6 ranges, not from the filter's pattern, extend its `INVALID_NAME` model, split the render log on `"\n"` with `LC_ALL` set, and see the new checks fail before T3.
 - [x] T3: In `lordicon.lua`, extend `invalid_name` with `<` and byte patterns for the UTF-8 forms of the noncharacters (U+FDD0–U+FDEF, U+FFFE, U+FFFF, and U+nFFFE, U+nFFFF for planes 1–16), spelled as byte ranges, not `%` classes. Update the invalid-name warning's reason text and the comments above `INVALID_NAME`.
-- [ ] T4: Raise the version to 0.7.11, add the CHANGELOG entry, and update README's skipped-key list. Update DESIGN.md Conventions, IP1, and IP5 to name `<` and noncharacters. Append a D-entry that records the user's decision and narrows IP1 and IP5. Its IP5 reason is its own, not D-003's: a `<` key such as `a<b` did give an attribute, but no `<lord-icon>` attribute has such a name. It also says the warning is IP1's warning for a skipped key, not a GP2 guardrail. (RB tripwire: ip-touching)
+- [x] T4: Raise the version to 0.7.11, add the CHANGELOG entry, and update README's skipped-key list. Update DESIGN.md Conventions, IP1, and IP5 to name `<` and noncharacters. Append a D-entry that records the user's decision and narrows IP1 and IP5. Its IP5 reason is its own, not D-003's: a `<` key such as `a<b` did give an attribute, but no `<lord-icon>` attribute has such a name. It also says the warning is IP1's warning for a skipped key, not a GP2 guardrail. (RB tripwire: ip-touching)
 - [ ] T5: Run `quarto render` at the repo root and commit `docs/`, `sitemap.xml` included.
 
 ## Work log
@@ -62,6 +62,8 @@ A shortcode key that holds `<` or a Unicode noncharacter is left out of the `<lo
 - 2026-10-26: correction to the T2 line: the 83 were log failures (82 case groups plus the total count), not 83 missing warnings.
 - 2026-10-26: T2 and T3 done: `invalid_name` adds `<` to `INVALID_NAME` and checks three UTF-8 byte patterns in a new `NONCHARACTERS` table; the warning's reason names noncharacters and `<`. `check_aria.py` 0 failures (170 cases, 130 warnings). A planted second-byte range `[\143-\191]` gave 7 failures on `kept-neighbors` (U+1EFFE, U+20FFE) and was reverted. The `quarto render` of the verify slot runs at T5.
 - 2026-10-26: implementation choice: noncharacter patterns kept in a table beside `INVALID_NAME`, rather than one pattern, because Lua patterns have no alternation.
+- 2026-10-26: T4 escalation offer (ip-touching): the user chose to write the drafted text without a Fable review.
+- 2026-10-26: T4 done: version 0.7.11, CHANGELOG 0.7.11 entry, README skipped-key list (noncharacters with the forbidden characters, `<` in its own item), DESIGN Conventions, IP1, IP5, and the Known issues milestone list, and D-006. `check_aria.py` 0 failures; `cairn_validate` passes. Pre-existing README lint hits from the simple-english hook are outside this change and left alone.
 
 ## Decisions
 
