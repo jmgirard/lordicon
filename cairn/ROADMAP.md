@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-26 (review M012: archived, M009 row pruned; graduat
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M013 | Name a missing first argument and Quarto's drops in IP1 | planned | — | normal | milestones/M013-ip1-missing-argument.md |
+| M013 | Name a missing first argument and Quarto's drops in IP1 | in-progress | — | normal | milestones/M013-ip1-missing-argument.md |
 | M012 | Skip keys that hold a less-than or a noncharacter | done | — | normal | milestones/archive/M012-less-than-noncharacter-keys.md |
 | M011 | Warn about an empty first argument | done | — | normal | milestones/archive/M011-empty-first-argument.md |
 | M010 | Warn on a lost first argument and document leading spaces | done | M009 | normal | milestones/archive/M010-leading-space-values.md |

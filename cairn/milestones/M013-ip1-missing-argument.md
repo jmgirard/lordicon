@@ -1,13 +1,13 @@
 # M013: Name a missing first argument and Quarto's drops in IP1
 
-- **Status:** planned
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
 - **Principles touched:** IP1
 - **Resolves:** —
 - **Surface tier:** internal — the diff changes only design and decision records under `cairn/`
-- **Branch/PR:** —
+- **Branch/PR:** m013-ip1-missing-argument
 
 ## Goal
 
@@ -35,7 +35,7 @@ IP1 names a call with no first argument as a call whose keys reach no element, a
 
 ## Tasks
 
-- [ ] T1: Append D-007 to `cairn/DECISIONS.md`: context (a call with no first argument makes no element since 0.7.9, and D-005's Consequences left it to the candidate row), the user's choice of both changes, and that IP5 does not change because such a call stopped the render before 0.7.9, so no working output broke.
+- [x] T1: Append D-007 to `cairn/DECISIONS.md`: context (a call with no first argument makes no element since 0.7.9, and D-005's Consequences left it to the candidate row), the user's choice of both changes, and that IP5 does not change because such a call stopped the render before 0.7.9, so no working output broke.
 - [ ] T2: Edit IP1 in `cairn/DESIGN.md` (line 91): "first argument is empty" becomes "first argument is missing or empty" in both places, the closing citation becomes "(D-005, D-007)", and add the sentence for AC2 with a D-007 citation.
 - [ ] T3: Run `python3 /Users/jmgirard/.claude/skills/cairn/scripts/cairn_validate.py` and `git diff --name-only origin/main...HEAD`, and confirm that the second lists only `cairn/` paths.
 
@@ -51,6 +51,8 @@ IP1 names a call with no first argument as a call whose keys reach no element, a
 - 2026-10-26: plan chose to leave IP5 unchanged over adding a D-007 narrowing, because a call with no first argument stopped the render before 0.7.9 and broke no working output; falsified by a release before 0.7.9 in which such a call rendered an element.
 - 2026-10-26: criteria audit (reduced mode, fresh Opus reader): 12 checks over AC1–AC4, 0 findings.
 - 2026-10-26: no changelog entry and no version change, because nothing user-visible changes (D-001, D-002).
+- 2026-10-26: implement started on branch `m013-ip1-missing-argument`, cut from `origin/main` at 0566f1c; untracked `.DS_Store` left unstaged.
+- 2026-10-26: T1 done: D-007 appended to `cairn/DECISIONS.md` (with a shell heredoc, not the Edit tool); its 0.7.9 facts read from `CHANGELOG.md` and `no_first_argument` in `lordicon.lua`.
 
 ## Decisions
 
