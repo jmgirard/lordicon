@@ -58,6 +58,7 @@ IP1 names a call with no first argument as a call whose keys reach no element, a
 - 2026-10-26: verify: `python3 _tests/check_aria.py` printed "0 failures" (130 of 130 lordicon warnings); `quarto render` and the browser look skipped, because the diff changes no file the demo site renders.
 - 2026-10-26: claim audit: not owed — internal tier.
 - 2026-10-26: implement done; status set to review.
+- 2026-10-26: step-7 approval: m013-ip1-missing-argument approved for merge
 
 ## Decisions
 
