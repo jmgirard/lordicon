@@ -9,7 +9,7 @@ _Last hygiene check: 2026-10-25 (review M011: archived, M008 row pruned; graduat
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M012 | Skip keys that hold a less-than or a noncharacter | planned | — | normal | milestones/M012-less-than-noncharacter-keys.md |
+| M012 | Skip keys that hold a less-than or a noncharacter | in-progress | — | normal | milestones/M012-less-than-noncharacter-keys.md |
 | M011 | Warn about an empty first argument | done | — | normal | milestones/archive/M011-empty-first-argument.md |
 | M010 | Warn on a lost first argument and document leading spaces | done | M009 | normal | milestones/archive/M010-leading-space-values.md |
 | M009 | Quote spaced arguments in warning calls | done | — | normal | milestones/archive/M009-quote-call-arguments.md |

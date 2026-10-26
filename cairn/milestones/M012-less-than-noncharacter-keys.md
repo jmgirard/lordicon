@@ -1,13 +1,13 @@
 # M012: Skip keys that hold a less-than or a noncharacter
 
-- **Status:** planned
+- **Status:** in-progress
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
 - **Principles touched:** IP1, IP5, GP2
 - **Resolves:** —
 - **Surface tier:** user-facing — it changes which shortcode keys reach the `<lord-icon>` element in users' pages
-- **Branch/PR:** —
+- **Branch/PR:** m012-less-than-noncharacter-keys
 
 ## Goal
 
@@ -37,7 +37,7 @@ A shortcode key that holds `<` or a Unicode noncharacter is left out of the `<lo
 
 ## Tasks
 
-- [ ] T1: Write source notes `cairn/references/whatwg-html.md` (§13.1.2.3 Attributes, the attribute-name rule that excludes noncharacters; §13.2.2 Parse errors, `unexpected-character-in-attribute-name` for `<`) and `cairn/references/whatwg-infra.md` (§4.6 Code points, the noncharacter definition), each with its `INDEX.md` line.
+- [x] T1: Write source notes `cairn/references/whatwg-html.md` (§13.1.2.3 Attributes, the attribute-name rule that excludes noncharacters; §13.2.2 Parse errors, `unexpected-character-in-attribute-name` for `<`) and `cairn/references/whatwg-infra.md` (§4.6 Code points, the noncharacter definition), each with its `INDEX.md` line.
 - [ ] T2: Tests first. Add the AC1 and AC3 cases to `_tests/aria.qmd`, each with a kept key beside the tested one. Write the non-ASCII keys with a short script and confirm the bytes with `od -c`. In `check_aria.py`, build the 66 code points from the §4.6 ranges, not from the filter's pattern, extend its `INVALID_NAME` model, split the render log on `"\n"` with `LC_ALL` set, and see the new checks fail before T3.
 - [ ] T3: In `lordicon.lua`, extend `invalid_name` with `<` and byte patterns for the UTF-8 forms of the noncharacters (U+FDD0–U+FDEF, U+FFFE, U+FFFF, and U+nFFFE, U+nFFFF for planes 1–16), spelled as byte ranges, not `%` classes. Update the invalid-name warning's reason text and the comments above `INVALID_NAME`.
 - [ ] T4: Raise the version to 0.7.11, add the CHANGELOG entry, and update README's skipped-key list. Update DESIGN.md Conventions, IP1, and IP5 to name `<` and noncharacters. Append a D-entry that records the user's decision and narrows IP1 and IP5. Its IP5 reason is its own, not D-003's: a `<` key such as `a<b` did give an attribute, but no `<lord-icon>` attribute has such a name. It also says the warning is IP1's warning for a skipped key, not a GP2 guardrail. (RB tripwire: ip-touching)
@@ -56,6 +56,8 @@ A shortcode key that holds `<` or a Unicode noncharacter is left out of the `<lo
 - 2026-10-26: criteria audit (full mode, fresh Opus reader): 9 items. Fixed: AC1 now counts 66 calls and varies the bad character's position, inline calls, and `lif`; AC2 states the reason in plain words and that the log keeps the key's bytes (probed); AC2 and AC4 separate `<` (flagged) from noncharacters (forbidden); AC3 adds neighbors one UTF-8 byte away and planes 4-15; AC1 names the raw filter output as the deciding check; T2 adds the "\n" and LC_ALL split. Answered: the DESIGN.md and D-entry edits stay in T4, not a criterion, because they are tracking records; T4 now names the D-entry's own IP5 reason and its GP2 note. No finding on AC5 or on task-lesson conflicts.
 - 2026-10-26: plan gate chose skipping both `<` and noncharacter keys over skipping only noncharacters, because parsers report `<` in a name as an error and no `<lord-icon>` attribute needs it; falsified by a user report of a working attribute whose name holds `<`.
 - 2026-10-26: plan chose reusing the invalid-name warning over a new warning kind, because the user's fix is the same rename; falsified by a user report that the shared warning text misleads.
+- 2026-10-26: implement started on branch m012-less-than-noncharacter-keys, cut from main at 8e88928; `.DS_Store` stays untracked and unstaged.
+- 2026-10-26: T1 done: source notes whatwg-html.md (§13.1.2.3, §13.2.2, §13.2.5.33) and whatwg-infra.md (§4.6) from pages fetched with curl, with INDEX lines; no code, so no verify run.
 
 ## Decisions
 
