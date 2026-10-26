@@ -49,7 +49,8 @@ Convenience shorthands do not qualify.
   letter case; and a key that is empty or holds whitespace, a control
   character, `"`, `'`, `<`, `>`, `/`, `=`, or a Unicode noncharacter. For each
   call, the render gives one warning per kind for the last two kinds (D-003,
-  corrected M003, D-006). Attributes
+  corrected M003, D-006). A call whose first argument is missing or empty
+  passes on no key, because it makes no element (D-005, D-007). Attributes
   are escaped and sorted for stable output.
 - `label` gives `role="img"` and `aria-label`, each only when the user did not
   pass it. No label gives `aria-hidden="true"`, unless the user passes a
@@ -94,9 +95,16 @@ are never reused or renumbered; retiring one takes a D-entry.
   attribute. The documented exceptions are the reserved keys (`label`, and
   `src` in any letter case), keys that HTML does not allow as attribute
   names or that hold a `<`, which HTML parsers report as an error, and every
-  key of a call whose first argument is empty. The render warns about each
-  such skipped key with a non-empty value, except `label` (D-003, D-006). A call whose first argument is empty makes no element, so its keys
-  reach none, and the render warns about the empty argument (D-005).
+  key of a call whose first argument is missing or empty. The render warns
+  about each skipped key of the first two kinds with a non-empty value,
+  except `label` (D-003, D-006). A call whose first argument is missing or
+  empty makes no element, so its keys reach none, and in HTML output the
+  render warns once about the argument (D-005, D-007). Quarto drops a quoted
+  value that starts with a space or tab, with its key, and a positional
+  argument that starts with one, before the extension runs. Such a value or
+  argument never reaches the extension and is not one of these exceptions,
+  though a call it leaves with no first argument is the missing case above
+  (D-007).
 - IP2: (Escaping) Every user value in emitted HTML is escaped: attribute
   values, the label, and the `li` code inside `src`.
 - IP3: (A shortcode never fails a render) Non-HTML formats get no output, and
