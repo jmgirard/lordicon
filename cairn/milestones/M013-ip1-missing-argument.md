@@ -21,10 +21,10 @@ IP1 names a call with no first argument as a call whose keys reach no element, a
 
 ## Acceptance criteria
 
-- [ ] AC1: IP1 in `cairn/DESIGN.md` names a call whose first argument is missing, beside a call whose first argument is empty, as a call that makes no element so that its keys reach none, and cites D-007.
-- [ ] AC2: IP1 in `cairn/DESIGN.md` states that a value or positional argument that Quarto drops before the extension runs, one that starts with a space or tab, never reaches the extension and is not one of IP1's exceptions.
-- [ ] AC3: `cairn/DECISIONS.md` ends with D-007, which records the user's choice at the M013 plan gate, names both IP1 changes, and states that IP5 does not change and why.
-- [ ] AC4: `git diff --name-only origin/main...HEAD` on the milestone branch lists only paths under `cairn/`.
+- [x] AC1: IP1 in `cairn/DESIGN.md` names a call whose first argument is missing, beside a call whose first argument is empty, as a call that makes no element so that its keys reach none, and cites D-007.
+- [x] AC2: IP1 in `cairn/DESIGN.md` states that a value or positional argument that Quarto drops before the extension runs, one that starts with a space or tab, never reaches the extension and is not one of IP1's exceptions.
+- [x] AC3: `cairn/DECISIONS.md` ends with D-007, which records the user's choice at the M013 plan gate, names both IP1 changes, and states that IP5 does not change and why.
+- [x] AC4: `git diff --name-only origin/main...HEAD` on the milestone branch lists only paths under `cairn/`.
 
 ## Coverage
 
@@ -62,3 +62,9 @@ IP1 names a call with no first argument as a call whose keys reach no element, a
 ## Decisions
 
 ## Review
+
+- 2026-10-26 AC1: `cairn/DESIGN.md` IP1 (lines 97-101, read at a9006d3) says "every key of a call whose first argument is missing or empty" and "A call whose first argument is missing or empty makes no element, so its keys reach none, and the render warns about the argument (D-005, D-007)". Pass.
+- 2026-10-26 AC2: IP1 (lines 101-103) says "Quarto drops a value or positional argument that starts with a space or tab before the extension runs, so it never reaches the extension and is not one of these exceptions (D-007)". Pass.
+- 2026-10-26 AC3: the last `### D-` heading in `cairn/DECISIONS.md` is D-007; its Decision names the M013 plan gate choice, the missing-argument change, and the Quarto-drop sentence, and says "IP5 does not change, because a call with no first argument stopped the render before 0.7.9". Pass.
+- 2026-10-26 AC4: `git diff --name-only origin/main...HEAD` (origin/main 0566f1c, HEAD a9006d3) lists `cairn/DECISIONS.md`, `cairn/DESIGN.md`, `cairn/ROADMAP.md`, `cairn/milestones/M013-ip1-missing-argument.md`. Pass.
+- 2026-10-26 gate: `cairn_validate` all checks passed; `cairn_impact IP1` live references are DESIGN.md:144 (GP5's "(IP1)", still true), the ROADMAP M013 row, and the candidate row this milestone graduates; `--changed` reports none because it reads the working tree. Version marker `_extension.yml` 0.7.11, unchanged; `check_aria.py` 0 failures on a tree whose only later change is under `cairn/`; changelog entry not needed, no user-visible change.
