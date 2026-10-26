@@ -92,6 +92,19 @@ BAD = {
     "bad-c1": "a\x85b",
     "bad-control": "a\x01b",
 }
+# HTML parsers report `<` in a name as an error, and HTML forbids the
+# noncharacters of Infra §4.6 in one. The fixture cycles a noncharacter
+# through the first, middle, last, and only place in its key.
+NONCHARACTERS = [*range(0xFDD0, 0xFDF0)] + [
+    plane * 0x10000 + low for plane in range(17) for low in (0xFFFE, 0xFFFF)
+]
+LT = {"lt-first": "<b", "lt-middle": "a<b", "lt-last": "a<", "lt-whole": "<"}
+BAD.update(LT)
+BAD.update({f"{case}-inline": key for case, key in LT.items()})
+for i, cp in enumerate(NONCHARACTERS):
+    BAD[f"nc-{cp:x}"] = ["{c}k", "k{c}k", "k{c}", "{c}"][i % 4].format(c=chr(cp))
+BAD["nc-fffe-inline"] = "x￾y"
+BAD["nc-10ffff-inline"] = "x\U0010ffffy"
 for case in BAD:
     CASES[case] = {"src": ICON, "class": "big", **DECORATIVE}
 
@@ -105,10 +118,23 @@ CASES["kept-names"] = {
     "data-datà": "5",
     **DECORATIVE,
 }
+# A lif call skips both kinds of key. Code points next to a noncharacter, or
+# one UTF-8 byte away from one, pass through.
+CASES["lt-nc-lif"] = {"src": "gift_raw.json", "class": "big", **DECORATIVE}
+NEIGHBORS = [
+    0xFDCF, 0xFDF0, 0xFFFD, 0x1FFFD, 0x10FFFD,
+    0xFD90, 0xFE10, 0xFFBE, 0x1EFFE, 0x1FFBE, 0x20FFE,
+    0x4FFFD, 0xEFFFD, 0x10000,
+]
+CASES["kept-neighbors"] = {
+    "src": ICON,
+    **{f"data-{cp:x}{chr(cp)}": str(n) for n, cp in enumerate(NEIGHBORS, 1)},
+    **DECORATIVE,
+}
 
 # Cases whose <lord-icon> holds no attribute beyond `id`, `src`, and the ones
 # CASES gives a value. The `label` case shows that `label` is not passed on.
-EXACT = {"src-li", "src-lif", "src-upper", "kept-names", "label", *BAD}
+EXACT = {"src-li", "src-lif", "src-upper", "kept-names", "label", "lt-nc-lif", "kept-neighbors", *BAD}
 
 # Keys that differ only in letter case give one attribute name more than once
 # in the filter output, which the parser lowercases. The page keeps one.
@@ -238,6 +264,13 @@ PAGE_ONLY = {
 CALL = object()
 SKIPS = {"src-li": "src", "src-lif": "src", "src-upper": "SRC", **BAD}
 WARNED = {case: [[CALL, "skips the", f'"{key}"']] for case, key in SKIPS.items()}
+INVALID_REASON = [
+    "or Unicode noncharacters such as U+FFFE.",
+    "HTML parsers also report a < in a name as an error.",
+]
+for case in BAD:
+    WARNED[case][0] += INVALID_REASON
+WARNED["lt-nc-lif"] = [[CALL, "skips the keys", '"a<b", "x￾y"', *INVALID_REASON]]
 CASE_CLASH = "differ only in letter case"
 ONE = "The page keeps only one of their values."
 EACH = "The page keeps only one value from each group."
@@ -300,10 +333,13 @@ for case in ("empty-li", "empty-li-inline"):
 for case in ("empty-lif", "empty-lif-inline"):
     WARNED[case] = [['{{< lif "" >}}', EMPTY_ARG, "such as {{< lif icon.json >}}."]]
 
-# The characters that the filter skips a key for: its INVALID_NAME pattern
-# (space, the ASCII controls, `"'>/=`) and its C1_CONTROL pattern
-# (U+0080 to U+009F).
-INVALID_NAME = re.compile(r"[\x00-\x20\x7f-\x9f\"'>/=]")
+# The characters that the filter skips a key for: space, the ASCII and C1
+# controls (U+0080 to U+009F), `"'<>/=`, and the noncharacters.
+INVALID_NAME = re.compile(r"[\x00-\x20\x7f-\x9f\"'<>/=]")
+
+
+def invalid_name(key):
+    return INVALID_NAME.search(key) or any(ord(c) in NONCHARACTERS for c in key)
 
 # One shortcode argument: a key=value pair or a positional word. A key or a
 # value may be quoted, and a quoted key may hold `=`.
@@ -415,7 +451,7 @@ def check_spelling(calls, raw):
             continue
         for key, value in call["kwargs"].items():
             skipped = (
-                key in ("label", "") or key.lower() == "src" or INVALID_NAME.search(key)
+                key in ("label", "") or key.lower() == "src" or invalid_name(key)
             )
             if value and not skipped and f' {key}="' not in line:
                 failures.append(f"filter {call['kwargs'].get('id')}: no {key}= in {line}")

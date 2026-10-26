@@ -58,6 +58,7 @@ A shortcode key that holds `<` or a Unicode noncharacter is left out of the `<lo
 - 2026-10-26: plan chose reusing the invalid-name warning over a new warning kind, because the user's fix is the same rename; falsified by a user report that the shared warning text misleads.
 - 2026-10-26: implement started on branch m012-less-than-noncharacter-keys, cut from main at 8e88928; `.DS_Store` stays untracked and unstaged.
 - 2026-10-26: T1 done: source notes whatwg-html.md (§13.1.2.3, §13.2.2, §13.2.5.33) and whatwg-infra.md (§4.6) from pages fetched with curl, with INDEX lines; no code, so no verify run.
+- 2026-10-26: T2 checkpoint, red by design until T3: 85 fixture calls added to `_tests/aria.qmd` by a script (bytes confirmed with `od -c`); `check_aria.py` builds the 66 code points from the §4.6 ranges and adds `invalid_name`; on the unchanged filter it gives 237 failures (154 kept `<` or noncharacter attributes, 83 missing warnings) and none for `kept-neighbors`. The render log was already split on "\n" under `LC_ALL=C.UTF-8`.
 
 ## Decisions
 
