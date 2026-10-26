@@ -1,6 +1,6 @@
 # M012: Skip keys that hold a less-than or a noncharacter
 
-- **Status:** in-progress
+- **Status:** review
 - **Priority:** normal
 - **Depends on:** —
 - **Driving RR:** —
@@ -65,6 +65,8 @@ A shortcode key that holds `<` or a Unicode noncharacter is left out of the `<lo
 - 2026-10-26: T4 escalation offer (ip-touching): the user chose to write the drafted text without a Fable review.
 - 2026-10-26: T4 done: version 0.7.11, CHANGELOG 0.7.11 entry, README skipped-key list (noncharacters with the forbidden characters, `<` in its own item), DESIGN Conventions, IP1, IP5, and the Known issues milestone list, and D-006. `check_aria.py` 0 failures; `cairn_validate` passes. Pre-existing README lint hits from the simple-english hook are outside this change and left alone.
 - 2026-10-26: T5 done: `quarto render` at the repo root exited 0 with no warning; only `docs/sitemap.xml` changed, so no demo page needed a browser look.
+- 2026-10-26: claim audit: 23 claims read, 0 corrected — lordicon.lua, check_aria.py, aria.qmd, README.md, CHANGELOG.md, _extension.yml. The reader's Infra §4.6 claim rested on recall, and T1's source note verified it against the fetched spec.
+- 2026-10-26: implement complete; status set to review.
 
 ## Decisions
 
