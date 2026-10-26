@@ -67,6 +67,7 @@ A shortcode key that holds `<` or a Unicode noncharacter is left out of the `<lo
 - 2026-10-26: T5 done: `quarto render` at the repo root exited 0 with no warning; only `docs/sitemap.xml` changed, so no demo page needed a browser look.
 - 2026-10-26: claim audit: 23 claims read, 0 corrected — lordicon.lua, check_aria.py, aria.qmd, README.md, CHANGELOG.md, _extension.yml. The reader's Infra §4.6 claim rested on recall, and T1's source note verified it against the fetched spec.
 - 2026-10-26: implement complete; status set to review.
+- 2026-10-26: step-7 approval: m012-less-than-noncharacter-keys approved for merge
 
 ## Decisions
 
