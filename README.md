@@ -90,8 +90,11 @@ The extension does not pass on these keys:
 - `src`, in any letter case (such as `SRC`). The first argument already sets
   the icon's source, so the render warns and keeps that source.
 - A key that is empty or holds whitespace, a control character, `"`, `'`,
-  `>`, `/`, or `=`. HTML does not allow such an attribute name, so the render
-  warns and leaves the key out.
+  `>`, `/`, `=`, or a Unicode noncharacter (U+FDD0 to U+FDEF, or the last two
+  code points of a Unicode plane, such as U+FFFE). HTML does not allow such an
+  attribute name, so the render warns and leaves the key out.
+- A key that holds `<`. HTML parsers report a `<` in an attribute name as an
+  error, so the render warns and leaves the key out.
 
 On the rendered page, attribute names that differ only in letter case, such as
 `Class` and `class`, name the same attribute. If one call passes on two keys that differ only in letter case, such as

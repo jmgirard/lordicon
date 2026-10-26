@@ -59,6 +59,90 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li wlpxtupd id=bad-c1 class=big "ab"=1 >}}
 {{< li wlpxtupd id=bad-control class=big "ab"=1 >}}
 
+## Keys with a less-than or a noncharacter
+
+{{< li wlpxtupd id=lt-first class=big <b=1 >}}
+{{< li wlpxtupd id=lt-middle class=big a<b=1 >}}
+{{< li wlpxtupd id=lt-last class=big a<=1 >}}
+{{< li wlpxtupd id=lt-whole class=big "<"=1 >}}
+
+{{< li wlpxtupd id=nc-fdd0 class=big ﷐k=1 >}}
+{{< li wlpxtupd id=nc-fdd1 class=big k﷑k=1 >}}
+{{< li wlpxtupd id=nc-fdd2 class=big k﷒=1 >}}
+{{< li wlpxtupd id=nc-fdd3 class=big ﷓=1 >}}
+{{< li wlpxtupd id=nc-fdd4 class=big ﷔k=1 >}}
+{{< li wlpxtupd id=nc-fdd5 class=big k﷕k=1 >}}
+{{< li wlpxtupd id=nc-fdd6 class=big k﷖=1 >}}
+{{< li wlpxtupd id=nc-fdd7 class=big ﷗=1 >}}
+{{< li wlpxtupd id=nc-fdd8 class=big ﷘k=1 >}}
+{{< li wlpxtupd id=nc-fdd9 class=big k﷙k=1 >}}
+{{< li wlpxtupd id=nc-fdda class=big k﷚=1 >}}
+{{< li wlpxtupd id=nc-fddb class=big ﷛=1 >}}
+{{< li wlpxtupd id=nc-fddc class=big ﷜k=1 >}}
+{{< li wlpxtupd id=nc-fddd class=big k﷝k=1 >}}
+{{< li wlpxtupd id=nc-fdde class=big k﷞=1 >}}
+{{< li wlpxtupd id=nc-fddf class=big ﷟=1 >}}
+{{< li wlpxtupd id=nc-fde0 class=big ﷠k=1 >}}
+{{< li wlpxtupd id=nc-fde1 class=big k﷡k=1 >}}
+{{< li wlpxtupd id=nc-fde2 class=big k﷢=1 >}}
+{{< li wlpxtupd id=nc-fde3 class=big ﷣=1 >}}
+{{< li wlpxtupd id=nc-fde4 class=big ﷤k=1 >}}
+{{< li wlpxtupd id=nc-fde5 class=big k﷥k=1 >}}
+{{< li wlpxtupd id=nc-fde6 class=big k﷦=1 >}}
+{{< li wlpxtupd id=nc-fde7 class=big ﷧=1 >}}
+{{< li wlpxtupd id=nc-fde8 class=big ﷨k=1 >}}
+{{< li wlpxtupd id=nc-fde9 class=big k﷩k=1 >}}
+{{< li wlpxtupd id=nc-fdea class=big k﷪=1 >}}
+{{< li wlpxtupd id=nc-fdeb class=big ﷫=1 >}}
+{{< li wlpxtupd id=nc-fdec class=big ﷬k=1 >}}
+{{< li wlpxtupd id=nc-fded class=big k﷭k=1 >}}
+{{< li wlpxtupd id=nc-fdee class=big k﷮=1 >}}
+{{< li wlpxtupd id=nc-fdef class=big ﷯=1 >}}
+{{< li wlpxtupd id=nc-fffe class=big ￾k=1 >}}
+{{< li wlpxtupd id=nc-ffff class=big k￿k=1 >}}
+{{< li wlpxtupd id=nc-1fffe class=big k🿾=1 >}}
+{{< li wlpxtupd id=nc-1ffff class=big 🿿=1 >}}
+{{< li wlpxtupd id=nc-2fffe class=big 𯿾k=1 >}}
+{{< li wlpxtupd id=nc-2ffff class=big k𯿿k=1 >}}
+{{< li wlpxtupd id=nc-3fffe class=big k𿿾=1 >}}
+{{< li wlpxtupd id=nc-3ffff class=big 𿿿=1 >}}
+{{< li wlpxtupd id=nc-4fffe class=big 񏿾k=1 >}}
+{{< li wlpxtupd id=nc-4ffff class=big k񏿿k=1 >}}
+{{< li wlpxtupd id=nc-5fffe class=big k񟿾=1 >}}
+{{< li wlpxtupd id=nc-5ffff class=big 񟿿=1 >}}
+{{< li wlpxtupd id=nc-6fffe class=big 񯿾k=1 >}}
+{{< li wlpxtupd id=nc-6ffff class=big k񯿿k=1 >}}
+{{< li wlpxtupd id=nc-7fffe class=big k񿿾=1 >}}
+{{< li wlpxtupd id=nc-7ffff class=big 񿿿=1 >}}
+{{< li wlpxtupd id=nc-8fffe class=big 򏿾k=1 >}}
+{{< li wlpxtupd id=nc-8ffff class=big k򏿿k=1 >}}
+{{< li wlpxtupd id=nc-9fffe class=big k򟿾=1 >}}
+{{< li wlpxtupd id=nc-9ffff class=big 򟿿=1 >}}
+{{< li wlpxtupd id=nc-afffe class=big 򯿾k=1 >}}
+{{< li wlpxtupd id=nc-affff class=big k򯿿k=1 >}}
+{{< li wlpxtupd id=nc-bfffe class=big k򿿾=1 >}}
+{{< li wlpxtupd id=nc-bffff class=big 򿿿=1 >}}
+{{< li wlpxtupd id=nc-cfffe class=big 󏿾k=1 >}}
+{{< li wlpxtupd id=nc-cffff class=big k󏿿k=1 >}}
+{{< li wlpxtupd id=nc-dfffe class=big k󟿾=1 >}}
+{{< li wlpxtupd id=nc-dffff class=big 󟿿=1 >}}
+{{< li wlpxtupd id=nc-efffe class=big 󯿾k=1 >}}
+{{< li wlpxtupd id=nc-effff class=big k󯿿k=1 >}}
+{{< li wlpxtupd id=nc-ffffe class=big k󿿾=1 >}}
+{{< li wlpxtupd id=nc-fffff class=big 󿿿=1 >}}
+{{< li wlpxtupd id=nc-10fffe class=big 􏿾k=1 >}}
+{{< li wlpxtupd id=nc-10ffff class=big k􏿿k=1 >}}
+
+Inside a paragraph: {{< li ltinline id=lt-first-inline class=big <b=1 >}} and {{< li ltinline id=lt-middle-inline class=big a<b=1 >}} and {{< li ltinline id=lt-last-inline class=big a<=1 >}} and {{< li ltinline id=lt-whole-inline class=big "<"=1 >}}.
+
+Also inside a paragraph: {{< li wlpxtupd id=nc-fffe-inline class=big x￾y=1 >}} and {{< li wlpxtupd id=nc-10ffff-inline class=big x􏿿y=1 >}}.
+
+{{< lif gift_raw.json id=lt-nc-lif class=big a<b=1 x￾y=1 >}}
+
+## Keys next to the noncharacters
+
+{{< li wlpxtupd id=kept-neighbors data-fdcf﷏=1 data-fdf0ﷰ=2 data-fffd�=3 data-1fffd🿽=4 data-10fffd􏿽=5 data-fd90﶐=6 data-fe10︐=7 data-ffbeﾾ=8 data-1effe𞿾=9 data-1ffbe🾾=10 data-20ffe𠿾=11 data-4fffd񏿽=12 data-efffd󯿽=13 data-10000𐀀=14 data-edd0=15 data-effe=16 >}}
+
 ## Keys that differ only in letter case
 
 {{< li clashrole id=clash-role role=presentation Role=img >}}

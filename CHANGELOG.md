@@ -2,6 +2,10 @@
 
 This file lists the changes in each version of the extension, newest first.
 
+## 0.7.11
+
+- The extension now also leaves out a key that holds `<` or a Unicode noncharacter, such as U+FFFE or U+FDD0. In HTML output, the render warns. HTML does not allow a noncharacter in an attribute name, and HTML parsers report a `<` in one as an error. Before, the extension passed such a key on, so `a<b=1` gave the attribute `a<b="1"`.
+
 ## 0.7.10
 
 - A `li` or `lif` call whose only positional argument is empty now shows no icon, and in HTML output the render warns. Examples are `{{< li "" >}}` and `{{< lif '' >}}`. Before, `li` made an icon with `src="https://cdn.lordicon.com/.json"`, a file that the CDN does not have, and `lif` made one with `src=""`. The render did not warn about the empty argument.

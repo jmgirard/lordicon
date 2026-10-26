@@ -10,8 +10,8 @@
   (colors, stroke, trigger, target, state, delay, speed, loading, class, id,
   style, …). See https://lordicon.com/docs/web for the full attribute list.
   The exceptions are `label`, `src` in any letter case (the first argument
-  sets the source), and keys that are not valid attribute names; the last two
-  are skipped with a render warning. Keys that differ only in letter case, and
+  sets the source), and keys that are not valid attribute names or hold a
+  `<`; the last two are skipped with a render warning. Keys that differ only in letter case, and
   `label` in another letter case, are forwarded with a render warning. An
   icon with an image role but no name, and not hidden, gets a render warning.
   A call with no first argument, or an empty one, shows no icon and gets a
@@ -27,16 +27,30 @@ local RESERVED = {
   label = true,
 }
 
--- A key holding whitespace, a control character, or one of these symbols is
--- not a valid HTML attribute name: written out, it can end the tag early,
--- split into stray attributes, or give an attribute with an invalid name.
+-- A key holding whitespace, a control character, or one of these symbols
+-- other than `<` is not a valid HTML attribute name: written out, it can end
+-- the tag early, split into stray attributes, or give an attribute with an
+-- invalid name.
 -- The byte ranges are spelled out because %s and %c follow the current
 -- locale, and under a UTF-8 locale they also match bytes inside letters such
 -- as "ß".
 -- INVALID_NAME covers space and the ASCII controls; C1_CONTROL covers
 -- U+0080 to U+009F, which UTF-8 writes as the byte 194 and a second byte.
-local INVALID_NAME = "[\0-\32\127\"'>/=]"
+-- HTML parsers keep a `<` in a name but report it as an error, so it is
+-- skipped too.
+local INVALID_NAME = "[\0-\32\127\"'<>/=]"
 local C1_CONTROL = "\194[\128-\159]"
+
+-- HTML also forbids the 66 Unicode noncharacters in a name. In UTF-8,
+-- U+FDD0 to U+FDEF are 239 183 and 144 to 175; U+FFFE and U+FFFF are
+-- 239 191 and 190 or 191; and U+nFFFE and U+nFFFF of planes 1 to 16 are a
+-- lead byte, a second byte whose low four bits are all 1, then 191 and 190
+-- or 191.
+local NONCHARACTERS = {
+  "\239\183[\144-\175]",
+  "\239\191[\190\191]",
+  "[\240-\244][\143\159\175\191]\191[\190\191]",
+}
 
 -- ARIA attributes that, when passed by the user in any letter case, replace
 -- the aria-hidden default given to an icon without a label.
@@ -93,9 +107,17 @@ local function ascii_lower(s)
   end))
 end
 
--- A key that HTML does not allow as an attribute name.
+-- A key that HTML does not allow as an attribute name, or that holds a `<`.
 local function invalid_name(key)
-  return key == "" or key:find(INVALID_NAME) or key:find(C1_CONTROL)
+  if key == "" or key:find(INVALID_NAME) or key:find(C1_CONTROL) then
+    return true
+  end
+  for _, pattern in ipairs(NONCHARACTERS) do
+    if key:find(pattern) then
+      return true
+    end
+  end
+  return false
 end
 
 -- Write a call's first argument as a warning shows it. Quarto has two
@@ -341,8 +363,8 @@ local function build_element(src, kwargs, call)
 
   -- Forward every non-reserved kwarg with a value as an attribute, sorted for
   -- stable output. A src key would give a second src, and an invalid name
-  -- would give a broken or stray attribute, so both are skipped with a
-  -- warning.
+  -- would give a broken, stray, or flagged attribute, so both are skipped
+  -- with a warning.
   local keys, src_keys, invalid_keys = {}, {}, {}
   for key, v in pairs(kwargs) do
     if not RESERVED[key] and value_of(v) ~= "" then
@@ -363,8 +385,9 @@ local function build_element(src, kwargs, call)
   end
   if #invalid_keys > 0 then
     warn_skipped(call, invalid_keys, "an attribute name cannot be empty or "
-      .. "hold spaces, control characters, quotes, >, /, or =. Rename the key "
-      .. "or remove it.")
+      .. "hold spaces, control characters, quotes, >, /, =, or Unicode "
+      .. "noncharacters such as U+FFFE. HTML parsers also report a < in a "
+      .. "name as an error. Rename the key or remove it.")
   end
   warn_case_clashes(call, keys)
   warn_label_case(call, keys)
