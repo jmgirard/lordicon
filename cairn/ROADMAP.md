@@ -1,7 +1,7 @@
 # Roadmap
 
 _The only authority on milestone status. Grouped by status, not ID._
-_Last hygiene check: 2026-10-26 (review M012: archived, M009 row pruned; graduated 1 row, added 0; captured 1 lesson, marked 9 used; validate green)_
+_Last hygiene check: 2026-10-26 (review M013: archived, M010 row pruned; graduated 1 row, added 0; captured 0 lessons, marked 0 used; validate green)_
 
 ## Milestones
 
@@ -9,10 +9,9 @@ _Last hygiene check: 2026-10-26 (review M012: archived, M009 row pruned; graduat
 |---|---|---|---|---|---|
 <!-- rows grouped by status, not sorted by ID; keep only the 3 most recent
      terminal (done or dropped) rows — older ones live in milestones/archive/ + git -->
-| M013 | Name a missing first argument and Quarto's drops in IP1 | review | — | normal | milestones/M013-ip1-missing-argument.md |
+| M013 | Name a missing first argument and Quarto's drops in IP1 | done | — | normal | milestones/archive/M013-ip1-missing-argument.md |
 | M012 | Skip keys that hold a less-than or a noncharacter | done | — | normal | milestones/archive/M012-less-than-noncharacter-keys.md |
 | M011 | Warn about an empty first argument | done | — | normal | milestones/archive/M011-empty-first-argument.md |
-| M010 | Warn on a lost first argument and document leading spaces | done | M009 | normal | milestones/archive/M010-leading-space-values.md |
 
 ## Candidates
 <!-- unnumbered ideas; one line each, ordered high → normal → low → parked:
@@ -27,7 +26,6 @@ _Last hygiene check: 2026-10-26 (review M012: archived, M009 row pruned; graduat
      `Fix SE of skewness calculation (#100)`; `/cairn-triage` offers a new title for one
      with fewer than 5 words or more than 40 characters; tracking-rules "Candidate short title" has the whole rule -->
 - Sort keys by byte, not by locale: `table.sort` in `build_element` and `warn_skipped` uses Lua's `<`, which follows the locale's collation, so under a non-C locale `role` can sort before `Role`, changing the attribute order and which duplicate the page keeps; a `quarto render` on Quarto 1.10.19 with `LC_ALL=en_US.UTF-8` kept the collation at `C` and sorted in byte order, observed 2026-10-26 — added 2026-10-24 — M004 review
-- Decide whether IP1 names Quarto's drops: IP1 lists only reserved keys, invalid names, keys with `<`, and an empty first argument (D-005, D-006, corrected M011, M012) as exceptions to passthrough, but Quarto drops a value or first argument that starts with a space or tab before the extension runs, and a call with no first argument now makes no element; changing IP1 takes the user's decision and a D-entry (D-003) — added 2026-10-25 — M010 review — started M013
 - [low] Warn when Quarto shifts arguments left: in `{{< li " x" wlpxtupd >}}` Quarto drops the leading-space `" x"` and `wlpxtupd` becomes the first argument, so the call renders that icon with no warning; found by the M010 claim audit — added 2026-10-25 — M010
 - [low] Match Quarto's case folding in warnings: the clash warning lowers with `pandoc.text.lower`, which folds Σ to σ, but Quarto's page folds it to ς, so `dataΣ dataσ` warns with no loss and `dataΣ dataς` loses a value with no warning — added 2026-10-24 — M004 review
 - [low] Match each warning to its own call: `check_warnings` in `_tests/check_aria.py` counts the log lines for each warning text, so when two cases share a text, as `empty-li` and `empty-li-inline` do, one doubled and one missing warning still pass; match warnings to calls in document order — added 2026-10-25 — M011 review
