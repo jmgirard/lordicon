@@ -93,8 +93,7 @@ BAD = {
     "bad-control": "a\x01b",
 }
 # HTML parsers report `<` in a name as an error, and HTML forbids the
-# noncharacters of Infra §4.6 in one. The fixture cycles a noncharacter
-# through the first, middle, last, and only place in its key.
+# noncharacters of Infra §4.6 in one.
 NONCHARACTERS = [*range(0xFDD0, 0xFDF0)] + [
     plane * 0x10000 + low for plane in range(17) for low in (0xFFFE, 0xFFFF)
 ]
@@ -107,6 +106,10 @@ BAD["nc-fffe-inline"] = "x￾y"
 BAD["nc-10ffff-inline"] = "x\U0010ffffy"
 for case in BAD:
     CASES[case] = {"src": ICON, "class": "big", **DECORATIVE}
+# The inline `<` cases use another icon, so that their warnings name another
+# call than the own-line cases with the same key.
+for case in LT:
+    CASES[f"{case}-inline"]["src"] = "https://cdn.lordicon.com/ltinline.json"
 
 # Keys that are valid attribute names, though they hold symbols or letters
 # outside ASCII, pass through unchanged.
@@ -118,13 +121,13 @@ CASES["kept-names"] = {
     "data-datà": "5",
     **DECORATIVE,
 }
-# A lif call skips both kinds of key. Code points next to a noncharacter, or
-# one UTF-8 byte away from one, pass through.
 CASES["lt-nc-lif"] = {"src": "gift_raw.json", "class": "big", **DECORATIVE}
+# Code points next to a noncharacter, or one UTF-8 byte away from one, pass
+# through.
 NEIGHBORS = [
     0xFDCF, 0xFDF0, 0xFFFD, 0x1FFFD, 0x10FFFD,
     0xFD90, 0xFE10, 0xFFBE, 0x1EFFE, 0x1FFBE, 0x20FFE,
-    0x4FFFD, 0xEFFFD, 0x10000,
+    0x4FFFD, 0xEFFFD, 0x10000, 0xEDD0, 0xEFFE,
 ]
 CASES["kept-neighbors"] = {
     "src": ICON,
@@ -134,7 +137,9 @@ CASES["kept-neighbors"] = {
 
 # Cases whose <lord-icon> holds no attribute beyond `id`, `src`, and the ones
 # CASES gives a value. The `label` case shows that `label` is not passed on.
-EXACT = {"src-li", "src-lif", "src-upper", "kept-names", "label", "lt-nc-lif", "kept-neighbors", *BAD}
+EXACT = {
+    "src-li", "src-lif", "src-upper", "kept-names", "label", "lt-nc-lif", "kept-neighbors", *BAD
+}
 
 # Keys that differ only in letter case give one attribute name more than once
 # in the filter output, which the parser lowercases. The page keeps one.

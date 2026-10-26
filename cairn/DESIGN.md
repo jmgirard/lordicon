@@ -74,7 +74,8 @@ Convenience shorthands do not qualify.
 - The shortcode names, `label`, and the passthrough meaning are a stable surface.
   A breaking change ships only after one release that warns about it. D-003
   narrows this: the `src` and invalid-name skips shipped in 0.7.3 with no
-  warning release first (corrected M003).
+  warning release first (corrected M003). D-005 and D-006 narrow it too, as
+  IP5 states (corrected M012).
 - The extension version is `version:` in `_extensions/lordicon/_extension.yml`.
 - The extension version rises in each merge that ships a user-visible change
   (D-001). The changelog is `CHANGELOG.md` (D-002), with one `## <version>`

@@ -133,7 +133,7 @@ Test document for `check_aria.py`. Each icon's `id` names its case.
 {{< li wlpxtupd id=nc-10fffe class=big 􏿾k=1 >}}
 {{< li wlpxtupd id=nc-10ffff class=big k􏿿k=1 >}}
 
-Inside a paragraph: {{< li wlpxtupd id=lt-first-inline class=big <b=1 >}} and {{< li wlpxtupd id=lt-middle-inline class=big a<b=1 >}} and {{< li wlpxtupd id=lt-last-inline class=big a<=1 >}} and {{< li wlpxtupd id=lt-whole-inline class=big "<"=1 >}}.
+Inside a paragraph: {{< li ltinline id=lt-first-inline class=big <b=1 >}} and {{< li ltinline id=lt-middle-inline class=big a<b=1 >}} and {{< li ltinline id=lt-last-inline class=big a<=1 >}} and {{< li ltinline id=lt-whole-inline class=big "<"=1 >}}.
 
 Also inside a paragraph: {{< li wlpxtupd id=nc-fffe-inline class=big x￾y=1 >}} and {{< li wlpxtupd id=nc-10ffff-inline class=big x􏿿y=1 >}}.
 
@@ -141,7 +141,7 @@ Also inside a paragraph: {{< li wlpxtupd id=nc-fffe-inline class=big x￾y=1 >}}
 
 ## Keys next to the noncharacters
 
-{{< li wlpxtupd id=kept-neighbors data-fdcf﷏=1 data-fdf0ﷰ=2 data-fffd�=3 data-1fffd🿽=4 data-10fffd􏿽=5 data-fd90﶐=6 data-fe10︐=7 data-ffbeﾾ=8 data-1effe𞿾=9 data-1ffbe🾾=10 data-20ffe𠿾=11 data-4fffd񏿽=12 data-efffd󯿽=13 data-10000𐀀=14 >}}
+{{< li wlpxtupd id=kept-neighbors data-fdcf﷏=1 data-fdf0ﷰ=2 data-fffd�=3 data-1fffd🿽=4 data-10fffd􏿽=5 data-fd90﶐=6 data-fe10︐=7 data-ffbeﾾ=8 data-1effe𞿾=9 data-1ffbe🾾=10 data-20ffe𠿾=11 data-4fffd񏿽=12 data-efffd󯿽=13 data-10000𐀀=14 data-edd0=15 data-effe=16 >}}
 
 ## Keys that differ only in letter case
 

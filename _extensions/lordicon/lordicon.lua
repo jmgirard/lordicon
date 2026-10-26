@@ -10,8 +10,8 @@
   (colors, stroke, trigger, target, state, delay, speed, loading, class, id,
   style, …). See https://lordicon.com/docs/web for the full attribute list.
   The exceptions are `label`, `src` in any letter case (the first argument
-  sets the source), and keys that are not valid attribute names; the last two
-  are skipped with a render warning. Keys that differ only in letter case, and
+  sets the source), and keys that are not valid attribute names or hold a
+  `<`; the last two are skipped with a render warning. Keys that differ only in letter case, and
   `label` in another letter case, are forwarded with a render warning. An
   icon with an image role but no name, and not hidden, gets a render warning.
   A call with no first argument, or an empty one, shows no icon and gets a
@@ -27,9 +27,10 @@ local RESERVED = {
   label = true,
 }
 
--- A key holding whitespace, a control character, or one of these symbols is
--- not a valid HTML attribute name: written out, it can end the tag early,
--- split into stray attributes, or give an attribute with an invalid name.
+-- A key holding whitespace, a control character, or one of these symbols
+-- other than `<` is not a valid HTML attribute name: written out, it can end
+-- the tag early, split into stray attributes, or give an attribute with an
+-- invalid name.
 -- The byte ranges are spelled out because %s and %c follow the current
 -- locale, and under a UTF-8 locale they also match bytes inside letters such
 -- as "ß".
@@ -106,7 +107,7 @@ local function ascii_lower(s)
   end))
 end
 
--- A key that HTML does not allow as an attribute name.
+-- A key that HTML does not allow as an attribute name, or that holds a `<`.
 local function invalid_name(key)
   if key == "" or key:find(INVALID_NAME) or key:find(C1_CONTROL) then
     return true
@@ -362,8 +363,8 @@ local function build_element(src, kwargs, call)
 
   -- Forward every non-reserved kwarg with a value as an attribute, sorted for
   -- stable output. A src key would give a second src, and an invalid name
-  -- would give a broken or stray attribute, so both are skipped with a
-  -- warning.
+  -- would give a broken, stray, or flagged attribute, so both are skipped
+  -- with a warning.
   local keys, src_keys, invalid_keys = {}, {}, {}
   for key, v in pairs(kwargs) do
     if not RESERVED[key] and value_of(v) ~= "" then

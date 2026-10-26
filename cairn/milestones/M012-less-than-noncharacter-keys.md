@@ -79,3 +79,28 @@ A shortcode key that holds `<` or a Unicode noncharacter is left out of the `<lo
 - AC4 evidence: README.md:91-96 lists "a Unicode noncharacter such as U+FFFE" with the forbidden characters ("HTML does not allow such an attribute name") and `<` in its own item ("HTML parsers report a `<` in an attribute name as an error"); CHANGELOG.md:5-7 has `## 0.7.11` naming `<` and noncharacters, that HTML does not allow a noncharacter, and that parsers report `<` as an error; `_extensions/lordicon/_extension.yml:3` reads `version: 0.7.11`.
 - AC5 evidence: on head 1d2944e, `python3 _tests/check_aria.py` exit 0, and `quarto render` at the repo root exit 0 leaving `git status` with no change under `docs/` (cbd20b0 committed the re-render); no demo page changed, so no browser look was owed.
 - Gate: `cairn_validate.py` exit 0, all checks passed. `cairn_impact.py --changed` compares against HEAD and reported none, so `cairn_impact.py IP1 IP5` ran instead: outside this milestone and history, DESIGN.md:90 and :107 are the edited principles, DESIGN.md:139 (GP5 citing IP1) is unaffected, and ROADMAP.md:31's list of IP1 exceptions was reconciled to name keys with `<` (corrected M012). Toolchain: the one version marker, `_extension.yml`, reads 0.7.11; the verify render succeeds (AC5); CHANGELOG has the 0.7.11 entry.
+- spawned: diff-bug, blame-history, prior-review, ripple
+- diff-bug #1: each own-line `<` case and its inline twin share a call and a key, so `check_warnings` cannot tell a doubled warning from a missing one — fix now: the inline `<` cases call `li ltinline`, so their warnings name another call.
+- diff-bug #2: no kept neighbor differs from a noncharacter only in the lead byte, so `[\238\239]\183` would pass — fix now: `kept-neighbors` adds U+EDD0 and U+EFFE; a planted `[\238\239]` made it fail (4 failures) and was reverted.
+- diff-bug #3: the four-byte pattern also matches the invalid runs F0 8F and F4 9F/AF/BF — reject (false): Pandoc reads a file that is not valid UTF-8 as Latin-1 (probed with byte FF), so no such run reaches the filter.
+- diff-bug #4: the comment above `INVALID_NAME` still says every listed symbol makes the name invalid, though `<` does not — fix now.
+- diff-bug #5: the `build_element` comment says an invalid name gives a broken or stray attribute, which a `<` key does not — fix now: "broken, stray, or flagged".
+- diff-bug #6: "also" in "HTML parsers also report a < in a name as an error" can read as covering the earlier characters — reject (style): the sentence names only `<`, and AC2 fixes the reason's content.
+- diff-bug #7: the candidate row "Decide on keys that hold a less-than" is still listed — reject (planned change): its ` — started M012` token marks it for removal at post-merge hygiene.
+- diff-bug #8: the `EXACT` line is about 120 characters — reject (style); wrapped anyway with the #2 fix.
+- diff-bug test rule: the 30 interior `U+FDD1`–`U+FDEE` calls, the noncharacter position rotation, and the `lif` call repeat a code path — reject (planned change): AC1 names each of them.
+- diff-bug test rule: two `check_aria.py` comments restate the code below them ("The fixture cycles…", "A lif call skips both kinds of key") — fix now: both removed.
+- ripple #1: ROADMAP.md:29 still says `<` and noncharacter keys pass through — reject (planned change): same row as diff-bug #7, removed at hygiene.
+- ripple #2: DESIGN.md Conventions says only "D-003 narrows this" for the stable surface — fix now: names D-005 and D-006 (corrected M012).
+- ripple #3: the comment over `invalid_name` says "a key that HTML does not allow" — fix now: adds "or that holds a `<`".
+- ripple #4: the `INVALID_NAME` comment says the set ends a tag early — fix now, same edit as diff-bug #4.
+- ripple #5: the file header names one class, "keys that are not valid attribute names" — fix now: adds "or hold a `<`".
+- prior-review #1: the `<` twins share warning text (echoes M011's row "Match each warning to its own call") — fix now, same as diff-bug #1.
+- prior-review #2: the CHANGELOG 0.7.11 entry says "the render warns" with no format limit, though only HTML output warns (echoes M011's changelog overclaim fix) — fix now: "In HTML output, the render warns."
+- prior-review #3: README names "a Unicode noncharacter such as U+FFFE" without saying which code points — fix now: README names U+FDD0 to U+FDEF and the last two code points of each plane.
+- prior-review #4: the `lt-nc-lif` expectation relies on the key sort order — reject (false): the keys differ in their first byte (`a` against `x`), and Quarto's collation is `C` (observed 2026-10-26), so the order cannot change.
+- blame-history #1: D-006's reason that no `<lord-icon>` attribute has such a name was not checked — reject (false): the bundle's `observedAttributes` list is colors, src, state, trigger, loading, target, stroke, speed.
+- blame-history #2: the candidate row is still listed — reject (planned change), same as diff-bug #7.
+- blame-history #3: a tool that strips noncharacters from `aria.qmd` would change the keys under test — reject (false): stripped keys would be valid, so `EXACT` and the warning count fail, and the review's count found all 66.
+- blame-history #4: odd line wrapping in the DESIGN IP1 and IP5 hunks — reject (style).
+- After the fixes: `python3 _tests/check_aria.py` 0 failures (170 cases, 130 warnings).

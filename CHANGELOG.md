@@ -4,7 +4,7 @@ This file lists the changes in each version of the extension, newest first.
 
 ## 0.7.11
 
-- The extension now also leaves out a key that holds `<` or a Unicode noncharacter, such as U+FFFE or U+FDD0, and the render warns. HTML does not allow a noncharacter in an attribute name, and HTML parsers report a `<` in one as an error. Before, the extension passed such a key on, so `a<b=1` gave the attribute `a<b="1"`.
+- The extension now also leaves out a key that holds `<` or a Unicode noncharacter, such as U+FFFE or U+FDD0. In HTML output, the render warns. HTML does not allow a noncharacter in an attribute name, and HTML parsers report a `<` in one as an error. Before, the extension passed such a key on, so `a<b=1` gave the attribute `a<b="1"`.
 
 ## 0.7.10
 
