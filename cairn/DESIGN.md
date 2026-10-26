@@ -94,9 +94,13 @@ are never reused or renumbered; retiring one takes a D-entry.
   attribute. The documented exceptions are the reserved keys (`label`, and
   `src` in any letter case), keys that HTML does not allow as attribute
   names or that hold a `<`, which HTML parsers report as an error, and every
-  key of a call whose first argument is empty. The render warns about each
-  such skipped key with a non-empty value, except `label` (D-003, D-006). A call whose first argument is empty makes no element, so its keys
-  reach none, and the render warns about the empty argument (D-005).
+  key of a call whose first argument is missing or empty. The render warns
+  about each such skipped key with a non-empty value, except `label` (D-003,
+  D-006). A call whose first argument is missing or empty makes no element,
+  so its keys reach none, and the render warns about the argument (D-005,
+  D-007). Quarto drops a value or positional argument that starts with a
+  space or tab before the extension runs, so it never reaches the extension
+  and is not one of these exceptions (D-007).
 - IP2: (Escaping) Every user value in emitted HTML is escaped: attribute
   values, the label, and the `li` code inside `src`.
 - IP3: (A shortcode never fails a render) Non-HTML formats get no output, and
